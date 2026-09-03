@@ -3147,18 +3147,18 @@
         "card-mtkk19j7-ep-9de4d0ad-24f6-4d83-9f5b-df3910c987fd",
         "card-mtkk19j7-eq-6da764bf-57ec-4907-ac65-38fb7c91207e"
       ],
-      "batchStart": 45,
+      "batchStart": 63,
       "roundOrder": [
-        "card-mtkk19j6-1i-ac51dfed-1009-4e71-b286-02898ae05fdd",
-        "card-mtkk19j6-1j-3f91e0a2-ef27-45af-87d8-8d5fb1bc644b",
-        "card-mtkk19j6-1k-d08011d5-ce77-4a2e-a918-c5519cf53c1a"
+        "card-mtkk19j6-20-d5f51f73-a946-4234-805f-9d3b1a85c70a",
+        "card-mtkk19j6-21-bb5db2be-77eb-455d-bef1-6f664a5def48"
       ],
-      "roundIndex": 1,
+      "roundIndex": 0,
       "retryIds": [
-        "card-mtkk19j6-1i-ac51dfed-1009-4e71-b286-02898ae05fdd",
-        "card-mtkk19j6-1j-3f91e0a2-ef27-45af-87d8-8d5fb1bc644b"
+        "card-mtkk19j6-20-d5f51f73-a946-4234-805f-9d3b1a85c70a"
       ],
-      "masteredIds": [],
+      "masteredIds": [
+        "card-mtkk19j6-22-2e473d8a-f82b-481c-b3c3-a8163f7f35d5"
+      ],
       "firstTryCorrectIds": [
         "card-mtkk19j6-a-3d4df393-7e38-489a-9de7-3fa2f7429bb8",
         "card-mtkk19j6-c-8a9a2594-fe00-4d1b-8470-06f21c3cef08",
@@ -3168,7 +3168,10 @@
         "card-mtkk19j6-15-46adf967-8671-4ac8-8743-c626dd3dd2f6",
         "card-mtkk19j6-17-4c0694ab-3b5d-4f3a-986a-34b338a7ce9c",
         "card-mtkk19j6-1b-bb20055c-3691-4fbb-a97c-f6824505c958",
-        "card-mtkk19j6-1e-4e30f82c-cfeb-4729-a6ae-2a1c94c7ecc5"
+        "card-mtkk19j6-1e-4e30f82c-cfeb-4729-a6ae-2a1c94c7ecc5",
+        "card-mtkk19j6-1p-95012491-723d-4a1f-8295-a8386c184bd5",
+        "card-mtkk19j6-1q-7c264341-6d7a-4a22-bc30-20ed682d1df9",
+        "card-mtkk19j6-1r-d88caacf-2be0-4a33-af70-b0736f6c7a29"
       ],
       "missedIds": [
         "card-mtkk19j6-9-1c6ba614-a7db-483f-be37-c51013eb57df",
@@ -3208,16 +3211,32 @@
         "card-mtkk19j6-1g-90377ac4-17ff-4663-8db9-07a4951dbd4e",
         "card-mtkk19j6-1h-6934245d-af1e-409c-b638-3f73b28b1249",
         "card-mtkk19j6-1i-ac51dfed-1009-4e71-b286-02898ae05fdd",
-        "card-mtkk19j6-1j-3f91e0a2-ef27-45af-87d8-8d5fb1bc644b"
+        "card-mtkk19j6-1j-3f91e0a2-ef27-45af-87d8-8d5fb1bc644b",
+        "card-mtkk19j6-1k-d08011d5-ce77-4a2e-a918-c5519cf53c1a",
+        "card-mtkk19j6-1l-3e859e43-9932-40ed-b2b9-3644a70bb9dc",
+        "card-mtkk19j6-1m-20297ee7-446a-402e-a8c3-b4a4b1383e57",
+        "card-mtkk19j6-1n-b0d9a2a7-a06d-426f-a5c5-67051f2441f8",
+        "card-mtkk19j6-1o-6627b0e8-630a-4a99-9609-7ae7f4f8cbc5",
+        "card-mtkk19j6-1s-567b129f-b753-4627-9b7f-7456745d1af5",
+        "card-mtkk19j6-1t-61541932-7783-43b3-bf7e-2fc8aa0cd07c",
+        "card-mtkk19j6-1u-6fa4cd35-b991-43d4-a62f-2df34f5466b0",
+        "card-mtkk19j6-1v-7a888759-f049-4f8e-a586-ead5606ff3ca",
+        "card-mtkk19j6-1w-174c322b-4cde-4e6b-bb8a-7554b7dac99e",
+        "card-mtkk19j6-1x-94f9c6a2-a274-4b56-bc3f-a4802e20b031",
+        "card-mtkk19j6-1y-4b943b4c-666f-4720-8d31-8a0c54503253",
+        "card-mtkk19j6-1z-584a16f0-bbd5-46ed-8db8-2dd5baa0df2c",
+        "card-mtkk19j6-20-d5f51f73-a946-4234-805f-9d3b1a85c70a",
+        "card-mtkk19j6-21-bb5db2be-77eb-455d-bef1-6f664a5def48",
+        "card-mtkk19j6-22-2e473d8a-f82b-481c-b3c3-a8163f7f35d5"
       ],
-      "wrongAttemptCount": 57,
+      "wrongAttemptCount": 90,
       "phase": "retype",
-      "wrongAnswer": "a",
+      "wrongAnswer": "risk monoring",
       "resolvedByRetype": false,
       "startedAt": "2026-09-02T20:36:45.137Z",
-      "updatedAt": "2026-09-03T02:43:08.981Z"
+      "updatedAt": "2026-09-03T06:38:32.031Z"
     },
-    "lastStudiedAt": "2026-09-03T02:43:08.981Z"
+    "lastStudiedAt": "2026-09-03T06:38:32.031Z"
   },
   {
     "id": "set-mth8iz12-yj-9bf23a35-3ff8-4c69-9440-2ce682bdb30c",
@@ -16270,5 +16289,96 @@
     ],
     "createdAt": "2026-08-29T12:45:47.272Z",
     "updatedAt": "2026-08-29T12:45:47.272Z"
+  },
+  {
+    "id": "security-plus",
+    "title": "CompTIA Security+ 用語学習",
+    "description": "日本語の説明を読み、英語の用語・略語を正確に入力するセットです。",
+    "cards": [
+      {
+        "id": "sec-tls",
+        "term": "TLS",
+        "definition": "通信中のデータを暗号化し、完全性を保護するSSL後継のプロトコルは？"
+      },
+      {
+        "id": "sec-mfa",
+        "term": "MFA",
+        "definition": "知識・所持・生体など、独立した2種類以上の認証要素を要求する統制は？"
+      },
+      {
+        "id": "sec-zero-trust",
+        "term": "Zero Trust",
+        "definition": "接続元を暗黙に信頼せず、要求ごとに主体・端末・状況を検証する考え方は？"
+      },
+      {
+        "id": "sec-least-privilege",
+        "term": "Least privilege",
+        "definition": "利用者やプロセスへ、業務に必要な権限だけを与える原則は？"
+      },
+      {
+        "id": "sec-pki",
+        "term": "PKI",
+        "definition": "証明書の発行・配布・失効と公開鍵への信頼を管理する仕組みは？"
+      },
+      {
+        "id": "sec-ids-ips",
+        "term": "IDS / IPS",
+        "definition": "ネットワーク通信を監視し、悪意ある活動を検知または遮断する技術の組み合わせは？"
+      },
+      {
+        "id": "sec-sase",
+        "term": "SASE",
+        "definition": "接続機能とSWG・CASB・FWaaSなどをクラウドから統合提供するアーキテクチャは？"
+      },
+      {
+        "id": "sec-xss",
+        "term": "XSS",
+        "definition": "入力値を通じ、攻撃者のスクリプトを他利用者のブラウザーで実行させる攻撃は？"
+      },
+      {
+        "id": "sec-dlp",
+        "term": "DLP",
+        "definition": "機密情報の不正送信を検知し、必要に応じて遮断する統制は？"
+      },
+      {
+        "id": "sec-ransomware",
+        "term": "Ransomware",
+        "definition": "データを利用不能にし、復旧と引き換えに支払いを要求するマルウェアは？"
+      },
+      {
+        "id": "sec-edr",
+        "term": "EDR",
+        "definition": "端末上のプロセスや挙動を監視し、悪意ある実行を検知・隔離する製品は？"
+      },
+      {
+        "id": "sec-siem",
+        "term": "SIEM",
+        "definition": "複数のログを集中収集・正規化・相関分析してアラートを生成する基盤は？"
+      },
+      {
+        "id": "sec-cvss",
+        "term": "CVSS",
+        "definition": "脆弱性の技術的深刻度を標準化された数値で表す評価方式は？"
+      },
+      {
+        "id": "sec-rto",
+        "term": "RTO",
+        "definition": "障害発生後、何時間以内にサービスを再開すべきかを示す目標は？"
+      },
+      {
+        "id": "sec-rpo",
+        "term": "RPO",
+        "definition": "どの時点までデータを復元できればよいかという許容損失量を示す目標は？"
+      },
+      {
+        "id": "sec-aes",
+        "term": "AES-256",
+        "definition": "256ビット鍵を使うAdvanced Encryption Standardの表記は？"
+      }
+    ],
+    "createdAt": "2026-08-20T09:00:00.000Z",
+    "updatedAt": "2026-08-24T10:20:00.000Z",
+    "lastStudiedAt": "2026-08-24T10:20:00.000Z",
+    "lastScore": 82
   }
 ]

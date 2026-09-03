@@ -3147,15 +3147,16 @@
         "card-mtkk19j7-ep-9de4d0ad-24f6-4d83-9f5b-df3910c987fd",
         "card-mtkk19j7-eq-6da764bf-57ec-4907-ac65-38fb7c91207e"
       ],
-      "batchStart": 60,
+      "batchStart": 75,
       "roundOrder": [
-        "card-mtkk19j6-1x-94f9c6a2-a274-4b56-bc3f-a4802e20b031",
-        "card-mtkk19j6-1y-4b943b4c-666f-4720-8d31-8a0c54503253",
-        "card-mtkk19j6-1z-584a16f0-bbd5-46ed-8db8-2dd5baa0df2c"
+        "card-mtkk19j6-2c-493a5be3-4cd1-4a56-a71f-4e5a513cfe96",
+        "card-mtkk19j6-2d-98ef8dd2-e19e-476f-8895-ea7774a24f49",
+        "card-mtkk19j6-2e-941ea819-8437-4641-ac3b-04432c396c67"
       ],
-      "roundIndex": 1,
+      "roundIndex": 2,
       "retryIds": [
-        "card-mtkk19j6-1x-94f9c6a2-a274-4b56-bc3f-a4802e20b031"
+        "card-mtkk19j6-2c-493a5be3-4cd1-4a56-a71f-4e5a513cfe96",
+        "card-mtkk19j6-2d-98ef8dd2-e19e-476f-8895-ea7774a24f49"
       ],
       "masteredIds": [],
       "firstTryCorrectIds": [
@@ -3170,7 +3171,10 @@
         "card-mtkk19j6-1e-4e30f82c-cfeb-4729-a6ae-2a1c94c7ecc5",
         "card-mtkk19j6-1p-95012491-723d-4a1f-8295-a8386c184bd5",
         "card-mtkk19j6-1q-7c264341-6d7a-4a22-bc30-20ed682d1df9",
-        "card-mtkk19j6-1r-d88caacf-2be0-4a33-af70-b0736f6c7a29"
+        "card-mtkk19j6-1r-d88caacf-2be0-4a33-af70-b0736f6c7a29",
+        "card-mtkk19j6-23-544a315b-0598-4b4f-bbe8-9a4a119aa858",
+        "card-mtkk19j6-26-4a34341b-da95-47f0-8af3-61929c18a0fe",
+        "card-mtkk19j6-2b-428d8524-4c84-46b5-9578-66fbfc6fea16"
       ],
       "missedIds": [
         "card-mtkk19j6-9-1c6ba614-a7db-483f-be37-c51013eb57df",
@@ -3221,16 +3225,29 @@
         "card-mtkk19j6-1u-6fa4cd35-b991-43d4-a62f-2df34f5466b0",
         "card-mtkk19j6-1v-7a888759-f049-4f8e-a586-ead5606ff3ca",
         "card-mtkk19j6-1w-174c322b-4cde-4e6b-bb8a-7554b7dac99e",
-        "card-mtkk19j6-1x-94f9c6a2-a274-4b56-bc3f-a4802e20b031"
+        "card-mtkk19j6-1x-94f9c6a2-a274-4b56-bc3f-a4802e20b031",
+        "card-mtkk19j6-1y-4b943b4c-666f-4720-8d31-8a0c54503253",
+        "card-mtkk19j6-1z-584a16f0-bbd5-46ed-8db8-2dd5baa0df2c",
+        "card-mtkk19j6-20-d5f51f73-a946-4234-805f-9d3b1a85c70a",
+        "card-mtkk19j6-21-bb5db2be-77eb-455d-bef1-6f664a5def48",
+        "card-mtkk19j6-22-2e473d8a-f82b-481c-b3c3-a8163f7f35d5",
+        "card-mtkk19j6-24-16b44e3d-57ad-479f-b9f6-003299dda7bd",
+        "card-mtkk19j6-25-9307f40b-1c4f-43f4-83ab-594da00e90c9",
+        "card-mtkk19j6-27-e6f257d6-9356-4158-bbc0-25e464eaf7a7",
+        "card-mtkk19j6-28-0ddf8e01-8241-42d8-96b1-8e3027fcadda",
+        "card-mtkk19j6-29-102eb30f-6474-4fd6-b531-d006a9798f0e",
+        "card-mtkk19j6-2a-bebe2399-cb8a-4e0f-bbb2-764e1952fed1",
+        "card-mtkk19j6-2c-493a5be3-4cd1-4a56-a71f-4e5a513cfe96",
+        "card-mtkk19j6-2d-98ef8dd2-e19e-476f-8895-ea7774a24f49"
       ],
-      "wrongAttemptCount": 78,
+      "wrongAttemptCount": 110,
       "phase": "question",
       "wrongAnswer": "",
       "resolvedByRetype": false,
       "startedAt": "2026-09-02T20:36:45.137Z",
-      "updatedAt": "2026-09-03T04:09:41.162Z"
+      "updatedAt": "2026-09-03T14:11:47.700Z"
     },
-    "lastStudiedAt": "2026-09-03T04:09:41.162Z"
+    "lastStudiedAt": "2026-09-03T14:11:47.700Z"
   },
   {
     "id": "set-mth8iz12-yj-9bf23a35-3ff8-4c69-9440-2ce682bdb30c",
@@ -13756,9 +13773,7 @@
         "card-mtedjeax-ec-2aef1e62-736c-4710-bda2-e2ac6ae07018"
       ],
       "roundIndex": 0,
-      "retryIds": [
-        "card-mtedjeax-ea-a210d42d-384e-47d5-bf2b-bf631f66bc26"
-      ],
+      "retryIds": ["card-mtedjeax-ea-a210d42d-384e-47d5-bf2b-bf631f66bc26"],
       "masteredIds": [],
       "firstTryCorrectIds": [],
       "missedIds": [
