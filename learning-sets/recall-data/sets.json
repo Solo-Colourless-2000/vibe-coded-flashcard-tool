@@ -3147,15 +3147,16 @@
         "card-mtkk19j7-ep-9de4d0ad-24f6-4d83-9f5b-df3910c987fd",
         "card-mtkk19j7-eq-6da764bf-57ec-4907-ac65-38fb7c91207e"
       ],
-      "batchStart": 33,
+      "batchStart": 45,
       "roundOrder": [
-        "card-mtkk19j6-16-c1afba93-b693-4f5d-a3eb-647b0df314be",
-        "card-mtkk19j6-17-4c0694ab-3b5d-4f3a-986a-34b338a7ce9c",
-        "card-mtkk19j6-18-635a9cfd-6667-47bc-a8e8-2f6084f4c792"
+        "card-mtkk19j6-1i-ac51dfed-1009-4e71-b286-02898ae05fdd",
+        "card-mtkk19j6-1j-3f91e0a2-ef27-45af-87d8-8d5fb1bc644b",
+        "card-mtkk19j6-1k-d08011d5-ce77-4a2e-a918-c5519cf53c1a"
       ],
-      "roundIndex": 0,
+      "roundIndex": 1,
       "retryIds": [
-        "card-mtkk19j6-16-c1afba93-b693-4f5d-a3eb-647b0df314be"
+        "card-mtkk19j6-1i-ac51dfed-1009-4e71-b286-02898ae05fdd",
+        "card-mtkk19j6-1j-3f91e0a2-ef27-45af-87d8-8d5fb1bc644b"
       ],
       "masteredIds": [],
       "firstTryCorrectIds": [
@@ -3164,7 +3165,10 @@
         "card-mtkk19j6-j-c7efbfe5-7394-42db-8318-a7714143aa4f",
         "card-mtkk19j6-r-17af665f-e80e-4d48-a2d7-656849a4b962",
         "card-mtkk19j6-12-95703353-2508-4d37-baa5-49eb50bfc99a",
-        "card-mtkk19j6-15-46adf967-8671-4ac8-8743-c626dd3dd2f6"
+        "card-mtkk19j6-15-46adf967-8671-4ac8-8743-c626dd3dd2f6",
+        "card-mtkk19j6-17-4c0694ab-3b5d-4f3a-986a-34b338a7ce9c",
+        "card-mtkk19j6-1b-bb20055c-3691-4fbb-a97c-f6824505c958",
+        "card-mtkk19j6-1e-4e30f82c-cfeb-4729-a6ae-2a1c94c7ecc5"
       ],
       "missedIds": [
         "card-mtkk19j6-9-1c6ba614-a7db-483f-be37-c51013eb57df",
@@ -3194,16 +3198,26 @@
         "card-mtkk19j6-11-3867284a-8da8-4331-a5a4-1224a622ed78",
         "card-mtkk19j6-13-f9d76e79-aed0-4578-8b4b-12e3e9390582",
         "card-mtkk19j6-14-6bcf5f9e-337a-4322-ba0b-8d7cc84e1ccc",
-        "card-mtkk19j6-16-c1afba93-b693-4f5d-a3eb-647b0df314be"
+        "card-mtkk19j6-16-c1afba93-b693-4f5d-a3eb-647b0df314be",
+        "card-mtkk19j6-18-635a9cfd-6667-47bc-a8e8-2f6084f4c792",
+        "card-mtkk19j6-19-63594fea-02f1-4db1-85aa-f6b90c6f8ce3",
+        "card-mtkk19j6-1a-675887f5-bea7-408e-befa-b0b8c79d76b7",
+        "card-mtkk19j6-1c-554e0dd8-3903-4dc8-b6e4-5fdd2730e9ec",
+        "card-mtkk19j6-1d-697d5861-ef8c-4343-9722-597f4c22422a",
+        "card-mtkk19j6-1f-3ecadd6c-dfee-4f41-8149-c303d4b6549c",
+        "card-mtkk19j6-1g-90377ac4-17ff-4663-8db9-07a4951dbd4e",
+        "card-mtkk19j6-1h-6934245d-af1e-409c-b638-3f73b28b1249",
+        "card-mtkk19j6-1i-ac51dfed-1009-4e71-b286-02898ae05fdd",
+        "card-mtkk19j6-1j-3f91e0a2-ef27-45af-87d8-8d5fb1bc644b"
       ],
-      "wrongAttemptCount": 39,
+      "wrongAttemptCount": 57,
       "phase": "retype",
       "wrongAnswer": "a",
       "resolvedByRetype": false,
       "startedAt": "2026-09-02T20:36:45.137Z",
-      "updatedAt": "2026-09-02T21:45:34.392Z"
+      "updatedAt": "2026-09-03T02:43:08.981Z"
     },
-    "lastStudiedAt": "2026-09-02T21:45:34.392Z"
+    "lastStudiedAt": "2026-09-03T02:43:08.981Z"
   },
   {
     "id": "set-mth8iz12-yj-9bf23a35-3ff8-4c69-9440-2ce682bdb30c",
