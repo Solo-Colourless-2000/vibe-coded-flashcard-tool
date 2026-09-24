@@ -3147,17 +3147,18 @@
         "card-mtkk19j7-ep-9de4d0ad-24f6-4d83-9f5b-df3910c987fd",
         "card-mtkk19j7-eq-6da764bf-57ec-4907-ac65-38fb7c91207e"
       ],
-      "batchStart": 60,
+      "batchStart": 63,
       "roundOrder": [
-        "card-mtkk19j6-1x-94f9c6a2-a274-4b56-bc3f-a4802e20b031",
-        "card-mtkk19j6-1y-4b943b4c-666f-4720-8d31-8a0c54503253",
-        "card-mtkk19j6-1z-584a16f0-bbd5-46ed-8db8-2dd5baa0df2c"
+        "card-mtkk19j6-20-d5f51f73-a946-4234-805f-9d3b1a85c70a",
+        "card-mtkk19j6-21-bb5db2be-77eb-455d-bef1-6f664a5def48"
       ],
-      "roundIndex": 1,
+      "roundIndex": 0,
       "retryIds": [
-        "card-mtkk19j6-1x-94f9c6a2-a274-4b56-bc3f-a4802e20b031"
+        "card-mtkk19j6-20-d5f51f73-a946-4234-805f-9d3b1a85c70a"
       ],
-      "masteredIds": [],
+      "masteredIds": [
+        "card-mtkk19j6-22-2e473d8a-f82b-481c-b3c3-a8163f7f35d5"
+      ],
       "firstTryCorrectIds": [
         "card-mtkk19j6-a-3d4df393-7e38-489a-9de7-3fa2f7429bb8",
         "card-mtkk19j6-c-8a9a2594-fe00-4d1b-8470-06f21c3cef08",
@@ -3221,16 +3222,21 @@
         "card-mtkk19j6-1u-6fa4cd35-b991-43d4-a62f-2df34f5466b0",
         "card-mtkk19j6-1v-7a888759-f049-4f8e-a586-ead5606ff3ca",
         "card-mtkk19j6-1w-174c322b-4cde-4e6b-bb8a-7554b7dac99e",
-        "card-mtkk19j6-1x-94f9c6a2-a274-4b56-bc3f-a4802e20b031"
+        "card-mtkk19j6-1x-94f9c6a2-a274-4b56-bc3f-a4802e20b031",
+        "card-mtkk19j6-1y-4b943b4c-666f-4720-8d31-8a0c54503253",
+        "card-mtkk19j6-1z-584a16f0-bbd5-46ed-8db8-2dd5baa0df2c",
+        "card-mtkk19j6-20-d5f51f73-a946-4234-805f-9d3b1a85c70a",
+        "card-mtkk19j6-21-bb5db2be-77eb-455d-bef1-6f664a5def48",
+        "card-mtkk19j6-22-2e473d8a-f82b-481c-b3c3-a8163f7f35d5"
       ],
-      "wrongAttemptCount": 78,
-      "phase": "question",
-      "wrongAnswer": "",
+      "wrongAttemptCount": 90,
+      "phase": "retype",
+      "wrongAnswer": "risk monoring",
       "resolvedByRetype": false,
       "startedAt": "2026-09-02T20:36:45.137Z",
-      "updatedAt": "2026-09-03T04:09:41.162Z"
+      "updatedAt": "2026-09-03T06:38:32.031Z"
     },
-    "lastStudiedAt": "2026-09-03T04:09:41.162Z"
+    "lastStudiedAt": "2026-09-03T06:38:32.031Z"
   },
   {
     "id": "set-mth8iz12-yj-9bf23a35-3ff8-4c69-9440-2ce682bdb30c",
@@ -16283,5 +16289,135 @@
     ],
     "createdAt": "2026-08-29T12:45:47.272Z",
     "updatedAt": "2026-08-29T12:45:47.272Z"
+  },
+  {
+    "id": "exact-text",
+    "title": "大文字・小文字と記号の確認",
+    "description": "英字のケースや特殊文字を、表示どおり正確に入力する練習です。",
+    "cards": [
+      {
+        "id": "exact-1",
+        "term": "C++",
+        "definition": "Cにクラスなどの機能を加えたプログラミング言語を、記号込みで入力してください。"
+      },
+      {
+        "id": "exact-2",
+        "term": "user@example.com",
+        "definition": "例示用メールアドレスを小文字と記号を含めて入力してください。"
+      },
+      {
+        "id": "exact-3",
+        "term": "<script>",
+        "definition": "HTMLのscript開始タグを、山括弧を含む文字列として入力してください。"
+      },
+      {
+        "id": "exact-4",
+        "term": "A+B=C?",
+        "definition": "大文字、プラス、イコール、疑問符を含む文字列を入力してください。"
+      },
+      {
+        "id": "exact-5",
+        "term": "TLS",
+        "definition": "小文字のtlsでは不正解になる、3文字の暗号プロトコル略語は？"
+      },
+      {
+        "id": "exact-6",
+        "term": "OAuth 2.0",
+        "definition": "スペースと小数点を含む認可フレームワーク名は？"
+      }
+    ],
+    "createdAt": "2026-08-24T11:00:00.000Z",
+    "updatedAt": "2026-08-24T11:00:00.000Z"
+  },
+  {
+    "id": "security-plus",
+    "title": "CompTIA Security+ 用語学習",
+    "description": "日本語の説明を読み、英語の用語・略語を正確に入力するセットです。",
+    "cards": [
+      {
+        "id": "sec-tls",
+        "term": "TLS",
+        "definition": "通信中のデータを暗号化し、完全性を保護するSSL後継のプロトコルは？"
+      },
+      {
+        "id": "sec-mfa",
+        "term": "MFA",
+        "definition": "知識・所持・生体など、独立した2種類以上の認証要素を要求する統制は？"
+      },
+      {
+        "id": "sec-zero-trust",
+        "term": "Zero Trust",
+        "definition": "接続元を暗黙に信頼せず、要求ごとに主体・端末・状況を検証する考え方は？"
+      },
+      {
+        "id": "sec-least-privilege",
+        "term": "Least privilege",
+        "definition": "利用者やプロセスへ、業務に必要な権限だけを与える原則は？"
+      },
+      {
+        "id": "sec-pki",
+        "term": "PKI",
+        "definition": "証明書の発行・配布・失効と公開鍵への信頼を管理する仕組みは？"
+      },
+      {
+        "id": "sec-ids-ips",
+        "term": "IDS / IPS",
+        "definition": "ネットワーク通信を監視し、悪意ある活動を検知または遮断する技術の組み合わせは？"
+      },
+      {
+        "id": "sec-sase",
+        "term": "SASE",
+        "definition": "接続機能とSWG・CASB・FWaaSなどをクラウドから統合提供するアーキテクチャは？"
+      },
+      {
+        "id": "sec-xss",
+        "term": "XSS",
+        "definition": "入力値を通じ、攻撃者のスクリプトを他利用者のブラウザーで実行させる攻撃は？"
+      },
+      {
+        "id": "sec-dlp",
+        "term": "DLP",
+        "definition": "機密情報の不正送信を検知し、必要に応じて遮断する統制は？"
+      },
+      {
+        "id": "sec-ransomware",
+        "term": "Ransomware",
+        "definition": "データを利用不能にし、復旧と引き換えに支払いを要求するマルウェアは？"
+      },
+      {
+        "id": "sec-edr",
+        "term": "EDR",
+        "definition": "端末上のプロセスや挙動を監視し、悪意ある実行を検知・隔離する製品は？"
+      },
+      {
+        "id": "sec-siem",
+        "term": "SIEM",
+        "definition": "複数のログを集中収集・正規化・相関分析してアラートを生成する基盤は？"
+      },
+      {
+        "id": "sec-cvss",
+        "term": "CVSS",
+        "definition": "脆弱性の技術的深刻度を標準化された数値で表す評価方式は？"
+      },
+      {
+        "id": "sec-rto",
+        "term": "RTO",
+        "definition": "障害発生後、何時間以内にサービスを再開すべきかを示す目標は？"
+      },
+      {
+        "id": "sec-rpo",
+        "term": "RPO",
+        "definition": "どの時点までデータを復元できればよいかという許容損失量を示す目標は？"
+      },
+      {
+        "id": "sec-aes",
+        "term": "AES-256",
+        "definition": "256ビット鍵を使うAdvanced Encryption Standardの表記は？"
+      }
+    ],
+    "createdAt": "2026-08-20T09:00:00.000Z",
+    "updatedAt": "2026-08-24T10:20:00.000Z",
+    "lastStudiedAt": "2026-08-24T10:20:00.000Z",
+    "lastScore": 82
   }
 ]

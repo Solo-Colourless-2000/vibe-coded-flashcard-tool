@@ -16291,45 +16291,6 @@
     "updatedAt": "2026-08-29T12:45:47.272Z"
   },
   {
-    "id": "exact-text",
-    "title": "大文字・小文字と記号の確認",
-    "description": "英字のケースや特殊文字を、表示どおり正確に入力する練習です。",
-    "cards": [
-      {
-        "id": "exact-1",
-        "term": "C++",
-        "definition": "Cにクラスなどの機能を加えたプログラミング言語を、記号込みで入力してください。"
-      },
-      {
-        "id": "exact-2",
-        "term": "user@example.com",
-        "definition": "例示用メールアドレスを小文字と記号を含めて入力してください。"
-      },
-      {
-        "id": "exact-3",
-        "term": "<script>",
-        "definition": "HTMLのscript開始タグを、山括弧を含む文字列として入力してください。"
-      },
-      {
-        "id": "exact-4",
-        "term": "A+B=C?",
-        "definition": "大文字、プラス、イコール、疑問符を含む文字列を入力してください。"
-      },
-      {
-        "id": "exact-5",
-        "term": "TLS",
-        "definition": "小文字のtlsでは不正解になる、3文字の暗号プロトコル略語は？"
-      },
-      {
-        "id": "exact-6",
-        "term": "OAuth 2.0",
-        "definition": "スペースと小数点を含む認可フレームワーク名は？"
-      }
-    ],
-    "createdAt": "2026-08-24T11:00:00.000Z",
-    "updatedAt": "2026-08-24T11:00:00.000Z"
-  },
-  {
     "id": "security-plus",
     "title": "CompTIA Security+ 用語学習",
     "description": "日本語の説明を読み、英語の用語・略語を正確に入力するセットです。",
