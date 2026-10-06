@@ -4,9 +4,17 @@ import { readFile } from 'node:fs/promises';
 
 const css = await readFile(new URL('../app/globals.css', import.meta.url), 'utf8');
 const pageSource = await readFile(
-  new URL('../app/page.tsx', import.meta.url),
+  new URL('../app/recall/study/StudyView.tsx', import.meta.url),
   'utf8',
 );
+
+const sidebarSource = await readFile(new URL('../app/recall/shell/AppSidebar.tsx', import.meta.url), 'utf8');
+const toastSource = await readFile(new URL('../app/recall/shared/Toast.tsx', import.meta.url), 'utf8');
+const typesSource = await readFile(new URL('../app/recall/types.ts', import.meta.url), 'utf8');
+const readySource = await readFile(new URL('../app/recall/study/StudyReadyView.tsx', import.meta.url), 'utf8');
+const sessionSource = await readFile(new URL('../app/recall/study/useStudySession.ts', import.meta.url), 'utf8');
+const appSource = await readFile(new URL('../app/recall/RecallApp.tsx', import.meta.url), 'utf8');
+const loadingSource = await readFile(new URL('../app/recall/shared/LoadingScreen.tsx', import.meta.url), 'utf8');
 
 test('the page does not force a horizontal scrollbar at the narrowest viewport', () => {
   assert.match(css, /body\s*\{[^}]*min-width:\s*0;/su);
@@ -33,13 +41,13 @@ test('the narrowest header uses icon navigation without wrapped text', () => {
     css,
     /@media \(max-width:\s*440px\)[\s\S]*?\.nav-item svg\s*\{[^}]*display:\s*block/su,
   );
-  assert.match(pageSource, /aria-label="TOTAL RECALL ホームへ戻る"/u);
+  assert.match(sidebarSource, /aria-label="TOTAL RECALL ホームへ戻る"/u);
 });
 
 test('save errors and warnings are not announced as successful operations', () => {
-  assert.match(pageSource, /type ToastTone = "success" \| "info" \| "warning" \| "error"/u);
-  assert.match(pageSource, /className=\{"toast toast-" \+ toast\.tone\}/u);
-  assert.match(pageSource, /toast\.tone === "error" \|\| toast\.tone === "warning"/u);
+  assert.match(typesSource, /type ToastTone = "success" \| "info" \| "warning" \| "error"/u);
+  assert.match(toastSource, /className=\{"toast toast-" \+ toast\.tone\}/u);
+  assert.match(toastSource, /toast\.tone === "error" \|\| toast\.tone === "warning"/u);
   assert.match(css, /\.toast-error\s*\{[^}]*border-color:\s*var\(--danger\)/su);
   assert.match(css, /\.toast-warning\s*\{[^}]*border-color:\s*#c7a75c/su);
 });
@@ -57,18 +65,18 @@ test('the current-group score excludes answers from earlier groups', () => {
 
 test('parenthetical omission is selectable and the saved session setting drives matching', () => {
   assert.match(
-    pageSource,
+    readySource,
     /checked=\{allowParentheticalOmission\}[\s\S]*?setAllowParentheticalOmission\(event\.target\.checked\)/su,
   );
   assert.match(
-    pageSource,
+    sessionSource,
     /createStudyProgress\([\s\S]*?studyBatchSize,[\s\S]*?allowParentheticalOmission,[\s\S]*?\)/su,
   );
   assert.ok(
-    (pageSource.match(/studyRun\.allowParentheticalOmission/gu) ?? []).length >= 5,
+    ((pageSource + sessionSource).match(/studyRun\.allowParentheticalOmission/gu) ?? []).length >= 5,
   );
   assert.match(
-    pageSource,
+    sessionSource,
     /activeSet\.studyProgress\.allowParentheticalOmission/u,
   );
 });
@@ -204,16 +212,17 @@ test('dialogs and compact landscape study views retain usable space', () => {
 });
 
 test('saved sets finish loading before the sample collection can render', () => {
-  const guardIndex = pageSource.indexOf('if (!hydrated) {');
-  const appShellIndex = pageSource.indexOf('<main className="app-shell">');
+  const guardIndex = appSource.indexOf('if (!hydrated) {');
+  const appShellIndex = appSource.indexOf('<main className="app-shell">');
 
   assert.ok(guardIndex >= 0, 'the hydration guard must exist');
   assert.ok(
     appShellIndex > guardIndex,
     'the data-backed application shell must render only after hydration',
   );
+  assert.match(loadingSource, /aria-busy="true" className="app-loading"/u);
   assert.match(
-    pageSource.slice(guardIndex, appShellIndex),
-    /aria-busy="true" className="app-loading"/u,
+    appSource.slice(guardIndex, appShellIndex),
+    /return <LoadingScreen \/>/u,
   );
 });

@@ -1,68 +1,1406 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0e1316">
-  <meta name="description" content="RECALL 0.2.1 コードエディター版 初心者向け完全開発マニュアル">
-  <title>RECALL 0.2.1 コードエディター版 初心者向け完全開発マニュアル</title>
-  <style>
-    :root{--paper:#151b1f;--canvas:#0e1316;--ink:#e5ecef;--muted:#a7b3b8;--lime:#b8e34a;--teal:#4ec4cc;--pink:#e2a0b8;--orange:#e8a54b;--line:#334047;--code:#29251e;--terminal:#0a0e12;--blue:#13242a;--green:#1b281a;--red:#2b1c1e;--shadow:0 18px 48px rgba(0,0,0,.28);--font-scale:1;--header-h:64px;--sidebar-w:310px}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Yu Gothic UI","Hiragino Sans","Noto Sans JP",sans-serif;font-size:calc(16px * var(--font-scale));line-height:1.82}
-    button,input{font:inherit}button{cursor:pointer}.skip-link{position:fixed;z-index:2000;top:8px;left:8px;transform:translateY(-160%);background:#fff;color:#111;padding:8px 12px}.skip-link:focus{transform:none}.top-progress{position:fixed;z-index:1000;top:0;left:0;height:3px;background:var(--lime);width:0;transition:width .08s linear}
-    .app-header{position:fixed;z-index:900;top:0;left:0;right:0;height:var(--header-h);background:rgba(21,27,31,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 18px;gap:14px}.brand{display:flex;align-items:center;gap:10px;min-width:300px}.brand-mark{font-weight:900;color:var(--lime);font-size:13px;letter-spacing:.08em}.brand-title{font-weight:800;font-size:15px}.brand-ver{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:2px 7px;margin-left:4px}.header-search{flex:1;max-width:640px;position:relative}.header-search input{width:100%;height:40px;border:1px solid var(--line);background:#101619;color:var(--ink);padding:0 48px 0 14px;outline:none}.header-search input:focus{border-color:var(--pink)}.header-search input::placeholder{color:#8f9da3;opacity:1}.kbd{position:absolute;right:9px;top:9px;font-size:11px;color:#aab7bc;border:1px solid #3a474d;background:#1d262b;padding:1px 5px}.header-actions{margin-left:auto;display:flex;align-items:center;gap:6px}.icon-btn{border:1px solid var(--line);background:#1d252a;color:var(--ink);min-width:38px;height:38px;padding:0 10px}.icon-btn:hover,.icon-btn:focus-visible{border-color:var(--pink);color:var(--pink)}.hamburger-icon{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-    .sidebar{position:fixed;z-index:700;left:0;top:var(--header-h);bottom:0;width:var(--sidebar-w);overflow:auto;background:#151b1f;border-right:1px solid var(--line);padding:18px 14px 90px}.toc-group-title{font-size:11px;font-weight:800;color:#9eabb0;letter-spacing:.09em;margin:15px 10px 6px}.toc-item{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 11px;color:#aebbc0;border-left:3px solid transparent}.toc-item:hover,.toc-item:focus-visible{background:#1b282d;color:#e0a6b9}.toc-item.active{background:#1b282d;color:var(--pink);border-left-color:var(--orange);font-weight:800}.toc-label{display:block;font-size:12px;font-weight:800;color:inherit}.toc-title{display:block;font-size:13px;line-height:1.4;margin-top:2px}
-    .main{margin-left:var(--sidebar-w);padding:calc(var(--header-h) + 28px) 28px 100px}.manual-section{display:block;max-width:1100px;margin:0 auto}.js .manual-section{display:none}.js .manual-section.active{display:block}.section-hero{background:#151b1f;border-top:5px solid var(--orange);box-shadow:var(--shadow);padding:34px 42px;margin-bottom:24px}.section-kicker{color:var(--pink);font-size:12px;font-weight:800;letter-spacing:.08em}.section-hero h1{font-size:clamp(28px,4vw,44px);line-height:1.25;margin:8px 0 12px;color:var(--pink)}.section-hero .lead{font-size:16px;color:#c0ccd1;max-width:880px}.update-note{border:1px solid #31525b;background:var(--blue);padding:18px 20px;margin:0 0 24px;border-left:5px solid var(--teal)}.update-note strong{color:var(--pink)}
-    .cover{min-height:calc(100vh - var(--header-h) - 70px);display:flex;align-items:center}.cover-card{width:100%;background:#151b1f;box-shadow:var(--shadow);padding:64px 58px;border-top:6px solid var(--orange)}.cover-logo{color:var(--lime);font-weight:900;letter-spacing:.08em;margin-bottom:26px}.cover h1{font-size:clamp(34px,6vw,64px);line-height:1.05;margin:0 0 18px}.cover-sub{font-size:clamp(16px,2.2vw,22px);font-weight:700}.cover-meta{color:var(--muted);margin-top:12px}.principle{margin-top:34px;border:1px solid #40583a;background:var(--green);padding:20px 22px}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}.feature{border:1px solid var(--line);background:#182126;padding:15px}.feature b{display:block;color:var(--pink);margin-bottom:5px}
-    .latest-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.latest-card{background:#151b1f;border:1px solid var(--line);padding:20px;border-top:4px solid var(--teal)}.latest-card h3{margin:0 0 8px;color:var(--pink);font-size:17px}.latest-card p{margin:0}.status-table{width:100%;border-collapse:collapse;background:#151b1f;margin:14px 0 22px}.status-table th,.status-table td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}.status-table th{background:#1d2b31;color:var(--pink)}.pass{color:#76e5ac;font-weight:800}.limit{color:#f1bd78;font-weight:800}
-    .legacy-page{position:relative;background:var(--paper);border:1px solid #263238;box-shadow:var(--shadow);padding:44px 52px;margin:0 0 22px;overflow:hidden;content-visibility:auto;contain-intrinsic-size:900px}.legacy-page.affected{border-top:4px solid var(--orange)}.page-origin{position:absolute;right:16px;top:12px;font-size:10px;color:#aeb7bc}.legacy-page h2,.legacy-page h3,.legacy-page h4{color:var(--pink);line-height:1.35}.legacy-page h2{font-size:24px;margin:0 0 22px;border-left:5px solid var(--orange);padding-left:12px}.legacy-page h3{font-size:19px;margin:26px 0 12px}.legacy-page h4{font-size:15px;margin:22px 0 9px;color:var(--teal)}.legacy-page p{white-space:normal;margin:10px 0;overflow-wrap:anywhere}.legacy-page ul{padding-left:1.4em}.legacy-page li{margin:5px 0}.replacement-banner{margin:0 0 18px;padding:10px 12px;border:1px solid #7e6230;background:#2a2418;color:#f3c97f;font-size:.84em}.callout{padding:14px 16px;border:1px solid var(--line)}.callout.warn{background:var(--red);border-color:#6b3a41}.callout.success{background:var(--green);border-color:#40583a}.callout.info{background:var(--blue);border-color:#31525b}
-    .code-wrap,.terminal-wrap{position:relative;margin:14px 0 20px}.code-wrap pre,.terminal-wrap pre,.table-text pre{margin:0;overflow:auto;padding:16px 18px;font-family:ui-monospace,"Cascadia Mono","SFMono-Regular",Consolas,"Noto Sans Mono CJK JP","Source Han Code JP",monospace;font-size:.84em;line-height:1.6;white-space:pre}.code-wrap pre{background:var(--code);border:1px solid #5c4d34;color:#f0e4ce}.terminal-wrap pre{background:var(--terminal);color:#e7edf0;border:1px solid #26333d}.copy-btn{position:absolute;right:8px;top:8px;z-index:2;border:1px solid #46545c;background:#20282d;color:#dce6e9;padding:4px 9px;font-size:11px}.copy-btn:hover,.copy-btn:focus-visible{border-color:var(--pink);color:var(--pink)}.line-explanation-title{font-size:1.03em;font-weight:800;line-height:1.6;margin:22px 0 9px;color:#72d5de;overflow-wrap:anywhere}.line-reference{font-weight:800;color:#72d5de}.legacy-page br+.line-reference{display:inline-block;margin-top:.55em}
-    .source-intro{background:var(--green);border:1px solid #40583a;padding:16px 18px;margin-bottom:16px}.source-file{background:#151b1f;border:1px solid var(--line);margin:10px 0}.source-file>summary{padding:12px 14px;font-weight:800;color:#dce6e9;cursor:pointer;list-style:none;overflow-wrap:anywhere}.source-file>summary::-webkit-details-marker{display:none}.source-file>summary::before{content:'＋';display:inline-block;width:24px;color:var(--orange)}.source-file[open]>summary::before{content:'−'}.source-meta{font-size:11px;color:#aebbc0;margin-left:28px;font-weight:400}.source-role{padding:12px 18px;border-top:1px solid var(--line);background:#182126}.source-file .code-wrap{margin:0;border-top:1px solid var(--line)}.source-file .code-wrap pre{border:0;max-height:70vh}.source-explanations{padding:16px 18px;border-top:1px solid var(--line)}.source-explanations h4{color:var(--pink);margin:0 0 12px}.source-explanations p{margin:9px 0;padding-bottom:9px;border-bottom:1px solid rgba(51,64,71,.65)}
-    .section-nav{display:flex;justify-content:space-between;gap:12px;margin:28px 0}.nav-btn{flex:1;border:1px solid var(--line);background:#1d252a;color:var(--ink);padding:14px 16px}.nav-btn:hover,.nav-btn:focus-visible{border-color:var(--pink);color:var(--pink)}.nav-btn.next{text-align:right}.nav-btn.prev{text-align:left}.nav-btn:disabled{opacity:.4;cursor:not-allowed}.search-panel{position:fixed;z-index:1200;top:58px;left:50%;transform:translateX(-50%);width:min(760px,calc(100vw - 30px));max-height:min(70vh,680px);background:#151b1f;border:1px solid var(--line);box-shadow:0 24px 80px rgba(0,0,0,.5);display:none;overflow:auto}.search-panel.open{display:block}.search-head{position:sticky;top:0;background:#151b1f;padding:12px 14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}.search-result{display:block;width:100%;border:0;border-bottom:1px solid #263238;background:#151b1f;color:var(--ink);text-align:left;padding:13px 15px}.search-result:hover,.search-result:focus-visible{background:#1b282d}.search-result b{color:var(--pink)}.search-result small{display:block;color:#a5b2b8;margin-top:4px;line-height:1.45}.search-empty{padding:24px;color:#aebbc0}.search-mark{background:#fff08a;color:#2b2a1d;padding:0 1px}.mobile-menu-btn{display:none}.drawer-backdrop{display:none}.mobile-bottom{display:none}.to-top{position:fixed;z-index:650;right:20px;bottom:22px;width:44px;height:44px;border:1px solid #46545c;background:#1d252a;color:var(--pink);box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s}.to-top.show{opacity:1;pointer-events:auto}a{color:#8fc6e8}a:visited{color:#c6a8e8}body.focus .sidebar{display:none}body.focus .main{margin-left:0}body.focus .brand{min-width:auto}.focus .brand-title,.focus .brand-ver{display:none}
-    @media(max-width:900px){:root{--header-h:56px}.app-header{padding:0 10px;gap:8px}.brand{min-width:0}.brand-title,.brand-ver{display:none}.header-search{display:none}.header-search.mobile-search-open{display:block;position:fixed;left:8px;right:8px;top:8px;z-index:1400;max-width:none}.mobile-menu-btn{display:inline-block}.sidebar{transform:translateX(-105%);transition:.22s;width:min(88vw,330px);top:0;z-index:1300;padding-top:68px}.sidebar.open{transform:translateX(0)}.drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1250}.drawer-backdrop.open{display:block}.main{margin-left:0;padding:calc(var(--header-h) + 14px) 10px 84px}.section-hero{padding:24px 20px}.legacy-page{padding:36px 18px 28px;margin-bottom:14px}.latest-grid,.feature-grid{grid-template-columns:1fr}.header-actions .desktop-only{display:none}.mobile-bottom{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;z-index:1100;left:0;right:0;bottom:0;height:58px;background:rgba(21,27,31,.98);border-top:1px solid var(--line)}.mobile-bottom button{border:0;background:transparent;color:#b7c4c9;font-size:11px;font-weight:700}.mobile-bottom button span{display:block;font-size:18px;line-height:1.1}.to-top{bottom:70px;right:12px}.search-panel{top:56px;max-height:calc(100vh - 64px)}.source-file .code-wrap pre{max-height:68vh;font-size:.76em}.section-nav{margin-bottom:10px}.cover-card{padding:38px 22px}.cover{min-height:auto}.app-header .brand-mark{font-size:12px}}
-    @media print{.app-header,.sidebar,.mobile-bottom,.to-top,.section-nav,.copy-btn,.top-progress,.skip-link{display:none!important}.main{margin:0;padding:0}.manual-section{display:block!important;max-width:none;break-before:page}.legacy-page,.section-hero,.cover-card{box-shadow:none;break-inside:avoid;background:#fff!important;color:#111!important;border-color:#aaa!important}.search-panel{display:none!important}.section-hero h1,.legacy-page h2,.legacy-page h3,.legacy-page h4,.line-explanation-title{color:#7d2947!important}.section-hero .lead,.source-meta,.page-origin{color:#222!important}.code-wrap pre,.source-file .code-wrap pre{background:#f7f1e5!important;color:#181818!important;border-color:#bbb!important}.terminal-wrap pre{background:#f1f1f1!important;color:#111!important;border-color:#bbb!important}.source-file,.source-role,.source-explanations,.status-table,.latest-card,.feature,.principle,.update-note{background:#fff!important;color:#111!important;border-color:#aaa!important}details:not([open])>*:not(summary){display:block!important}body{background:#fff!important;color:#111!important}*{-webkit-print-color-adjust:economy!important;print-color-adjust:economy!important}}
-  </style>
-</head>
-<body class="night">
-  <a class="skip-link" href="#manualMain">本文へ移動</a>
-  <div class="top-progress" id="topProgress"></div>
-  <header class="app-header">
-    <button type="button" class="icon-btn mobile-menu-btn" id="menuBtn" aria-controls="sidebar" aria-expanded="false" aria-label="目次">☰</button>
-    <div class="brand"><span class="brand-mark">RECALL</span><span class="brand-title">コードエディター版 開発マニュアル</span><span class="brand-ver">0.2.1</span></div>
-    <div class="header-search"><input id="searchInput" type="search" inputmode="search" autocomplete="off" aria-label="全文検索" placeholder="全文検索… (Ctrl/⌘+K)"><span class="kbd">⌘K</span></div>
-    <div class="header-actions"><button type="button" class="icon-btn desktop-only" id="searchBtn" title="Search" aria-label="Search">Search</button><button type="button" class="icon-btn" id="fontDown" title="文字を小さく">A−</button><button type="button" class="icon-btn" id="fontUp" title="文字を大きく">A＋</button><button type="button" class="icon-btn desktop-only" id="focusBtn" title="集中表示" aria-label="集中表示"><svg class="hamburger-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button></div>
-  </header>
-  <aside class="sidebar" id="sidebar"><div class="toc-group-title">MANUAL</div><!--MANUAL_TOC--></aside>
-  <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <main class="main" id="manualMain"><!--MANUAL_SECTIONS--></main>
-  <div class="search-panel" id="searchPanel" role="dialog" aria-label="全文検索結果"><div class="search-head"><span id="searchCount" aria-live="polite">キーワードを入力すると全セクションを検索します</span></div><div id="searchResults"></div></div>
-  <button type="button" class="to-top" id="toTop" aria-label="上へ戻る">↑</button>
-  <nav class="mobile-bottom" aria-label="モバイルナビ"><button type="button" data-action="prev" id="mobilePrev"><span>←</span>前へ</button><button type="button" id="mobileToc"><span>☰</span>目次</button><button type="button" id="mobileSearch"><span>⌕</span>検索</button><button type="button" data-action="next" id="mobileNext"><span>→</span>次へ</button></nav>
-  <script>
-    (() => {
-      const sections=[...document.querySelectorAll('.manual-section')];const navButtons=[...document.querySelectorAll('.toc-item')];const sidebar=document.getElementById('sidebar');const backdrop=document.getElementById('drawerBackdrop');const searchInput=document.getElementById('searchInput');const searchPanel=document.getElementById('searchPanel');const searchCount=document.getElementById('searchCount');const toTop=document.getElementById('toTop');const progress=document.getElementById('topProgress');const mobilePrev=document.getElementById('mobilePrev');const mobileNext=document.getElementById('mobileNext');let current=0;let searchIndex=[];
-      function storageGet(key){try{return window.localStorage?localStorage.getItem(key):null}catch{return null}}function storageSet(key,value){try{if(window.localStorage)localStorage.setItem(key,value)}catch{}}
-      const parsedScale=Number.parseFloat(storageGet('recallWebManualFontScale')||'1');let fontScale=Number.isFinite(parsedScale)?Math.max(.82,Math.min(1.35,parsedScale)):1;document.documentElement.style.setProperty('--font-scale',fontScale);
-      function sectionTitle(index){return sections[index]?.dataset.title||''}function updateNavButtons(){document.querySelectorAll('[data-action="prev"]').forEach(button=>button.disabled=current<=0);document.querySelectorAll('[data-action="next"]').forEach(button=>button.disabled=current>=sections.length-1);mobilePrev.disabled=current<=0;mobileNext.disabled=current>=sections.length-1}
-      function clearMarks(){document.querySelectorAll('mark.search-mark').forEach(mark=>mark.replaceWith(document.createTextNode(mark.textContent)))}
-      function showSection(id,push=true){const index=sections.findIndex(section=>section.id===id);if(index<0)return;clearMarks();current=index;sections.forEach((section,i)=>section.classList.toggle('active',i===current));navButtons.forEach(button=>{const active=button.dataset.target===id;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current')});updateNavButtons();storageSet('recallWebManualSection',id);if(push)history.replaceState(null,'','#'+id);window.scrollTo({top:0,behavior:'auto'});closeDrawer();closeSearch(false);updateProgress();document.title=`${sectionTitle(current)} | RECALL 0.2.1 Manual`}
-      function move(delta){const next=Math.max(0,Math.min(sections.length-1,current+delta));if(next!==current)showSection(sections[next].id)}
-      navButtons.forEach(button=>button.addEventListener('click',()=>showSection(button.dataset.target)));document.querySelectorAll('[data-action="prev"]').forEach(button=>button.addEventListener('click',()=>move(-1)));document.querySelectorAll('[data-action="next"]').forEach(button=>button.addEventListener('click',()=>move(1)));
-      function openDrawer(){sidebar.classList.add('open');backdrop.classList.add('open');document.getElementById('menuBtn')?.setAttribute('aria-expanded','true')}function closeDrawer(){sidebar.classList.remove('open');backdrop.classList.remove('open');document.getElementById('menuBtn')?.setAttribute('aria-expanded','false')}
-      document.getElementById('menuBtn').addEventListener('click',openDrawer);document.getElementById('mobileToc').addEventListener('click',openDrawer);backdrop.addEventListener('click',closeDrawer);
-      function openSearch(){searchPanel.classList.add('open');if(window.innerWidth<=900)searchInput.closest('.header-search')?.classList.add('mobile-search-open');searchInput.focus();runSearch()}function closeSearch(clear=false){searchPanel.classList.remove('open');searchInput.closest('.header-search')?.classList.remove('mobile-search-open');if(clear){searchInput.value='';renderSearch([])}}
-      document.getElementById('searchBtn').addEventListener('click',openSearch);document.getElementById('mobileSearch').addEventListener('click',openSearch);searchInput.addEventListener('focus',()=>{searchPanel.classList.add('open');runSearch()});document.addEventListener('click',event=>{if(!searchPanel.contains(event.target)&&!searchInput.contains(event.target)&&event.target.id!=='searchBtn'&&event.target.id!=='mobileSearch')closeSearch(false)});
-      function buildSearchIndex(){searchIndex=sections.map(section=>{const text=section.textContent.replace(/\s+/g,' ').trim();return{id:section.id,title:section.dataset.title,text,lower:text.toLocaleLowerCase()}})}function snippets(text,query){const lower=text.toLocaleLowerCase(),needle=query.toLocaleLowerCase(),items=[];let position=0;while(items.length<3&&(position=lower.indexOf(needle,position))!==-1){const start=Math.max(0,position-70),end=Math.min(text.length,position+needle.length+95);items.push((start?'…':'')+text.slice(start,end)+(end<text.length?'…':''));position+=needle.length}return items}
-      function runSearch(){const query=searchInput.value.trim();if(!query){renderSearch([]);searchCount.textContent='キーワードを入力すると全セクションを検索します';return}if(!searchIndex.length)buildSearchIndex();const hits=[],needle=query.toLocaleLowerCase();for(const item of searchIndex){let count=0,position=0;while((position=item.lower.indexOf(needle,position))!==-1&&count<999){count++;position+=needle.length}if(count)hits.push({...item,count,snips:snippets(item.text,query)})}searchCount.textContent=`「${query}」: ${hits.reduce((sum,item)=>sum+item.count,0)} 件 / ${hits.length} セクション`;renderSearch(hits,query)}
-      function escapeHtml(value){return value.replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}function renderSearch(hits,query=''){const body=document.getElementById('searchResults');body.innerHTML='';if(!query){body.innerHTML='<div class="search-empty">例: <b>Node 24</b>、<b>allowParentheticalOmission</b>、<b>IndexedDB</b>、<b>proxy.ts</b></div>';return}if(!hits.length){body.innerHTML='<div class="search-empty">一致する箇所がありません。</div>';return}hits.forEach(hit=>{const button=document.createElement('button');button.type='button';button.className='search-result';button.innerHTML=`<b>${escapeHtml(hit.title)}</b> <span>(${hit.count})</span><small>${hit.snips.map(escapeHtml).join('<br>')}</small>`;button.addEventListener('click',()=>{showSection(hit.id);highlightActive(query)});body.appendChild(button)})}
-      let searchTimer;searchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(runSearch,120)});function highlightActive(query){clearMarks();if(!query)return;const root=sections[current],walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(node){if(!node.nodeValue.toLocaleLowerCase().includes(query.toLocaleLowerCase()))return NodeFilter.FILTER_REJECT;if(node.parentElement.closest('script,style,mark'))return NodeFilter.FILTER_REJECT;return NodeFilter.FILTER_ACCEPT}}),nodes=[];while(walker.nextNode()&&nodes.length<120)nodes.push(walker.currentNode);let first=null;nodes.forEach(node=>{const text=node.nodeValue,lower=text.toLocaleLowerCase(),needle=query.toLocaleLowerCase(),fragment=document.createDocumentFragment();let position=0,index;while((index=lower.indexOf(needle,position))!==-1){fragment.append(text.slice(position,index));const mark=document.createElement('mark');mark.className='search-mark';mark.textContent=text.slice(index,index+query.length);fragment.append(mark);first=first||mark;position=index+query.length}fragment.append(text.slice(position));node.replaceWith(fragment)});first?.scrollIntoView({behavior:'smooth',block:'center'})}
-      document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLocaleLowerCase()==='k'){event.preventDefault();openSearch()}if(event.key==='Escape'){closeSearch(false);closeDrawer()}if(event.altKey&&event.key==='ArrowLeft'){event.preventDefault();move(-1)}if(event.altKey&&event.key==='ArrowRight'){event.preventDefault();move(1)}});
-      async function copyText(text){if(navigator.clipboard?.writeText){try{await navigator.clipboard.writeText(text);return true}catch{}}try{const area=document.createElement('textarea');area.value=text;area.setAttribute('readonly','');area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();const ok=document.execCommand('copy');area.remove();return ok}catch{return false}}
-      document.querySelectorAll('.copy-btn').forEach(button=>button.addEventListener('click',async()=>{const raw=button.parentElement.querySelector('code,pre')?.innerText||'';const code=button.closest('.source-file')?raw.replace(/^\d{4}\s*\|\s?/gm,''):raw.replace(/^\s*>>\s?/gm,'');const ok=await copyText(code);button.textContent=ok?'コピー済み':'コピー失敗';setTimeout(()=>button.textContent='コピー',1500)}));
-      function adjustFont(delta){fontScale=Math.max(.82,Math.min(1.35,Math.round((fontScale+delta)*100)/100));document.documentElement.style.setProperty('--font-scale',fontScale);storageSet('recallWebManualFontScale',fontScale)}document.getElementById('fontDown').addEventListener('click',()=>adjustFont(-.08));document.getElementById('fontUp').addEventListener('click',()=>adjustFont(.08));document.getElementById('focusBtn').addEventListener('click',()=>document.body.classList.toggle('focus'));toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));function updateProgress(){const root=document.documentElement,max=root.scrollHeight-innerHeight,pct=max>0?scrollY/max*100:0;progress.style.width=pct+'%';toTop.classList.toggle('show',scrollY>600)}addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);
-      const requested=location.hash.slice(1),saved=storageGet('recallWebManualSection'),isValid=id=>sections.some(section=>section.id===id),initial=isValid(requested)?requested:(isValid(saved)?saved:'home');showSection(initial,false);updateProgress();document.documentElement.classList.add('js');
-    })();
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0e1316" />
+    <meta
+      name="description"
+      content="RECALL 0.2.1 コードエディター版 初心者向け完全開発マニュアル"
+    />
+    <title>RECALL 0.2.1 コードエディター版 初心者向け完全開発マニュアル</title>
+    <style>
+      :root {
+        --paper: #151b1f;
+        --canvas: #0e1316;
+        --ink: #e5ecef;
+        --muted: #a7b3b8;
+        --lime: #b8e34a;
+        --teal: #4ec4cc;
+        --pink: #e2a0b8;
+        --orange: #e8a54b;
+        --line: #334047;
+        --code: #29251e;
+        --terminal: #0a0e12;
+        --blue: #13242a;
+        --green: #1b281a;
+        --red: #2b1c1e;
+        --shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+        --font-scale: 1;
+        --header-h: 64px;
+        --sidebar-w: 310px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Yu Gothic UI",
+          "Hiragino Sans", "Noto Sans JP", sans-serif;
+        font-size: calc(16px * var(--font-scale));
+        line-height: 1.82;
+      }
+      button,
+      input {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      .skip-link {
+        position: fixed;
+        z-index: 2000;
+        top: 8px;
+        left: 8px;
+        transform: translateY(-160%);
+        background: #fff;
+        color: #111;
+        padding: 8px 12px;
+      }
+      .skip-link:focus {
+        transform: none;
+      }
+      .top-progress {
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: var(--lime);
+        width: 0;
+        transition: width 0.08s linear;
+      }
+      .app-header {
+        position: fixed;
+        z-index: 900;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-h);
+        background: rgba(21, 27, 31, 0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        padding: 0 18px;
+        gap: 14px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 300px;
+      }
+      .brand-mark {
+        font-weight: 900;
+        color: var(--lime);
+        font-size: 13px;
+        letter-spacing: 0.08em;
+      }
+      .brand-title {
+        font-weight: 800;
+        font-size: 15px;
+      }
+      .brand-ver {
+        font-size: 11px;
+        color: var(--muted);
+        border: 1px solid var(--line);
+        padding: 2px 7px;
+        margin-left: 4px;
+      }
+      .header-search {
+        flex: 1;
+        max-width: 640px;
+        position: relative;
+      }
+      .header-search input {
+        width: 100%;
+        height: 40px;
+        border: 1px solid var(--line);
+        background: #101619;
+        color: var(--ink);
+        padding: 0 48px 0 14px;
+        outline: none;
+      }
+      .header-search input:focus {
+        border-color: var(--pink);
+      }
+      .header-search input::placeholder {
+        color: #8f9da3;
+        opacity: 1;
+      }
+      .kbd {
+        position: absolute;
+        right: 9px;
+        top: 9px;
+        font-size: 11px;
+        color: #aab7bc;
+        border: 1px solid #3a474d;
+        background: #1d262b;
+        padding: 1px 5px;
+      }
+      .header-actions {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .icon-btn {
+        border: 1px solid var(--line);
+        background: #1d252a;
+        color: var(--ink);
+        min-width: 38px;
+        height: 38px;
+        padding: 0 10px;
+      }
+      .icon-btn:hover,
+      .icon-btn:focus-visible {
+        border-color: var(--pink);
+        color: var(--pink);
+      }
+      .hamburger-icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+      .sidebar {
+        position: fixed;
+        z-index: 700;
+        left: 0;
+        top: var(--header-h);
+        bottom: 0;
+        width: var(--sidebar-w);
+        overflow: auto;
+        background: #151b1f;
+        border-right: 1px solid var(--line);
+        padding: 18px 14px 90px;
+      }
+      .toc-group-title {
+        font-size: 11px;
+        font-weight: 800;
+        color: #9eabb0;
+        letter-spacing: 0.09em;
+        margin: 15px 10px 6px;
+      }
+      .toc-item {
+        display: block;
+        width: 100%;
+        text-align: left;
+        border: 0;
+        background: transparent;
+        padding: 10px 11px;
+        color: #aebbc0;
+        border-left: 3px solid transparent;
+      }
+      .toc-item:hover,
+      .toc-item:focus-visible {
+        background: #1b282d;
+        color: #e0a6b9;
+      }
+      .toc-item.active {
+        background: #1b282d;
+        color: var(--pink);
+        border-left-color: var(--orange);
+        font-weight: 800;
+      }
+      .toc-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 800;
+        color: inherit;
+      }
+      .toc-title {
+        display: block;
+        font-size: 13px;
+        line-height: 1.4;
+        margin-top: 2px;
+      }
+      .main {
+        margin-left: var(--sidebar-w);
+        padding: calc(var(--header-h) + 28px) 28px 100px;
+      }
+      .manual-section {
+        display: block;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .js .manual-section {
+        display: none;
+      }
+      .js .manual-section.active {
+        display: block;
+      }
+      .section-hero {
+        background: #151b1f;
+        border-top: 5px solid var(--orange);
+        box-shadow: var(--shadow);
+        padding: 34px 42px;
+        margin-bottom: 24px;
+      }
+      .section-kicker {
+        color: var(--pink);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+      .section-hero h1 {
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.25;
+        margin: 8px 0 12px;
+        color: var(--pink);
+      }
+      .section-hero .lead {
+        font-size: 16px;
+        color: #c0ccd1;
+        max-width: 880px;
+      }
+      .update-note {
+        border: 1px solid #31525b;
+        background: var(--blue);
+        padding: 18px 20px;
+        margin: 0 0 24px;
+        border-left: 5px solid var(--teal);
+      }
+      .update-note strong {
+        color: var(--pink);
+      }
+      .cover {
+        min-height: calc(100vh - var(--header-h) - 70px);
+        display: flex;
+        align-items: center;
+      }
+      .cover-card {
+        width: 100%;
+        background: #151b1f;
+        box-shadow: var(--shadow);
+        padding: 64px 58px;
+        border-top: 6px solid var(--orange);
+      }
+      .cover-logo {
+        color: var(--lime);
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        margin-bottom: 26px;
+      }
+      .cover h1 {
+        font-size: clamp(34px, 6vw, 64px);
+        line-height: 1.05;
+        margin: 0 0 18px;
+      }
+      .cover-sub {
+        font-size: clamp(16px, 2.2vw, 22px);
+        font-weight: 700;
+      }
+      .cover-meta {
+        color: var(--muted);
+        margin-top: 12px;
+      }
+      .principle {
+        margin-top: 34px;
+        border: 1px solid #40583a;
+        background: var(--green);
+        padding: 20px 22px;
+      }
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 24px;
+      }
+      .feature {
+        border: 1px solid var(--line);
+        background: #182126;
+        padding: 15px;
+      }
+      .feature b {
+        display: block;
+        color: var(--pink);
+        margin-bottom: 5px;
+      }
+      .latest-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .latest-card {
+        background: #151b1f;
+        border: 1px solid var(--line);
+        padding: 20px;
+        border-top: 4px solid var(--teal);
+      }
+      .latest-card h3 {
+        margin: 0 0 8px;
+        color: var(--pink);
+        font-size: 17px;
+      }
+      .latest-card p {
+        margin: 0;
+      }
+      .status-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #151b1f;
+        margin: 14px 0 22px;
+      }
+      .status-table th,
+      .status-table td {
+        border: 1px solid var(--line);
+        padding: 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+      .status-table th {
+        background: #1d2b31;
+        color: var(--pink);
+      }
+      .pass {
+        color: #76e5ac;
+        font-weight: 800;
+      }
+      .limit {
+        color: #f1bd78;
+        font-weight: 800;
+      }
+      .legacy-page {
+        position: relative;
+        background: var(--paper);
+        border: 1px solid #263238;
+        box-shadow: var(--shadow);
+        padding: 44px 52px;
+        margin: 0 0 22px;
+        overflow: hidden;
+        content-visibility: auto;
+        contain-intrinsic-size: 900px;
+      }
+      .legacy-page.affected {
+        border-top: 4px solid var(--orange);
+      }
+      .page-origin {
+        position: absolute;
+        right: 16px;
+        top: 12px;
+        font-size: 10px;
+        color: #aeb7bc;
+      }
+      .legacy-page h2,
+      .legacy-page h3,
+      .legacy-page h4 {
+        color: var(--pink);
+        line-height: 1.35;
+      }
+      .legacy-page h2 {
+        font-size: 24px;
+        margin: 0 0 22px;
+        border-left: 5px solid var(--orange);
+        padding-left: 12px;
+      }
+      .legacy-page h3 {
+        font-size: 19px;
+        margin: 26px 0 12px;
+      }
+      .legacy-page h4 {
+        font-size: 15px;
+        margin: 22px 0 9px;
+        color: var(--teal);
+      }
+      .legacy-page p {
+        white-space: normal;
+        margin: 10px 0;
+        overflow-wrap: anywhere;
+      }
+      .legacy-page ul {
+        padding-left: 1.4em;
+      }
+      .legacy-page li {
+        margin: 5px 0;
+      }
+      .replacement-banner {
+        margin: 0 0 18px;
+        padding: 10px 12px;
+        border: 1px solid #7e6230;
+        background: #2a2418;
+        color: #f3c97f;
+        font-size: 0.84em;
+      }
+      .callout {
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+      }
+      .callout.warn {
+        background: var(--red);
+        border-color: #6b3a41;
+      }
+      .callout.success {
+        background: var(--green);
+        border-color: #40583a;
+      }
+      .callout.info {
+        background: var(--blue);
+        border-color: #31525b;
+      }
+      .code-wrap,
+      .terminal-wrap {
+        position: relative;
+        margin: 14px 0 20px;
+      }
+      .code-wrap pre,
+      .terminal-wrap pre,
+      .table-text pre {
+        margin: 0;
+        overflow: auto;
+        padding: 16px 18px;
+        font-family:
+          ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas,
+          "Noto Sans Mono CJK JP", "Source Han Code JP", monospace;
+        font-size: 0.84em;
+        line-height: 1.6;
+        white-space: pre;
+      }
+      .code-wrap pre {
+        background: var(--code);
+        border: 1px solid #5c4d34;
+        color: #f0e4ce;
+      }
+      .terminal-wrap pre {
+        background: var(--terminal);
+        color: #e7edf0;
+        border: 1px solid #26333d;
+      }
+      .copy-btn {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        z-index: 2;
+        border: 1px solid #46545c;
+        background: #20282d;
+        color: #dce6e9;
+        padding: 4px 9px;
+        font-size: 11px;
+      }
+      .copy-btn:hover,
+      .copy-btn:focus-visible {
+        border-color: var(--pink);
+        color: var(--pink);
+      }
+      .line-explanation-title {
+        font-size: 1.03em;
+        font-weight: 800;
+        line-height: 1.6;
+        margin: 22px 0 9px;
+        color: #72d5de;
+        overflow-wrap: anywhere;
+      }
+      .line-reference {
+        font-weight: 800;
+        color: #72d5de;
+      }
+      .legacy-page br + .line-reference {
+        display: inline-block;
+        margin-top: 0.55em;
+      }
+      .source-intro {
+        background: var(--green);
+        border: 1px solid #40583a;
+        padding: 16px 18px;
+        margin-bottom: 16px;
+      }
+      .source-file {
+        background: #151b1f;
+        border: 1px solid var(--line);
+        margin: 10px 0;
+      }
+      .source-file > summary {
+        padding: 12px 14px;
+        font-weight: 800;
+        color: #dce6e9;
+        cursor: pointer;
+        list-style: none;
+        overflow-wrap: anywhere;
+      }
+      .source-file > summary::-webkit-details-marker {
+        display: none;
+      }
+      .source-file > summary::before {
+        content: "＋";
+        display: inline-block;
+        width: 24px;
+        color: var(--orange);
+      }
+      .source-file[open] > summary::before {
+        content: "−";
+      }
+      .source-meta {
+        font-size: 11px;
+        color: #aebbc0;
+        margin-left: 28px;
+        font-weight: 400;
+      }
+      .source-role {
+        padding: 12px 18px;
+        border-top: 1px solid var(--line);
+        background: #182126;
+      }
+      .source-file .code-wrap {
+        margin: 0;
+        border-top: 1px solid var(--line);
+      }
+      .source-file .code-wrap pre {
+        border: 0;
+        max-height: 70vh;
+      }
+      .source-explanations {
+        padding: 16px 18px;
+        border-top: 1px solid var(--line);
+      }
+      .source-explanations h4 {
+        color: var(--pink);
+        margin: 0 0 12px;
+      }
+      .source-explanations p {
+        margin: 9px 0;
+        padding-bottom: 9px;
+        border-bottom: 1px solid rgba(51, 64, 71, 0.65);
+      }
+      .section-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 28px 0;
+      }
+      .nav-btn {
+        flex: 1;
+        border: 1px solid var(--line);
+        background: #1d252a;
+        color: var(--ink);
+        padding: 14px 16px;
+      }
+      .nav-btn:hover,
+      .nav-btn:focus-visible {
+        border-color: var(--pink);
+        color: var(--pink);
+      }
+      .nav-btn.next {
+        text-align: right;
+      }
+      .nav-btn.prev {
+        text-align: left;
+      }
+      .nav-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .search-panel {
+        position: fixed;
+        z-index: 1200;
+        top: 58px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(760px, calc(100vw - 30px));
+        max-height: min(70vh, 680px);
+        background: #151b1f;
+        border: 1px solid var(--line);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+        display: none;
+        overflow: auto;
+      }
+      .search-panel.open {
+        display: block;
+      }
+      .search-head {
+        position: sticky;
+        top: 0;
+        background: #151b1f;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .search-result {
+        display: block;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #263238;
+        background: #151b1f;
+        color: var(--ink);
+        text-align: left;
+        padding: 13px 15px;
+      }
+      .search-result:hover,
+      .search-result:focus-visible {
+        background: #1b282d;
+      }
+      .search-result b {
+        color: var(--pink);
+      }
+      .search-result small {
+        display: block;
+        color: #a5b2b8;
+        margin-top: 4px;
+        line-height: 1.45;
+      }
+      .search-empty {
+        padding: 24px;
+        color: #aebbc0;
+      }
+      .search-mark {
+        background: #fff08a;
+        color: #2b2a1d;
+        padding: 0 1px;
+      }
+      .mobile-menu-btn {
+        display: none;
+      }
+      .drawer-backdrop {
+        display: none;
+      }
+      .mobile-bottom {
+        display: none;
+      }
+      .to-top {
+        position: fixed;
+        z-index: 650;
+        right: 20px;
+        bottom: 22px;
+        width: 44px;
+        height: 44px;
+        border: 1px solid #46545c;
+        background: #1d252a;
+        color: var(--pink);
+        box-shadow: var(--shadow);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s;
+      }
+      .to-top.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      a {
+        color: #8fc6e8;
+      }
+      a:visited {
+        color: #c6a8e8;
+      }
+      body.focus .sidebar {
+        display: none;
+      }
+      body.focus .main {
+        margin-left: 0;
+      }
+      body.focus .brand {
+        min-width: auto;
+      }
+      .focus .brand-title,
+      .focus .brand-ver {
+        display: none;
+      }
+      @media (max-width: 900px) {
+        :root {
+          --header-h: 56px;
+        }
+        .app-header {
+          padding: 0 10px;
+          gap: 8px;
+        }
+        .brand {
+          min-width: 0;
+        }
+        .brand-title,
+        .brand-ver {
+          display: none;
+        }
+        .header-search {
+          display: none;
+        }
+        .header-search.mobile-search-open {
+          display: block;
+          position: fixed;
+          left: 8px;
+          right: 8px;
+          top: 8px;
+          z-index: 1400;
+          max-width: none;
+        }
+        .mobile-menu-btn {
+          display: inline-block;
+        }
+        .sidebar {
+          transform: translateX(-105%);
+          transition: 0.22s;
+          width: min(88vw, 330px);
+          top: 0;
+          z-index: 1300;
+          padding-top: 68px;
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        .drawer-backdrop {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.55);
+          z-index: 1250;
+        }
+        .drawer-backdrop.open {
+          display: block;
+        }
+        .main {
+          margin-left: 0;
+          padding: calc(var(--header-h) + 14px) 10px 84px;
+        }
+        .section-hero {
+          padding: 24px 20px;
+        }
+        .legacy-page {
+          padding: 36px 18px 28px;
+          margin-bottom: 14px;
+        }
+        .latest-grid,
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+        .header-actions .desktop-only {
+          display: none;
+        }
+        .mobile-bottom {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          position: fixed;
+          z-index: 1100;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 58px;
+          background: rgba(21, 27, 31, 0.98);
+          border-top: 1px solid var(--line);
+        }
+        .mobile-bottom button {
+          border: 0;
+          background: transparent;
+          color: #b7c4c9;
+          font-size: 11px;
+          font-weight: 700;
+        }
+        .mobile-bottom button span {
+          display: block;
+          font-size: 18px;
+          line-height: 1.1;
+        }
+        .to-top {
+          bottom: 70px;
+          right: 12px;
+        }
+        .search-panel {
+          top: 56px;
+          max-height: calc(100vh - 64px);
+        }
+        .source-file .code-wrap pre {
+          max-height: 68vh;
+          font-size: 0.76em;
+        }
+        .section-nav {
+          margin-bottom: 10px;
+        }
+        .cover-card {
+          padding: 38px 22px;
+        }
+        .cover {
+          min-height: auto;
+        }
+        .app-header .brand-mark {
+          font-size: 12px;
+        }
+      }
+      @media print {
+        .app-header,
+        .sidebar,
+        .mobile-bottom,
+        .to-top,
+        .section-nav,
+        .copy-btn,
+        .top-progress,
+        .skip-link {
+          display: none !important;
+        }
+        .main {
+          margin: 0;
+          padding: 0;
+        }
+        .manual-section {
+          display: block !important;
+          max-width: none;
+          break-before: page;
+        }
+        .legacy-page,
+        .section-hero,
+        .cover-card {
+          box-shadow: none;
+          break-inside: avoid;
+          background: #fff !important;
+          color: #111 !important;
+          border-color: #aaa !important;
+        }
+        .search-panel {
+          display: none !important;
+        }
+        .section-hero h1,
+        .legacy-page h2,
+        .legacy-page h3,
+        .legacy-page h4,
+        .line-explanation-title {
+          color: #7d2947 !important;
+        }
+        .section-hero .lead,
+        .source-meta,
+        .page-origin {
+          color: #222 !important;
+        }
+        .code-wrap pre,
+        .source-file .code-wrap pre {
+          background: #f7f1e5 !important;
+          color: #181818 !important;
+          border-color: #bbb !important;
+        }
+        .terminal-wrap pre {
+          background: #f1f1f1 !important;
+          color: #111 !important;
+          border-color: #bbb !important;
+        }
+        .source-file,
+        .source-role,
+        .source-explanations,
+        .status-table,
+        .latest-card,
+        .feature,
+        .principle,
+        .update-note {
+          background: #fff !important;
+          color: #111 !important;
+          border-color: #aaa !important;
+        }
+        details:not([open]) > *:not(summary) {
+          display: block !important;
+        }
+        body {
+          background: #fff !important;
+          color: #111 !important;
+        }
+        * {
+          -webkit-print-color-adjust: economy !important;
+          print-color-adjust: economy !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="night">
+    <a class="skip-link" href="#manualMain">本文へ移動</a>
+    <div class="top-progress" id="topProgress"></div>
+    <header class="app-header">
+      <button
+        type="button"
+        class="icon-btn mobile-menu-btn"
+        id="menuBtn"
+        aria-controls="sidebar"
+        aria-expanded="false"
+        aria-label="目次"
+      >
+        ☰
+      </button>
+      <div class="brand">
+        <span class="brand-mark">RECALL</span
+        ><span class="brand-title">コードエディター版 開発マニュアル</span
+        ><span class="brand-ver">0.2.1</span>
+      </div>
+      <div class="header-search">
+        <input
+          id="searchInput"
+          type="search"
+          inputmode="search"
+          autocomplete="off"
+          aria-label="全文検索"
+          placeholder="全文検索… (Ctrl/⌘+K)"
+        /><span class="kbd">⌘K</span>
+      </div>
+      <div class="header-actions">
+        <button
+          type="button"
+          class="icon-btn desktop-only"
+          id="searchBtn"
+          title="Search"
+          aria-label="Search"
+        >
+          Search</button
+        ><button
+          type="button"
+          class="icon-btn"
+          id="fontDown"
+          title="文字を小さく"
+        >
+          A−</button
+        ><button
+          type="button"
+          class="icon-btn"
+          id="fontUp"
+          title="文字を大きく"
+        >
+          A＋</button
+        ><button
+          type="button"
+          class="icon-btn desktop-only"
+          id="focusBtn"
+          title="集中表示"
+          aria-label="集中表示"
+        >
+          <svg class="hamburger-icon" aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+    <aside class="sidebar" id="sidebar">
+      <div class="toc-group-title">MANUAL</div>
+      <!--MANUAL_TOC-->
+    </aside>
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <main class="main" id="manualMain"><!--MANUAL_SECTIONS--></main>
+    <div
+      class="search-panel"
+      id="searchPanel"
+      role="dialog"
+      aria-label="全文検索結果"
+    >
+      <div class="search-head">
+        <span id="searchCount" aria-live="polite"
+          >キーワードを入力すると全セクションを検索します</span
+        >
+      </div>
+      <div id="searchResults"></div>
+    </div>
+    <button type="button" class="to-top" id="toTop" aria-label="上へ戻る">
+      ↑
+    </button>
+    <nav class="mobile-bottom" aria-label="モバイルナビ">
+      <button type="button" data-action="prev" id="mobilePrev">
+        <span>←</span>前へ</button
+      ><button type="button" id="mobileToc"><span>☰</span>目次</button
+      ><button type="button" id="mobileSearch"><span>⌕</span>検索</button
+      ><button type="button" data-action="next" id="mobileNext">
+        <span>→</span>次へ
+      </button>
+    </nav>
+    <script>
+      (() => {
+        const sections = [...document.querySelectorAll(".manual-section")];
+        const navButtons = [...document.querySelectorAll(".toc-item")];
+        const sidebar = document.getElementById("sidebar");
+        const backdrop = document.getElementById("drawerBackdrop");
+        const searchInput = document.getElementById("searchInput");
+        const searchPanel = document.getElementById("searchPanel");
+        const searchCount = document.getElementById("searchCount");
+        const toTop = document.getElementById("toTop");
+        const progress = document.getElementById("topProgress");
+        const mobilePrev = document.getElementById("mobilePrev");
+        const mobileNext = document.getElementById("mobileNext");
+        let current = 0;
+        let searchIndex = [];
+        function storageGet(key) {
+          try {
+            return window.localStorage ? localStorage.getItem(key) : null;
+          } catch {
+            return null;
+          }
+        }
+        function storageSet(key, value) {
+          try {
+            if (window.localStorage) localStorage.setItem(key, value);
+          } catch {}
+        }
+        const parsedScale = Number.parseFloat(
+          storageGet("recallWebManualFontScale") || "1",
+        );
+        let fontScale = Number.isFinite(parsedScale)
+          ? Math.max(0.82, Math.min(1.35, parsedScale))
+          : 1;
+        document.documentElement.style.setProperty("--font-scale", fontScale);
+        function sectionTitle(index) {
+          return sections[index]?.dataset.title || "";
+        }
+        function updateNavButtons() {
+          document
+            .querySelectorAll('[data-action="prev"]')
+            .forEach((button) => (button.disabled = current <= 0));
+          document
+            .querySelectorAll('[data-action="next"]')
+            .forEach(
+              (button) => (button.disabled = current >= sections.length - 1),
+            );
+          mobilePrev.disabled = current <= 0;
+          mobileNext.disabled = current >= sections.length - 1;
+        }
+        function clearMarks() {
+          document
+            .querySelectorAll("mark.search-mark")
+            .forEach((mark) =>
+              mark.replaceWith(document.createTextNode(mark.textContent)),
+            );
+        }
+        function showSection(id, push = true) {
+          const index = sections.findIndex((section) => section.id === id);
+          if (index < 0) return;
+          clearMarks();
+          current = index;
+          sections.forEach((section, i) =>
+            section.classList.toggle("active", i === current),
+          );
+          navButtons.forEach((button) => {
+            const active = button.dataset.target === id;
+            button.classList.toggle("active", active);
+            if (active) button.setAttribute("aria-current", "page");
+            else button.removeAttribute("aria-current");
+          });
+          updateNavButtons();
+          storageSet("recallWebManualSection", id);
+          if (push) history.replaceState(null, "", "#" + id);
+          window.scrollTo({ top: 0, behavior: "auto" });
+          closeDrawer();
+          closeSearch(false);
+          updateProgress();
+          document.title = `${sectionTitle(current)} | RECALL 0.2.1 Manual`;
+        }
+        function move(delta) {
+          const next = Math.max(
+            0,
+            Math.min(sections.length - 1, current + delta),
+          );
+          if (next !== current) showSection(sections[next].id);
+        }
+        navButtons.forEach((button) =>
+          button.addEventListener("click", () =>
+            showSection(button.dataset.target),
+          ),
+        );
+        document
+          .querySelectorAll('[data-action="prev"]')
+          .forEach((button) =>
+            button.addEventListener("click", () => move(-1)),
+          );
+        document
+          .querySelectorAll('[data-action="next"]')
+          .forEach((button) => button.addEventListener("click", () => move(1)));
+        function openDrawer() {
+          sidebar.classList.add("open");
+          backdrop.classList.add("open");
+          document
+            .getElementById("menuBtn")
+            ?.setAttribute("aria-expanded", "true");
+        }
+        function closeDrawer() {
+          sidebar.classList.remove("open");
+          backdrop.classList.remove("open");
+          document
+            .getElementById("menuBtn")
+            ?.setAttribute("aria-expanded", "false");
+        }
+        document
+          .getElementById("menuBtn")
+          .addEventListener("click", openDrawer);
+        document
+          .getElementById("mobileToc")
+          .addEventListener("click", openDrawer);
+        backdrop.addEventListener("click", closeDrawer);
+        function openSearch() {
+          searchPanel.classList.add("open");
+          if (window.innerWidth <= 900)
+            searchInput
+              .closest(".header-search")
+              ?.classList.add("mobile-search-open");
+          searchInput.focus();
+          runSearch();
+        }
+        function closeSearch(clear = false) {
+          searchPanel.classList.remove("open");
+          searchInput
+            .closest(".header-search")
+            ?.classList.remove("mobile-search-open");
+          if (clear) {
+            searchInput.value = "";
+            renderSearch([]);
+          }
+        }
+        document
+          .getElementById("searchBtn")
+          .addEventListener("click", openSearch);
+        document
+          .getElementById("mobileSearch")
+          .addEventListener("click", openSearch);
+        searchInput.addEventListener("focus", () => {
+          searchPanel.classList.add("open");
+          runSearch();
+        });
+        document.addEventListener("click", (event) => {
+          if (
+            !searchPanel.contains(event.target) &&
+            !searchInput.contains(event.target) &&
+            event.target.id !== "searchBtn" &&
+            event.target.id !== "mobileSearch"
+          )
+            closeSearch(false);
+        });
+        function buildSearchIndex() {
+          searchIndex = sections.map((section) => {
+            const text = section.textContent.replace(/\s+/g, " ").trim();
+            return {
+              id: section.id,
+              title: section.dataset.title,
+              text,
+              lower: text.toLocaleLowerCase(),
+            };
+          });
+        }
+        function snippets(text, query) {
+          const lower = text.toLocaleLowerCase(),
+            needle = query.toLocaleLowerCase(),
+            items = [];
+          let position = 0;
+          while (
+            items.length < 3 &&
+            (position = lower.indexOf(needle, position)) !== -1
+          ) {
+            const start = Math.max(0, position - 70),
+              end = Math.min(text.length, position + needle.length + 95);
+            items.push(
+              (start ? "…" : "") +
+                text.slice(start, end) +
+                (end < text.length ? "…" : ""),
+            );
+            position += needle.length;
+          }
+          return items;
+        }
+        function runSearch() {
+          const query = searchInput.value.trim();
+          if (!query) {
+            renderSearch([]);
+            searchCount.textContent =
+              "キーワードを入力すると全セクションを検索します";
+            return;
+          }
+          if (!searchIndex.length) buildSearchIndex();
+          const hits = [],
+            needle = query.toLocaleLowerCase();
+          for (const item of searchIndex) {
+            let count = 0,
+              position = 0;
+            while (
+              (position = item.lower.indexOf(needle, position)) !== -1 &&
+              count < 999
+            ) {
+              count++;
+              position += needle.length;
+            }
+            if (count)
+              hits.push({ ...item, count, snips: snippets(item.text, query) });
+          }
+          searchCount.textContent = `「${query}」: ${hits.reduce((sum, item) => sum + item.count, 0)} 件 / ${hits.length} セクション`;
+          renderSearch(hits, query);
+        }
+        function escapeHtml(value) {
+          return value.replace(
+            /[&<>"']/g,
+            (char) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              })[char],
+          );
+        }
+        function renderSearch(hits, query = "") {
+          const body = document.getElementById("searchResults");
+          body.innerHTML = "";
+          if (!query) {
+            body.innerHTML =
+              '<div class="search-empty">例: <b>Node 24</b>、<b>allowParentheticalOmission</b>、<b>IndexedDB</b>、<b>proxy.ts</b></div>';
+            return;
+          }
+          if (!hits.length) {
+            body.innerHTML =
+              '<div class="search-empty">一致する箇所がありません。</div>';
+            return;
+          }
+          hits.forEach((hit) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "search-result";
+            button.innerHTML = `<b>${escapeHtml(hit.title)}</b> <span>(${hit.count})</span><small>${hit.snips.map(escapeHtml).join("<br>")}</small>`;
+            button.addEventListener("click", () => {
+              showSection(hit.id);
+              highlightActive(query);
+            });
+            body.appendChild(button);
+          });
+        }
+        let searchTimer;
+        searchInput.addEventListener("input", () => {
+          clearTimeout(searchTimer);
+          searchTimer = setTimeout(runSearch, 120);
+        });
+        function highlightActive(query) {
+          clearMarks();
+          if (!query) return;
+          const root = sections[current],
+            walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+              acceptNode(node) {
+                if (
+                  !node.nodeValue
+                    .toLocaleLowerCase()
+                    .includes(query.toLocaleLowerCase())
+                )
+                  return NodeFilter.FILTER_REJECT;
+                if (node.parentElement.closest("script,style,mark"))
+                  return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+              },
+            }),
+            nodes = [];
+          while (walker.nextNode() && nodes.length < 120)
+            nodes.push(walker.currentNode);
+          let first = null;
+          nodes.forEach((node) => {
+            const text = node.nodeValue,
+              lower = text.toLocaleLowerCase(),
+              needle = query.toLocaleLowerCase(),
+              fragment = document.createDocumentFragment();
+            let position = 0,
+              index;
+            while ((index = lower.indexOf(needle, position)) !== -1) {
+              fragment.append(text.slice(position, index));
+              const mark = document.createElement("mark");
+              mark.className = "search-mark";
+              mark.textContent = text.slice(index, index + query.length);
+              fragment.append(mark);
+              first = first || mark;
+              position = index + query.length;
+            }
+            fragment.append(text.slice(position));
+            node.replaceWith(fragment);
+          });
+          first?.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        document.addEventListener("keydown", (event) => {
+          if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLocaleLowerCase() === "k"
+          ) {
+            event.preventDefault();
+            openSearch();
+          }
+          if (event.key === "Escape") {
+            closeSearch(false);
+            closeDrawer();
+          }
+          if (event.altKey && event.key === "ArrowLeft") {
+            event.preventDefault();
+            move(-1);
+          }
+          if (event.altKey && event.key === "ArrowRight") {
+            event.preventDefault();
+            move(1);
+          }
+        });
+        async function copyText(text) {
+          if (navigator.clipboard?.writeText) {
+            try {
+              await navigator.clipboard.writeText(text);
+              return true;
+            } catch {}
+          }
+          try {
+            const area = document.createElement("textarea");
+            area.value = text;
+            area.setAttribute("readonly", "");
+            area.style.position = "fixed";
+            area.style.opacity = "0";
+            document.body.appendChild(area);
+            area.select();
+            const ok = document.execCommand("copy");
+            area.remove();
+            return ok;
+          } catch {
+            return false;
+          }
+        }
+        document.querySelectorAll(".copy-btn").forEach((button) =>
+          button.addEventListener("click", async () => {
+            const raw =
+              button.parentElement.querySelector("code,pre")?.innerText || "";
+            const code = button.closest(".source-file")
+              ? raw.replace(/^\d{4}\s*\|\s?/gm, "")
+              : raw.replace(/^\s*>>\s?/gm, "");
+            const ok = await copyText(code);
+            button.textContent = ok ? "コピー済み" : "コピー失敗";
+            setTimeout(() => (button.textContent = "コピー"), 1500);
+          }),
+        );
+        function adjustFont(delta) {
+          fontScale = Math.max(
+            0.82,
+            Math.min(1.35, Math.round((fontScale + delta) * 100) / 100),
+          );
+          document.documentElement.style.setProperty("--font-scale", fontScale);
+          storageSet("recallWebManualFontScale", fontScale);
+        }
+        document
+          .getElementById("fontDown")
+          .addEventListener("click", () => adjustFont(-0.08));
+        document
+          .getElementById("fontUp")
+          .addEventListener("click", () => adjustFont(0.08));
+        document
+          .getElementById("focusBtn")
+          .addEventListener("click", () =>
+            document.body.classList.toggle("focus"),
+          );
+        toTop.addEventListener("click", () =>
+          window.scrollTo({ top: 0, behavior: "smooth" }),
+        );
+        function updateProgress() {
+          const root = document.documentElement,
+            max = root.scrollHeight - innerHeight,
+            pct = max > 0 ? (scrollY / max) * 100 : 0;
+          progress.style.width = pct + "%";
+          toTop.classList.toggle("show", scrollY > 600);
+        }
+        addEventListener("scroll", updateProgress, { passive: true });
+        addEventListener("resize", updateProgress);
+        const requested = location.hash.slice(1),
+          saved = storageGet("recallWebManualSection"),
+          isValid = (id) => sections.some((section) => section.id === id),
+          initial = isValid(requested)
+            ? requested
+            : isValid(saved)
+              ? saved
+              : "home";
+        showSection(initial, false);
+        updateProgress();
+        document.documentElement.classList.add("js");
+      })();
+    </script>
+  </body>
 </html>

@@ -17,9 +17,10 @@ const editorSource = await readFile(
   'utf8',
 );
 const pageSource = await readFile(
-  new URL('../app/page.tsx', import.meta.url),
+  new URL('../app/recall/study/StudyView.tsx', import.meta.url),
   'utf8',
 );
+const sessionSource = await readFile(new URL('../app/recall/study/useStudySession.ts', import.meta.url), 'utf8');
 const css = await readFile(new URL('../app/globals.css', import.meta.url), 'utf8');
 
 test('the study and retype inputs use the same CodeMirror editor', () => {
@@ -211,19 +212,19 @@ test('CodeMirror text trims line ends but keeps indentation and case exact', () 
 
 test('both editor forms trim submitted line ends before processing', () => {
   assert.match(
-    pageSource,
+    sessionSource,
     /const submittedAnswer = trimStudyAnswerLineEndWhitespace\(answer\)/u,
   );
   assert.match(
-    pageSource,
+    sessionSource,
     /recordWrongStudyAnswer\(studyRun, submittedAnswer\)/u,
   );
   assert.match(
-    pageSource,
+    sessionSource,
     /const submittedRetype = trimStudyAnswerLineEndWhitespace\(retypeAnswer\)/u,
   );
   assert.match(
-    pageSource,
+    sessionSource,
     /matchesStudyAnswer\(submittedRetype, expectedAnswer, \{[\s\S]*?allowParentheticalOmission:[\s\S]*?studyRun\.allowParentheticalOmission/su,
   );
 });

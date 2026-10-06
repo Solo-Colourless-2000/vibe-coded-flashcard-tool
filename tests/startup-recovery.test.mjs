@@ -3,9 +3,11 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const pageSource = await readFile(
-  new URL('../app/page.tsx', import.meta.url),
+  new URL('../app/recall/storage/useStorageHydration.ts', import.meta.url),
   'utf8',
 );
+const storageConstantsSource = await readFile(new URL('../app/recall/storage/constants.ts', import.meta.url), 'utf8');
+const folderSource = await readFile(new URL('../app/recall/storage/useFolderStorage.ts', import.meta.url), 'utf8');
 const fileStorageSource = await readFile(
   new URL('../app/fileStorage.ts', import.meta.url),
   'utf8',
@@ -43,7 +45,7 @@ test('valid browser data unlocks the interface before optional folder recovery',
 
 test('startup has a fail-safe that cannot silently overwrite fallback samples', () => {
   assert.match(
-    pageSource,
+    storageConstantsSource,
     /const INITIAL_STORAGE_RESTORE_TIMEOUT_MS = 3_000;/u,
   );
   assert.match(
@@ -80,13 +82,13 @@ test('timed-out IndexedDB writes are aborted instead of committing later', () =>
 });
 
 test('folder disconnect cannot bypass a browser revision conflict', () => {
-  const disconnectStart = pageSource.indexOf(
+  const disconnectStart = folderSource.indexOf(
     'async function disconnectProjectFolder()',
   );
-  const disconnectEnd = pageSource.indexOf(
+  const disconnectEnd = folderSource.indexOf(
     'async function makeBrowserStoragePersistent()',
   );
-  const disconnectSource = pageSource.slice(disconnectStart, disconnectEnd);
+  const disconnectSource = folderSource.slice(disconnectStart, disconnectEnd);
   assert.match(disconnectSource, /readBrowserStudySnapshot\(\)/u);
   assert.match(disconnectSource, /current\.snapshot\.revision !== browserRevisionRef\.current/u);
   assert.match(disconnectSource, /expectedRevision:/u);
