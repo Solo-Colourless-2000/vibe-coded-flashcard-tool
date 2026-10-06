@@ -10,9 +10,9 @@
     <meta name="theme-color" content="#0e1316" />
     <meta
       name="description"
-      content="RECALL 0.2.1 コードエディター版 初心者向け完全開発マニュアル"
+      content="TOTAL RECALL 0.2.1 機能別開発 初心者向け完全開発マニュアル 2026-10-07改訂"
     />
-    <title>RECALL 0.2.1 コードエディター版 初心者向け完全開発マニュアル</title>
+    <title>TOTAL RECALL 機能別開発 初心者向け完全開発マニュアル 2026-10-07</title>
     <style>
       :root {
         --paper: #151b1f;
@@ -708,6 +708,40 @@
       .focus .brand-ver {
         display: none;
       }
+      .lesson-step {
+        margin: 24px 0;
+        padding: clamp(20px, 4vw, 42px);
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-top: 4px solid var(--teal);
+        box-shadow: var(--shadow);
+        overflow-wrap: anywhere;
+      }
+      .lesson-step h2 { color: var(--pink); line-height: 1.4; }
+      .lesson-step h3 { color: var(--teal); margin-top: 24px; }
+      .lesson-field h4 { margin: 22px 0 6px; color: var(--teal); }
+      .lesson-field p { margin-top: 6px; }
+      .step-number { color: var(--orange); font-size: 13px; font-weight: 800; }
+      .file-travel, .source-position, .next-file {
+        padding: 12px 16px;
+        border: 1px solid var(--line);
+        background: var(--blue);
+        margin: 12px 0;
+        overflow-wrap: anywhere;
+      }
+      .source-position code { white-space: pre-wrap; }
+      .next-file { border-left: 4px solid var(--orange); margin-top: 24px; }
+      .travel-route { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 18px; border: 1px solid var(--line); background: var(--green); }
+      .travel-route span { overflow-wrap: anywhere; }
+      .travel-arrow { color: var(--orange); }
+      .chapter-checkpoint { padding: 24px; background: var(--green); border-left: 4px solid var(--lime); }
+      .before-code { padding: 12px; border: 1px solid var(--line); }
+      .before-code summary { cursor: pointer; color: var(--orange); }
+      .table-scroll { overflow-x: auto; }
+      .flow-diagram { padding: 22px; background: var(--blue); border: 1px solid var(--teal); line-height: 2; }
+      .start-reading { display: inline-block; margin-top: 18px; padding: 12px 18px; background: var(--green); border: 1px solid var(--lime); text-decoration: none; }
+      .cover-card p, .cover-card code { overflow-wrap: anywhere; white-space: normal; }
+      .manual-jump:focus-visible { outline: 3px solid var(--orange); outline-offset: 4px; }
       @media (max-width: 900px) {
         :root {
           --header-h: 56px;
@@ -921,9 +955,9 @@
         ☰
       </button>
       <div class="brand">
-        <span class="brand-mark">RECALL</span
-        ><span class="brand-title">コードエディター版 開発マニュアル</span
-        ><span class="brand-ver">0.2.1</span>
+        <span class="brand-mark">TOTAL RECALL</span
+        ><span class="brand-title">機能別開発マニュアル</span
+        ><span class="brand-ver">2026-10-07</span>
       </div>
       <div class="header-search">
         <input
@@ -1073,13 +1107,13 @@
             else button.removeAttribute("aria-current");
           });
           updateNavButtons();
-          storageSet("recallWebManualSection", id);
+          storageSet("recallWebManualSection20261007", id);
           if (push) history.replaceState(null, "", "#" + id);
           window.scrollTo({ top: 0, behavior: "auto" });
           closeDrawer();
           closeSearch(false);
           updateProgress();
-          document.title = `${sectionTitle(current)} | RECALL 0.2.1 Manual`;
+          document.title = `${sectionTitle(current)} | TOTAL RECALL 2026-10-07 Manual`;
         }
         function move(delta) {
           const next = Math.max(
@@ -1093,6 +1127,30 @@
             showSection(button.dataset.target),
           ),
         );
+        let lessonReturn = null;
+        document.getElementById("returnToLesson").addEventListener("click", () => {
+          if (!lessonReturn) return;
+          showSection(lessonReturn.id);
+          window.scrollTo({ top: lessonReturn.top, behavior: "auto" });
+        });
+        document.querySelectorAll(".manual-jump").forEach((link) => {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (link.dataset.file) {
+              lessonReturn = { id: sections[current].id, top: window.scrollY };
+              document.getElementById("returnToLesson").hidden = false;
+            }
+            showSection(link.dataset.target);
+            if (link.dataset.file) {
+              const target = [...document.querySelectorAll(".source-file")]
+                .find((item) => item.dataset.file === link.dataset.file);
+              if (target) {
+                target.open = true;
+                target.scrollIntoView({ block: "start", behavior: "auto" });
+              }
+            }
+          });
+        });
         document
           .querySelectorAll('[data-action="prev"]')
           .forEach((button) =>
@@ -1161,7 +1219,7 @@
             closeSearch(false);
         });
         function buildSearchIndex() {
-          searchIndex = sections.map((section) => {
+          searchIndex = sections.filter((section) => section.dataset.history !== "true").map((section) => {
             const text = section.textContent.replace(/\s+/g, " ").trim();
             return {
               id: section.id,
@@ -1196,7 +1254,7 @@
           if (!query) {
             renderSearch([]);
             searchCount.textContent =
-              "キーワードを入力すると全セクションを検索します";
+              "現在の本文と資料を検索します（旧版資料は除外）";
             return;
           }
           if (!searchIndex.length) buildSearchIndex();
@@ -1348,14 +1406,16 @@
         }
         document.querySelectorAll(".copy-btn").forEach((button) =>
           button.addEventListener("click", async () => {
+            const originalLabel = button.dataset.copyLabel || button.textContent;
+            button.dataset.copyLabel = originalLabel;
             const raw =
               button.parentElement.querySelector("code,pre")?.innerText || "";
             const code = button.closest(".source-file")
-              ? raw.replace(/^\d{4}\s*\|\s?/gm, "")
+              ? raw.replace(/^\d{4}[ \t]*\|[ \t]?/gm, "")
               : raw.replace(/^\s*>>\s?/gm, "");
             const ok = await copyText(code);
             button.textContent = ok ? "コピー済み" : "コピー失敗";
-            setTimeout(() => (button.textContent = "コピー"), 1500);
+            setTimeout(() => (button.textContent = originalLabel), 1500);
           }),
         );
         function adjustFont(delta) {
@@ -1390,7 +1450,7 @@
         addEventListener("scroll", updateProgress, { passive: true });
         addEventListener("resize", updateProgress);
         const requested = location.hash.slice(1),
-          saved = storageGet("recallWebManualSection"),
+          saved = storageGet("recallWebManualSection20261007"),
           isValid = (id) => sections.some((section) => section.id === id),
           initial = isValid(requested)
             ? requested

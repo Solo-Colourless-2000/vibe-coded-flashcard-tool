@@ -84,7 +84,12 @@
     "docs/RELEASE.md",
     "public/favicon.svg",
     "tests/editor-draft.test.mjs",
-    "docs/ARCHITECTURE.md"
+    "docs/ARCHITECTURE.md",
+    "docs/manual-source/development-guide.json",
+    "docs/manual-source/beginner-workshop.mjs",
+    "docs/manual-source/render-development-guide.mjs",
+    "docs/manual-source/verify-workshop.mjs",
+    "docs/manual-source/search-workshop.mjs"
   ],
   "roles": {
     "package.json": "npm scripts、依存version、Node/npm要件、配布補助コマンドを定義するプロジェクト台帳。",
@@ -170,6 +175,11 @@
     "app/recall/study/StudyView.tsx": "問題、正答再入力、グループ習得、セット完了のUI。",
     "app/recall/study/useStudySession.ts": "学習セッション、採点呼び出し、再入力、再出題、進捗、キーボード操作を管理する。",
     "tests/editor-draft.test.mjs": "下書き復元、保存前検証、進捗保持・リセット、フォルダー統合を入力データから検証する。",
-    "docs/ARCHITECTURE.md": "機能別のファイル構成、データの流れ、変更先の探し方を説明する保守ガイド。"
+    "docs/ARCHITECTURE.md": "機能別のファイル構成、データの流れ、変更先の探し方を説明する保守ガイド。",
+    "docs/manual-source/development-guide.json": "初心者向けの準備・基礎語句・機能別の往復手順・期待結果・切り分けを管理する改訂本文。",
+    "docs/manual-source/beginner-workshop.mjs": "別ファイルを往復してカード機能を作る小さな差分と、その順序を再適用する教材データ。",
+    "docs/manual-source/render-development-guide.mjs": "改訂本文・実習の差分・実ソースの短い抜粋・検索位置を自己完結HTMLへ生成する。",
+    "docs/manual-source/verify-workshop.mjs": "教材の全途中状態を型検査し、最終教材をlint・採点テストで実行検証する。",
+    "docs/manual-source/search-workshop.mjs": "完成アプリの検索へ設定を追加する保守実習の小さな差分。各途中状態と検索テストを検証する。"
   }
 }

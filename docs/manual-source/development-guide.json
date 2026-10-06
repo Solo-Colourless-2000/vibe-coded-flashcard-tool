@@ -1,0 +1,1896 @@
+{
+  "schemaVersion": 1,
+  "revision": "2026-10-07",
+  "glossary": [
+    [
+      "プロジェクトのルート",
+      "package.jsonが置かれた一番外側のフォルダー。この教材ではF:\\learning-tool\\vibe-coded-flashcard-tool。appやdocsの中をルートと呼びません。"
+    ],
+    [
+      "ファイルとフォルダー",
+      "ファイルは文章やコードを保存する一つの入れ物。フォルダーはファイルを整理する入れ物。editorはフォルダー、EditorView.tsxはその中のファイルです。"
+    ],
+    [
+      "拡張子",
+      "名前の最後の.ts、.tsx、.mjsなど。.tsはTypeScript、.tsxはTypeScriptとJSX、.mjsはJavaScriptのモジュールです。エクスプローラーの拡張子表示を有効にします。"
+    ],
+    [
+      "ターミナル",
+      "文字でコマンドを実行する場所。コードを書くエディターとは役割が違います。Windowsの例はPowerShellです。先頭のPSや>は入力するコマンドに含めません。"
+    ],
+    [
+      "Node.jsとnpm",
+      "Node.jsはJavaScriptをブラウザーの外で実行する仕組み。npmは依存パッケージの導入とpackage.jsonのscriptsを実行する道具。ブラウザー画面とは別の環境です。"
+    ],
+    [
+      "依存パッケージとlockfile",
+      "Reactなど他のプログラムを利用するための部品。package-lock.jsonは導入する正確な組合せを記録します。npm ciはこの記録に従って導入します。"
+    ],
+    [
+      "import / export",
+      "別ファイルの値や型を受け取る／外へ渡す宣言。export functionの読み込みには{}を使い、export defaultの読み込みには使いません。"
+    ],
+    [
+      "相対パス",
+      "今いるファイルから見た場所。./は同じフォルダー、../は一つ上。storage/useStudyStorage.tsから../../modelはapp/model.tsです。プロジェクトのルート基準ではありません。"
+    ],
+    [
+      "型 / 値",
+      "型はデータの形の設計図で実行時には消えます。値は実際の文字列、配列、関数など。import typeは型だけを読み込みます。"
+    ],
+    [
+      "関数 / 引数 / 戻り値",
+      "関数は名前付きの処理。引数は処理へ渡す入力。戻り値はreturnで呼び出し側へ返す結果。prepareDraftSaveの入力は下書き、結果は保存候補またはエラーです。"
+    ],
+    [
+      "オブジェクト / 配列",
+      "オブジェクトはtitleやcardsという名前付きの値の集合。配列は複数のカードなど順序のある一覧。cards[0]が最初の要素で、番号は0から始まります。"
+    ],
+    [
+      "分割代入 / スプレッド",
+      "{ sets, setSets }は必要な項目を取り出します。{ ...set, title }は元の項目を引き継いでtitleを置き換えた新しいオブジェクトを作ります。深い階層まですべて複製する操作ではありません。"
+    ],
+    [
+      "map / filter / find",
+      "mapは各要素を変換した新しい配列、filterは条件に合う要素の新しい配列、findは最初に合う一要素またはundefinedを返します。名前の似た結果を混同しません。"
+    ],
+    [
+      "不変の更新",
+      "Reactの元の配列を直接書き換えず、新しい配列やオブジェクトを作って更新する方法。同じカードIDを保ちながら本文だけ変える場合もあります。"
+    ],
+    [
+      "コンポーネント / JSX",
+      "コンポーネントは画面の部品。JSXはJavaScriptの中でタグを記述する書き方。{value}で値を表示し、classNameでCSSのクラスを指定します。"
+    ],
+    [
+      "Props",
+      "親から画面部品へ渡す値と操作の契約。表示部品が親の保存キューを勝手に触る代わりに、onSaveなどの操作を受け取ります。"
+    ],
+    [
+      "state / useState",
+      "画面に反映する現在の状態。useStateが値と更新関数を返し、更新関数を呼ぶとReactが再描画します。再描画はページ全体の再読み込みとは違います。"
+    ],
+    [
+      "フック",
+      "useから始まるReactの関数。状態や操作をまとめるカスタムフックは画面タグを返さず、値と関数を返します。条件分岐やクリックの中で呼びません。"
+    ],
+    [
+      "useEffect / cleanup",
+      "描画後に保存、タイマー、イベント登録などを行う仕組み。returnで返す関数は再実行前や部品の終了時に解除を行います。解除しない登録を増やし続けません。"
+    ],
+    [
+      "依存配列",
+      "useEffectの最後の[sets, hydrated]など。これらが変わるとeffectをやり直します。必要な値を省いて古い状態を読み続けることや、毎回変わる値で無限に実行することを避けます。"
+    ],
+    [
+      "useRef",
+      "再描画しても保持する入れ物。currentの変更だけでは画面を再描画しません。DOMへの参照、最新の状態、保存キューなどに使います。"
+    ],
+    [
+      "コールバック",
+      "後で呼び出すために渡す関数。onBackupRestoredは復元が成功した後に入口側をリセットする操作です。関数を渡すこととその場で実行することは違います。"
+    ],
+    [
+      "純粋な関数",
+      "同じ入力なら同じ結果で、画面や保存先を変えない処理。時刻やIDを外から渡せばテスト結果も揃えやすくなります。"
+    ],
+    [
+      "async / await / Promise",
+      "時間のかかる処理を待つ仕組み。awaitはその関数内の続きだけを待ちます。画面や別のイベントまで全部停止する意味ではありません。失敗はtry/catchで処理します。"
+    ],
+    [
+      "hydrated",
+      "このアプリでは起動時の保存復元を終え、画面を操作できる段階を表す値。保存内容を読む前に初期サンプルを上書き保存しないために使います。"
+    ],
+    [
+      "IndexedDB / localStorage",
+      "どちらもブラウザー内の保存領域。現在の主保存はIndexedDBです。localStorageは旧版データの移行や変更通知などにも使います。プロジェクトのファイルとは別です。"
+    ],
+    [
+      "origin",
+      "URLのスキーム、ホスト、ポートの組合せ。127.0.0.1:3000とlocalhost:3000は別の保存領域になるため、この教材では常に前者を使います。"
+    ],
+    [
+      "revision / 保存キュー",
+      "revisionは保存内容の世代を識別する文字列。キューは順番待ちの処理列。古い保存が新しい保存を追い越すことや別タブの変更を消すことを防ぎます。"
+    ],
+    [
+      "tombstone（削除済みID）",
+      "削除したセットのIDを記録する仕組み。別のフォルダーやバックアップに古いセットが残っていても、意図せず復活しないために使います。"
+    ],
+    [
+      "型検査 / lint / テスト / build",
+      "型検査は値の形と接続、lintは記述上の問題、テストは特定の動作、buildは配布用の変換を確認します。一つの成功で残り全部の成功を意味しません。"
+    ],
+    [
+      "差分 / アンカー",
+      "差分は変更前と変更後の違い。アンカーは編集位置を探すための関数名やコード文字列。行番号が変わってもアンカーで同じ責務を探せます。"
+    ],
+    [
+      "0始まりのページ番号",
+      "editorPage=0が最初の編集ページ。カード番号101は配列位置100です。Math.floor(位置 / ページサイズ)で問題のあるページを選びます。"
+    ],
+    [
+      "undefined / null / ?. / ??",
+      "undefinedは値がない、nullは明示的に空。?.は途中の値がないときアクセスを止め、??はnull/undefinedの場合だけ代わりの値を使います。0や空文字を勝手に置き換えません。"
+    ],
+    [
+      "フォームの送信",
+      "submitボタンや入力中のEnterで起きるイベント。React内で採点する場合はpreventDefaultでページ送信を止めます。通常操作のボタンはtype=buttonを明示します。"
+    ],
+    [
+      "フォーカス / inert / aria-hidden",
+      "フォーカスはキーボードの操作先。inertは背景を操作対象から外し、aria-hiddenは支援技術から隠します。ダイアログを閉じたら元に戻す必要があります。"
+    ]
+  ],
+  "preparation": [
+    {
+      "title": "完成プロジェクトと実習用コピーを区別する",
+      "paragraphs": [
+        "この改訂版は、現在の完成プロジェクトを教材として、最初に小さな機能を自分で実装し、その後に本番の各機能を同じ開発ループで読み、変更できるようにする本です。空のフォルダーへ全ソースを一括入力する手順ではありません。同梱のpackage.json、lockfile、model、保存I/Oを土台に使います。空から別のアプリを設計するための汎用入門書とは開始条件が違います。",
+        "本番用の学習データと完成コードを保護するため、エクスプローラーでプロジェクトを実習用の別フォルダーへコピーします。例はF:\\learning-tool\\recall-practiceです。コピー元とコピー先を別のエディターウィンドウで開き、実習中はコピー先だけを編集します。この操作は学習用に自分で行う手順であり、配布版のアプリがフォルダーを自動変更する機能ではありません。",
+        "node_modules、dist、.next、.vinext、.wrangler、releaseは生成物なのでコピー先へ持ち込む必要はありません。package-lock.jsonは必ず持ち込みます。recall-data、sets.json、sets.backup.jsonなど実際の学習データは実習へ持ち込みません。Gitを使っている場合は自分の作業前の差分を確認してから記録します。",
+        "ブラウザーの保存領域はフォルダーをコピーしても別になりません。同じoriginのアプリは同じIndexedDBを読むため、実習は新しいブラウザープロファイルで開きます。完成アプリのタブを閉じ、そのプロファイルだけを使います。保存先フォルダーを選ぶ実習では新しく空の実習データ用フォルダーを用意し、本番の学習フォルダーを選びません。"
+      ]
+    },
+    {
+      "title": "フォルダーを開き、ファイル名を正確に確認する",
+      "paragraphs": [
+        "エディターの「フォルダーを開く」で実習用コピーのルートを開きます。左のファイル一覧にapp、docs、tests、package.json、package-lock.jsonが並んでいれば正しい場所です。appだけを開いた場合は上の階層へ開き直します。Ctrl+Pでファイル名、Ctrl+Fでファイル内のアンカー、Ctrl+Shift+Fでプロジェクト全体の名前を探します。",
+        "Windowsのエクスプローラーでは「表示」から「ファイル名拡張子」を有効にします。page.tsx.txtという名前のテキストファイルを作らないようにします。importで使う大文字小文字は実ファイルと同じにします。Windowsで見逃した不一致が別OSで失敗する場合があります。",
+        "コード欄のファイルパスはプロジェクトルートからの相対位置です。PowerShellへファイル名をそのまま入力する指示ではありません。エディターで開き、指定した場所へ入力してCtrl+Sで保存します。UTF-8で保存し、コードに全角の引用符や全角の括弧を入れません。"
+      ],
+      "commands": "Set-Location -LiteralPath \"F:\\learning-tool\\recall-practice\"\nGet-Location\nTest-Path -LiteralPath package.json\nnode --version\nnpm --version",
+      "expected": "Get-Locationが実習用コピーを示し、Test-PathはTrueです。Node.jsは22.13.0以上25未満を使います。この改訂時の検証環境は24.20.0です。バージョンが条件外なら対応版を用意してターミナルを開き直します。node --version自体が動かない場合は先にNode.jsの導入とPATHを確認します。"
+    },
+    {
+      "title": "依存を導入して、変更前の成功を確認する",
+      "paragraphs": [
+        "実習用コピーでnpm ciを一度実行します。インターネット接続が必要になるのは、未導入の依存を取得するこの段階などです。HTMLマニュアルの閲覧と、導入後の学習データ処理は別です。package-lock.jsonを削除したり、npm updateを先に実行したりしません。",
+        "まず変更前のnpm run checkとnpm run buildを確認します。成功した環境で小さな差分を作ると、その後に失敗した原因を絞れます。npm run checkはテスト、型検査、lint、マニュアル検証の順です。途中で止まったら、その工程を直してから続けます。",
+        "完成コードを変更するとHTMLに収録したSHA-256が古くなるため、最後のmanual:verifyだけ失敗することがあります。変更途中は対象テストとtypecheck、lintを使い、章の区切りでmanual:buildしてからcheckを行います。検証を無効にして先へ進む操作はしません。"
+      ],
+      "commands": "npm ci\nnpm run check\nnpm run build",
+      "expected": "改訂時の完成コードの自動テストは85件です。後で実習用テストを一つ追加するとコピー側の件数は86件になります。将来の版で数が変わっても、fail 0であることと各検査の終了を確認します。"
+    },
+    {
+      "title": "二つのターミナルと一つのブラウザーで小さく往復する",
+      "paragraphs": [
+        "ターミナルAでnpm run devを実行し、ブラウザーでhttp://127.0.0.1:3000を開きます。ターミナルBも同じ実習用ルートで開き、テストや型検査を行います。サーバーが動いているターミナルへ追加コマンドを打たず、止めるときだけCtrl+Cを押します。",
+        "開発モードは保存したコードを読み直して画面へ反映します。表示が更新されなければ、Ctrl+S、ターミナルのエラー、開いているプロファイルとURLの順に確認します。エディターの赤線だけでなく、ブラウザーの開発者ツールのConsoleも読みます。最初のエラーから直すと、連鎖したエラーが減ることがあります。",
+        "本番確認では開発サーバーを止めてからnpm run build、npm run startを実行します。startだけではソース変更から本番成果物を作り直しません。同じ3000番でdevとstartを同時に起動しません。終了後はCtrl+Cで止めます。"
+      ],
+      "commands": "npm run dev",
+      "expected": "開発サーバーの起動表示が出て、ホーム画面を操作できます。URLの#setsなどは画面状態です。/practiceは次章で追加する実習専用ルートで、#practiceとは異なります。"
+    },
+    {
+      "title": "コード欄の読み方と、一回の作業の終わり方",
+      "paragraphs": [
+        "基礎実習の欄は「新規作成」か「指定部分の置換」を明記します。置換では変更前をCtrl+Fで探し、その範囲だけを変更後へ書き換えます。新しい関数を末尾へ重複して追加する操作ではありません。入力するコードに説明文や表示用の行番号は含めません。",
+        "本番実装編の欄は現在の完成コードから抽出した小さな抜粋です。上部のファイル名と検索アンカーで実ファイルを開き、周囲の関数の中で照合します。抜粋の最後が関数の終わりとは限りません。コード欄に出ていない残りを削除したり、抜粋だけでファイル全体を置換したりしません。完成プロジェクトには既にあるので、同じコードを二重に追加しません。",
+        "一回の開発ループは、必要な型または純粋関数を少し書く → そのテストを書く → フックへつなぐ → 表示へつなぐ → 入口へ戻る → 確認する、です。一回で全部のファイルを完成させる順番ではありません。この本の各章の「往復する順序」は、そのループを具体的に示します。",
+        "確認に成功した区切りで変更を記録します。Gitを使う場合はgit status --short、git diff --対象ファイルで自分が変更したものを読みます。既にあった他の変更を無関係にコミットしません。Gitがまだ分からなければ実習用フォルダーの別コピーを区切りごとに保存し、いつの状態か名前を付けます。"
+      ]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "structure",
+      "title": "入口・型・表示・操作の担当を決める",
+      "goal": "画面を増やしてもpage.tsxが再び大きくならない依存の向きを理解する。",
+      "before": "基礎実習を終えている。/practiceの機能は実習用だけに置き、本番ファイルへ混ぜない。",
+      "route": [
+        "app/page.tsx",
+        "app/recall/RecallApp.tsx",
+        "app/recall/types.ts",
+        "app/recall/library/LibraryView.tsx",
+        "app/recall/library/useSetLibrary.ts",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/page.tsx",
+          "title": "入口は一つの部品を描画する",
+          "source": {
+            "anchor": "import RecallApp",
+            "lines": 5
+          },
+          "action": "page.tsxを開き、現在の5行を照合します。新しいUIを増やすときも、このファイルへ検索や保存を加えません。",
+          "why": "HomePageはURLの入口です。状態やイベントを扱うRecallApp側にuse clientがあるため、この入口へ全処理を移す必要はありません。default exportとnamed exportの読み込みを区別します。",
+          "check": "入口にuseStateやIndexedDBの処理がないことを確認します。npm run typecheckを実行します。",
+          "trouble": "入口が5行でもアプリのコードが消えたわけではありません。import先のRecallAppから依存を追います。"
+        },
+        {
+          "file": "app/recall/types.ts",
+          "title": "ファイル間で共有する契約を先に読む",
+          "source": {
+            "anchor": "export type EditorDraft",
+            "lines": 19
+          },
+          "action": "types.tsへ移り、EditorDraftから保存操作の型までを読みます。型を変更する実装では、まず必要な項目をここへ追加してから利用側へ戻ります。",
+          "why": "EditorDraftは入力中の下書きで、保存済みStudySetと同じ型ではありません。PersistStudySetsは非同期で、警告を含む結果を返します。Promiseの戻り値を無視して保存成功を宣言しない設計です。",
+          "check": "EditorDraftにcreatedAtやstudyProgressが必須でない理由を説明できるか確認します。型の変更後はtypecheckで利用先を洗い出します。",
+          "trouble": "UI専用の型をmodelへ無差別に入れません。モデルがReactに依存すると、画面なしの検査が難しくなります。"
+        },
+        {
+          "file": "app/recall/RecallApp.tsx",
+          "title": "入口の組み立てに戻る",
+          "source": {
+            "anchor": "  const [activeSetId",
+            "lines": 24
+          },
+          "action": "RecallAppの関数の先頭を開き、保存・画面移動・一覧・編集へどの引数を渡しているか一項目ずつ追います。",
+          "why": "セットの状態を保存フックが所有し、各機能へ同じsetsとsetSetsを渡します。activeSetIdは選択中のセットを表します。別々のフックで同じセットのコピーを独立所有すると表示がずれるので、一つの共有状態へ集約しています。",
+          "check": "libraryとeditorが同じsetsを受け取ること、保存結果後にだけ一覧更新することを次の章で確認します。",
+          "trouble": "フックの呼び出しをview===editorのif内へ移しません。Reactのフックは毎回同じ順序で呼びます。"
+        },
+        {
+          "file": "app/recall/library/LibraryView.tsx",
+          "title": "表示から操作へ向かう境界を確認する",
+          "source": {
+            "anchor": "type Props",
+            "lines": 24
+          },
+          "action": "LibraryViewへ移り、Propsと関数の冒頭を見ます。見た目の変更はこの画面、検索条件の変更は次のフックへ分けます。",
+          "why": "SetLibraryはフックの戻り値の型、SetActionsは画面間の操作です。表示側は保存領域を直接開かず、受け取った操作を呼びます。",
+          "check": "一覧を開いて検索できることを確認し、Ctrl+クリックでlibrary.setSearchの定義へ移動します。",
+          "trouble": "props名とローカル変数名が同じでも、値を定義しているファイルは異なります。importと引数を見て追います。"
+        },
+        {
+          "file": "app/recall/shell/AppSidebar.tsx",
+          "title": "共通メニューへ必要な操作だけを渡す",
+          "source": {
+            "anchor": "type Props =",
+            "lines": 10
+          },
+          "action": "AppSidebarへ移り、PropsのPickを読みます。全画面共通のメニューはこの部品、画面移動の処理はnavigation、保存状態の処理はstorageへ分けます。",
+          "why": "Pickは型の中から必要な項目だけ選ぶ記法です。メニューへ内部の保存キューなど不要な値を渡しません。同じactionsから新規作成と一覧移動を受け取り、画面ごとの操作を複製しません。",
+          "check": "ホーム、一覧、編集、学習のどの画面でもメニューが同じ操作へつながることを確認します。",
+          "trouble": "メニューへ新しい項目を追加したら、型・入口で渡す値・操作の初期化へ戻って確認します。表示だけ増やして処理をpage.tsxへ書き足しません。"
+        }
+      ],
+      "checkpoint": "npm run typecheck。ページの入口と画面部品・フック・モデルの四つの役割を、自分の言葉で説明する。"
+    },
+    {
+      "id": "model",
+      "title": "採点と学習データを画面から独立させる",
+      "goal": "文字列の扱いとカードIDを、UIを作る前にテストで固定する。",
+      "before": "model.tsとsecurityLimits.tsは同梱の土台。本文中の短い抜粋だけで丸ごと置換しない。",
+      "route": [
+        "app/model.ts",
+        "app/securityLimits.ts",
+        "tests/model.test.mjs",
+        "app/recall/editor/prepareDraftSave.ts",
+        "app/recall/study/useStudySession.ts"
+      ],
+      "steps": [
+        {
+          "file": "app/model.ts",
+          "title": "カードとセットの二つの型を区別する",
+          "source": {
+            "anchor": "export type Flashcard",
+            "lines": 18
+          },
+          "action": "Flashcardの3項目を確認した後、同ファイル内のStudySetを検索してcardsがこの型の配列であることを照合します。",
+          "why": "idはカードを追跡する識別子、termは正解、definitionは問題です。表示順の番号をID代わりにすると、並べ替え後の進捗が別カードを指します。配列位置とIDは別の役割です。",
+          "check": "サンプルセットのcardsを見て、各idが重複していないことを確認します。",
+          "trouble": "termを常に画面の問題と考えないでください。出題方向で問題と正解が入れ替わります。"
+        },
+        {
+          "file": "app/securityLimits.ts",
+          "title": "入力の上限を一か所で共有する",
+          "source": {
+            "anchor": "export const MAX_STUDY_SETS",
+            "lines": 19
+          },
+          "action": "securityLimitsへ移動し、セット・カード本文・インポート上限を読みます。上限を変える場合はUIと保存とテストへ戻って確認します。",
+          "why": "画面のmaxLengthだけでは、ファイル入力やJSON復元で上限を越えられます。検証関数と保存処理も同じ定数を使います。10_000の下線は桁の区切りで、数値10000と同じです。",
+          "check": "MAX_CARD_TEXT_LENGTHの参照先をプロジェクト全体検索し、入力画面以外でも検証されることを確認します。",
+          "trouble": "上限を増やしても処理が速くなるわけではありません。カード数、文字数、ファイルサイズは別々に考えます。"
+        },
+        {
+          "file": "app/model.ts",
+          "title": "行末空白だけを除く処理を読む",
+          "source": {
+            "anchor": "export function trimStudyAnswerLineEndWhitespace",
+            "lines": 4
+          },
+          "action": "modelへ戻り、この小さな関数とmatchesStudyAnswerの呼び出しを照合します。",
+          "why": "改行コードを揃え、各行の末尾の水平空白を取り除きます。全文のtrimではないので、コードの先頭インデントを失いません。UnicodeのNFC/NFDや大文字小文字を勝手に同一視しないルールです。",
+          "check": "対象テストでTLSとtls、行末空白、先頭空白の違いを確認します。node --experimental-strip-types --test tests/model.test.mjsを実行します。",
+          "trouble": "検索は大文字小文字を無視しますが、採点は別仕様です。検索用の正規化を採点へ流用しません。"
+        },
+        {
+          "file": "app/model.ts",
+          "title": "採点設定を関数の引数へ渡す",
+          "source": {
+            "anchor": "export function matchesStudyAnswer",
+            "lines": 30
+          },
+          "action": "matchesStudyAnswerを開き、optionsからカッコ省略設定を読む箇所を確認します。次にStudyReadyViewの設定UIへ移ります。",
+          "why": "括弧の扱いはグローバルな画面変数ではなく、渡された設定に従います。半角の対応したカッコだけを対象にするなど、本番の仕様をモデルに閉じ込めています。",
+          "check": "省略設定オンとオフの両方をモデルテストで確認します。",
+          "trouble": "例示の30行で関数が終わっていなければ、実ファイルの閉じ括弧まで読みます。続きを削除しません。"
+        }
+      ],
+      "checkpoint": "node --experimental-strip-types --test tests/model.test.mjs。fail 0であることを確認する。"
+    },
+    {
+      "id": "notifications",
+      "title": "通知を型・状態・表示の三往復で作る",
+      "goal": "成功・警告・エラーを同じ表示部品で扱い、解除するタイマーも管理する。",
+      "before": "状態を使う入口RecallAppのuse clientを確認済み。",
+      "route": [
+        "app/recall/types.ts",
+        "app/recall/shared/useNotifications.ts",
+        "app/recall/shared/Toast.tsx",
+        "app/recall/RecallApp.tsx",
+        "app/globals.css",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/types.ts",
+          "title": "通知の内容を型にする",
+          "source": {
+            "anchor": "export type ToastTone",
+            "lines": 6
+          },
+          "action": "ToastToneとToastNoticeを開きます。新しい通知種別を作る実装では、ここに定義してから表示・自動消去時間へ戻ります。",
+          "why": "messageだけでなくtoneを持つことで、成功とエラーを色以外の意味にも反映できます。型の候補以外の文字列を書けばtypecheckで発見できます。",
+          "check": "toneの4候補を確認します。",
+          "trouble": "successとsavedを混同しません。savedは保存状態、successは通知の種類です。"
+        },
+        {
+          "file": "app/recall/shared/useNotifications.ts",
+          "title": "状態とタイマーを書く場所を分ける",
+          "source": {
+            "anchor": "export function useNotifications",
+            "lines": 13
+          },
+          "action": "通知フックを開き、useState、useEffect、cleanupを順に追います。期限の変更はこのdurationへ小さく加えます。",
+          "why": "errorは自動消去せず、成功・情報・警告は別の時間で消えます。通知が変わると前のタイマーをclearTimeoutするため、前の通知のタイマーが新しいエラーを消しません。",
+          "check": "成功通知が消え、エラー通知は閉じるまで残ることをブラウザーで確認します。",
+          "trouble": "setTimeoutを描画関数の外側へ無条件で置くと再描画ごとに増えます。effectの解除と一組で考えます。"
+        },
+        {
+          "file": "app/recall/shared/Toast.tsx",
+          "title": "表示と支援技術向けの意味を加える",
+          "source": {
+            "anchor": "export function Toast",
+            "lines": 22
+          },
+          "action": "Toastへ戻り、roleとaria-live、閉じるボタンを確認します。文言・色・位置は表示部品とglobals.cssを往復して変更します。",
+          "why": "緊急のエラーと通常の通知で読み上げ方を変えます。閉じる操作は親から受け取るため、この表示部品は通知のタイマーを所有しません。",
+          "check": "キーボードだけで閉じるボタンへ移動できることを確認します。",
+          "trouble": "aria-liveをすべてassertiveにすると、通常通知まで読み上げを中断します。"
+        },
+        {
+          "file": "app/recall/RecallApp.tsx",
+          "title": "入口へ戻って条件表示を接続する",
+          "source": {
+            "anchor": "      {toast &&",
+            "lines": 2
+          },
+          "action": "RecallAppの最後のtoast表示を照合します。フックで得たtoastがあるときだけ部品を表示し、閉じるとnullへ戻します。",
+          "why": "通知を作る操作は各フックへsetToastとして渡し、表示場所は入口の一か所です。各画面へ個別のトースト状態を増やしません。",
+          "check": "複数画面で通知が同じ位置に出ることを確認します。",
+          "trouble": "toastがnullのときにtoast.messageへ無条件アクセスしないでください。"
+        }
+      ],
+      "checkpoint": "npm run typecheck。変更したファイルへnpx eslintを実行し、成功・警告・エラーの表示を確認する。"
+    },
+    {
+      "id": "navigation",
+      "title": "URLと画面移動を独立してつなぐ",
+      "goal": "画面切替、戻る・進む、ダイアログ解除を同じ経路へまとめる。",
+      "before": "本番の画面名はhome、sets、editor、study、flashcards。",
+      "route": [
+        "app/recall/navigation/views.ts",
+        "app/recall/navigation/useAppNavigation.ts",
+        "app/recall/RecallApp.tsx",
+        "app/recall/shell/AppSidebar.tsx",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/navigation/views.ts",
+          "title": "URLから受け取る画面名を検証する",
+          "source": {
+            "anchor": "const APP_VIEWS",
+            "lines": 8
+          },
+          "action": "viewsを開きます。画面を増やす場合は、型とこの許可一覧を一緒に変更してから入口の表示へ戻ります。",
+          "why": "URLハッシュは利用者が自由に書ける文字列です。isViewで正しい画面名だけを状態として受け取ります。型へのasだけで入力が正しくなるわけではありません。",
+          "check": "URL末尾を#unknownにして再読み込みし、無効な画面へ移らないことを確認します。",
+          "trouble": "#editorを直接読み込む場合は下書き初期化の必要があるため、初期画面として無条件に使いません。"
+        },
+        {
+          "file": "app/recall/navigation/useAppNavigation.ts",
+          "title": "ブラウザーでしか存在しない値を守る",
+          "source": {
+            "anchor": "  const [view",
+            "lines": 6
+          },
+          "action": "初期値を決める関数を読みます。typeof windowの判定を消さず、画面名の検証後にstateへ入れます。",
+          "why": "画面の初期描画はサーバーで行われることがあります。windowやlocationを無条件で読むと、その段階で失敗します。use clientだけですべての実行環境が同じになるとは限りません。",
+          "check": "npm run buildでサーバー側の変換も確認します。",
+          "trouble": "window is not definedは、どのファイルの初期化でブラウザー値を読んだかを探します。"
+        },
+        {
+          "file": "app/recall/navigation/useAppNavigation.ts",
+          "title": "移動関数へ履歴更新を集める",
+          "source": {
+            "anchor": "  function goTo",
+            "lines": 21
+          },
+          "action": "goToを読み、setView、onNavigate、pushState、scrollToの順を照合します。ボタン側はこの関数へ次の画面名を渡します。",
+          "why": "画面状態だけ変えてURLを変えない経路が増えると戻る操作と表示がずれます。同じハッシュなら履歴を追加しないので、同じ画面のボタンを連打しても無意味な履歴を増やしません。",
+          "check": "一覧→編集→戻る→進むを確認します。",
+          "trouble": "pushState自体はpopstateを発火しません。クリック時のgoToと履歴移動時のハンドラーは両方必要です。"
+        },
+        {
+          "file": "app/recall/RecallApp.tsx",
+          "title": "履歴移動で一時状態を解除する",
+          "source": {
+            "anchor": "  function clearTransientState",
+            "lines": 11
+          },
+          "action": "入口へ戻り、履歴から来た場合に閉じるダイアログを確認します。新しいモーダルを増やしたときも、この連携を見直します。",
+          "why": "ナビゲーションは個々のeditorやstorageをimportして操作せず、渡されたコールバックを呼びます。この依存の向きによりナビゲーションを単独で読みやすくしています。",
+          "check": "ダイアログを開いて戻るを押し、元画面でキーボード操作が戻ることを確認します。",
+          "trouble": "履歴移動で下書き本体を無条件破棄しないでください。一時的なエラーやモーダルと入力データは違います。"
+        }
+      ],
+      "checkpoint": "npm run typecheck。戻る・進むと直接URLの両方を確認する。"
+    },
+    {
+      "id": "library",
+      "title": "一覧の検索と集計を画面へつなぐ",
+      "goal": "検索処理をフックへ閉じ込め、表示と採点の文字列ルールを混ぜない。",
+      "before": "setsは保存フックから受け取る。",
+      "route": [
+        "app/recall/library/useSetLibrary.ts",
+        "app/recall/library/LibraryView.tsx",
+        "app/recall/library/DashboardView.tsx",
+        "app/recall/RecallApp.tsx",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/library/useSetLibrary.ts",
+          "title": "検索の状態を追加する場所を確認する",
+          "source": {
+            "anchor": "  const [search",
+            "lines": 18
+          },
+          "action": "検索のuseStateと統計の計算を開きます。検索項目を増やす場合は、このフックに検索状態を加えてから表示部品へ戻ります。",
+          "why": "一覧の入力値はsearch、削除確認の対象はdeleteTargetです。互いに別の状態なので、検索文字の変更で削除対象が書き換わりません。平均成績は未学習セットを除いて計算しています。",
+          "check": "未学習しかないときの平均が0になり、NaNにならないことを確認します。",
+          "trouble": "全セット数と学習済みセット数を平均の分母で混同しません。"
+        },
+        {
+          "file": "app/recall/library/useSetLibrary.ts",
+          "title": "検索を純粋な絞り込みとして作る",
+          "source": {
+            "anchor": "  const filteredSets",
+            "lines": 18
+          },
+          "action": "filteredSetsの条件を読みます。セット名、説明、カードの両側を同じ検索用正規化で比較します。",
+          "why": "useMemoはsetsまたはsearchが変わったときに結果を計算します。検索用にはNFCと小文字化を使いますが、元データや採点文字列を変更する処理ではありません。",
+          "check": "TLSとtlsの検索で同じカードが見つかり、採点では違うことを確認します。",
+          "trouble": "filterで絞った配列をsetSetsへ保存すると、検索で消えたセットを削除してしまいます。filteredSetsは表示専用です。"
+        },
+        {
+          "file": "app/recall/library/LibraryView.tsx",
+          "title": "入力と状態を接続する",
+          "source": {
+            "anchor": "value={search}",
+            "lines": 9
+          },
+          "action": "LibraryViewの検索inputを開き、value、onChange、検索解除の接続を確認します。",
+          "why": "イベントから文字を取り出してsetSearchへ渡し、フックが返したfilteredSetsを一覧で描画します。検索input自身はIndexedDBにアクセスしません。",
+          "check": "空文字へ戻すと全セットが出ることを確認します。",
+          "trouble": "inputにdefaultValueだけを使うと、状態からリセットしても見た目が同期しない場合があります。"
+        },
+        {
+          "file": "app/recall/library/DashboardView.tsx",
+          "title": "ホームの操作を一覧と共有する",
+          "source": {
+            "anchor": "export function DashboardView",
+            "lines": 20
+          },
+          "action": "DashboardViewの受け取り値と操作を確認し、同じactionsがRecallAppから渡されることを照合します。",
+          "why": "新規作成や学習開始を画面ごとに別実装しません。同じコールバックをホームと一覧へ渡すことで、開始時の状態初期化も共通になります。",
+          "check": "ホームと一覧の両方から新規作成を開き、同じ編集画面になることを確認します。",
+          "trouble": "見た目が違うボタンでも、同じ役割なら同じ操作を呼びます。"
+        }
+      ],
+      "checkpoint": "npm run typecheck。検索対象、空結果、解除、ホームの統計を確認する。"
+    },
+    {
+      "id": "draft",
+      "title": "保存済みセットと編集中の下書きを分ける",
+      "goal": "入力中の不完全なカードを許し、確定保存時に必要な条件を検査する。",
+      "before": "編集用の型EditorDraftを確認済み。",
+      "route": [
+        "app/recall/types.ts",
+        "app/recall/editor/draft.ts",
+        "app/recall/editor/useSetEditor.ts",
+        "app/recall/editor/EditorView.tsx",
+        "tests/editor-draft.test.mjs"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/editor/draft.ts",
+          "title": "下書きの初期値を関数で作る",
+          "source": {
+            "anchor": "export const newDraft",
+            "lines": 8
+          },
+          "action": "newDraftを開き、空のtitleとdescription、初期カードの生成を確認します。初期枚数を変えるならcreateBlankCardsの呼び出しへ戻ります。",
+          "why": "毎回新しいIDのカードを作る関数にして、異なる新規セットで同じカードIDを使い回しません。useState(newDraft)は初回に初期値を作る遅延初期化です。",
+          "check": "新規作成を二度行って別IDになることを確認します。",
+          "trouble": "newDraftとnewDraft()は渡し方が違います。初期化の文脈を確認します。"
+        },
+        {
+          "file": "app/recall/editor/useSetEditor.ts",
+          "title": "表示用のエラーと下書きを別状態にする",
+          "source": {
+            "anchor": "  const [draft, setDraft]",
+            "lines": 15
+          },
+          "action": "フックの状態宣言へ戻り、エラー・無効フィールド・ページ・削除undoを区別します。",
+          "why": "エラー文字列と入力中のカードを同じ状態に混ぜません。editorInvalidFieldはどのinputへフォーカスするかに使います。draftStatusはセットの確定保存とは別の下書き保存状況です。",
+          "check": "未入力で保存しても入力済みの他カードが消えないことを確認します。",
+          "trouble": "エラーを消すためにsetDraft(newDraft())を呼ぶと入力内容まで失います。"
+        },
+        {
+          "file": "app/recall/editor/EditorView.tsx",
+          "title": "セット名の入力を接続する",
+          "source": {
+            "anchor": "id=\"set-title\"",
+            "lines": 17
+          },
+          "action": "EditorViewのセット名inputを開き、valueとsetDraftを照合します。文言だけ変えるなら表示部品で、下書き処理を変えるならフックへ戻ります。",
+          "why": "{ ...current, title: 新しい値 }で他のdescriptionとcardsを保持します。setDraft({ title })だけでは下書きの他項目を失います。関数形式の更新で最新値を受け取ります。",
+          "check": "セット名を入力して説明とカードが保持されることを確認します。",
+          "trouble": "入力イベントの値を遅い非同期処理の後で読む設計にする場合は、最初に文字列を取り出します。"
+        },
+        {
+          "file": "app/recall/editor/draft.ts",
+          "title": "保存済み下書きにも検証を行う",
+          "source": {
+            "anchor": "export function validDraftFromStorage",
+            "lines": 30
+          },
+          "action": "draftへ戻り、JSON解析から型・ID・文字数の検証を順に読みます。型宣言だけでは外から読んだJSONの安全性を保証しません。",
+          "why": "無効な下書きはnullを返し、未知の項目を引き継がず、改行だけ正規化します。本文の空白をtrimしてコードの意味を変えないようにします。",
+          "check": "node --experimental-strip-types --test tests/editor-draft.test.mjsで無効ID、重複ID、過大文字列を確認します。",
+          "trouble": "JSON.parseで成功しても正しいEditorDraftとは限りません。as EditorDraftで検証を省略しません。"
+        }
+      ],
+      "checkpoint": "node --experimental-strip-types --test tests/editor-draft.test.mjs。npm run typecheck。"
+    },
+    {
+      "id": "card-edit",
+      "title": "カードの編集・削除・undoを小さく接続する",
+      "goal": "カードIDを使って不変更新し、ページ表示と元データの位置を区別する。",
+      "before": "下書きはuseSetEditorが所有する。",
+      "route": [
+        "app/recall/editor/useSetEditor.ts",
+        "app/recall/editor/EditorView.tsx",
+        "app/recall/editor/useSetEditor.ts",
+        "app/recall/editor/EditorView.tsx",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/editor/useSetEditor.ts",
+          "title": "一枚の変更をIDで指定する",
+          "source": {
+            "anchor": "  function updateDraftCard",
+            "lines": 19
+          },
+          "action": "updateDraftCardへ戻り、対象IDだけ新しいオブジェクトにする処理を読みます。fieldはtermかdefinitionに限定されています。",
+          "why": "表示上の何枚目という番号でなくIDで更新します。並べ替え後でも同じカードへ変更が届きます。元の配列へ直接代入せずmapの結果を次のdraftへ返します。",
+          "check": "並べ替えたカードの片側を変更し、別カードが変わらないことを確認します。",
+          "trouble": "入力欄のkeyに配列indexを使うと、移動後の入力部品が別カードとして再利用される場合があります。"
+        },
+        {
+          "file": "app/recall/editor/EditorView.tsx",
+          "title": "表示のイベントをID付きで渡す",
+          "source": {
+            "anchor": "id={\"card-\" + card.id + \"-term\"}",
+            "lines": 18
+          },
+          "action": "カード入力欄のidとupdateDraftCardを検索して照合します。掲載の抜粋は入力欄の途中なので、親のmapとkeyも実ファイルで確認します。",
+          "why": "入力欄のidは保存時エラーのfieldIdと同じ形式です。検証が指摘したカードへフォーカスするには、名前の組合せを揃える必要があります。",
+          "check": "問題だけ入力したカードで保存し、正解欄へ移ることを確認します。",
+          "trouble": "idの名前だけを表示都合で変更すると、エラー時のフォーカスが壊れます。"
+        },
+        {
+          "file": "app/recall/editor/useSetEditor.ts",
+          "title": "削除前の位置を記録する",
+          "source": {
+            "anchor": "  function removeDraftCard",
+            "lines": 18
+          },
+          "action": "削除処理へ戻り、cardとindexをremovedDraftCardへ保存してから配列を絞る順序を確認します。",
+          "why": "undoのために削除した内容と元位置を記録します。最後のカードを消して編集不能にしない処理もここに集めます。削除確認とカード一枚のundoは異なる仕組みです。",
+          "check": "一枚削除して元に戻し、内容と順番が戻ることを確認します。",
+          "trouble": "カード削除のundoを、セット削除の永続バックアップ代わりに考えません。"
+        },
+        {
+          "file": "app/recall/editor/useSetEditor.ts",
+          "title": "undoと並べ替えの境界を処理する",
+          "source": {
+            "anchor": "  function undoRemoveDraftCard",
+            "lines": 30
+          },
+          "action": "undoの後にmoveDraftCardを読みます。挿入位置とページ計算を確認し、表示側の操作ボタンへ戻ります。",
+          "why": "配列の複製を作ってspliceや要素交換を行うので、元状態を直接変更しません。先頭より前、末尾より後の移動を許さない条件があります。",
+          "check": "先頭の上移動、末尾の下移動、ページ境界のカードを確認します。",
+          "trouble": "offsetの型-1 | 1は二つの方向だけを許す契約です。任意の数値を渡して穴を作りません。"
+        }
+      ],
+      "checkpoint": "npm run typecheck。編集・並べ替え・削除・undoと100枚単位のページ表示を確認する。"
+    },
+    {
+      "id": "draft-autosave",
+      "title": "下書きの自動保存と復元をつなぐ",
+      "goal": "入力中の内容と確定済みセットを別の保存として扱う。",
+      "before": "実習専用ブラウザープロファイルを使う。",
+      "route": [
+        "app/browserStorage.ts",
+        "app/recall/editor/draftStorage.ts",
+        "app/recall/editor/useSetEditor.ts",
+        "app/recall/editor/EditorView.tsx",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/browserStorage.ts",
+          "title": "下書きI/Oの小さな境界を読む",
+          "source": {
+            "anchor": "export async function readBrowserDraft",
+            "lines": 21
+          },
+          "action": "低レベル保存の下書きreadとsaveを読みます。入力のたびにDBを開く処理を表示部品へコピーしません。",
+          "why": "このファイルは保存APIを扱い、画面のどの編集ページを開くかは知りません。読む値は文字列なので、その後draftの検証を通す必要があります。",
+          "check": "readBrowserDraftの呼び出し先を全体検索します。",
+          "trouble": "IndexedDBの読み込み成功と下書きの形式検証成功は別段階です。"
+        },
+        {
+          "file": "app/recall/editor/draftStorage.ts",
+          "title": "旧形式の移行を一か所へ集める",
+          "source": {
+            "anchor": "export async function loadStoredDraft",
+            "lines": 28
+          },
+          "action": "draftStorageへ移り、IndexedDBから旧localStorageへ進む条件を読みます。",
+          "why": "現在の保存があるならそれを優先し、旧形式は移行する経路として扱います。旧形式を読み込む例を新規の主保存方式に戻さないようにします。",
+          "check": "型検査と下書きテストを実行します。",
+          "trouble": "旧localStorageのキーを変更しても既存データが自動で移るわけではありません。"
+        },
+        {
+          "file": "app/recall/editor/useSetEditor.ts",
+          "title": "入力の保存をまとめて行う",
+          "source": {
+            "anchor": "  useEffect(() => {\n    if (!hydrated || view",
+            "lines": 24
+          },
+          "action": "useSetEditorの下書き保存effectを開き、hydratedとviewの条件、タイマーの解除を確認します。",
+          "why": "復元前や編集画面以外の保存を避けます。短い待機で連続入力をまとめることと、確定保存の成功を保証することは違います。失敗時はdraftStatusへ反映します。",
+          "check": "数文字入力して保存表示を待ち、再読み込み後に新規作成から下書きが戻ることを確認します。",
+          "trouble": "実習の/practiceは下書き保存を持ちません。この確認は本番の編集画面で行います。"
+        },
+        {
+          "file": "app/recall/editor/useSetEditor.ts",
+          "title": "新規と既存編集の復元を分ける",
+          "source": {
+            "anchor": "  async function startNewSet",
+            "lines": 24
+          },
+          "action": "startNewSetのsetId判定を読んだ後、editSetを検索します。",
+          "why": "既存セットに属する下書きを新規セットへ復元すると複製と誤更新が起きます。setIdの有無で使う先を区別し、新規のインポート開始では古い下書きを使わない経路を選びます。",
+          "check": "既存セットの編集中に中断し、そのセットの編集から復元されることを確認します。",
+          "trouble": "新規作成時に古い内容が出ないだけで、保存を失ったとは限りません。下書きの所属を確認します。"
+        }
+      ],
+      "checkpoint": "npm run typecheck。新規下書きと既存セット下書きの二つを別々に再読み込みして確認する。"
+    },
+    {
+      "id": "save-validation",
+      "title": "保存前検証をフックから切り出す",
+      "goal": "不完全な入力、ページ境界、進捗保持のルールを純粋関数で確認する。",
+      "before": "prepareDraftSaveの入力はEditorDraftと現在のStudySet配列。",
+      "route": [
+        "app/recall/editor/prepareDraftSave.ts",
+        "tests/editor-draft.test.mjs",
+        "app/recall/shared/setHelpers.ts",
+        "app/recall/editor/prepareDraftSave.ts",
+        "app/recall/editor/useSetEditor.ts",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/editor/prepareDraftSave.ts",
+          "title": "成功と失敗の結果を型で分ける",
+          "source": {
+            "anchor": "type DraftSaveResult",
+            "lines": 12
+          },
+          "action": "結果の型と関数の先頭を開きます。statusがinvalidならfieldId、validならnextSetsがあることを照合します。",
+          "why": "検証関数は保存せず、保存してよい内容を作ります。statusで分岐するとTypeScriptが使える項目を絞ります。エラー文字列だけを返すより、正確な入力欄へ戻せます。",
+          "check": "typecheckでstatusを判定する呼び出し側を確認します。",
+          "trouble": "validという検証結果を、ディスクへの保存完了と同じ意味にしません。"
+        },
+        {
+          "file": "app/recall/editor/prepareDraftSave.ts",
+          "title": "片側だけのカードを先に見つける",
+          "source": {
+            "anchor": "  const partialIndex",
+            "lines": 15
+          },
+          "action": "タイトルの検証の後に、このカード検証を追加する位置を確認します。",
+          "why": "完全な空欄カードと、片側だけのカードは違います。前者は保存対象から外せますが、後者は入力漏れを示すのでエラーにします。Math.floorで対象の編集ページを求めます。",
+          "check": "101枚目以降に入力漏れを作り、正しいページと欄へ移動することを確認します。",
+          "trouble": "filterで不完全なカードを全部捨てると、利用者が入力した問題を黙って失います。"
+        },
+        {
+          "file": "tests/editor-draft.test.mjs",
+          "title": "ページをまたぐ失敗を先に固定する",
+          "source": {
+            "anchor": "test('a partial card",
+            "lines": 9
+          },
+          "action": "テストへ移動し、102枚のうち最後のカードに問題だけ入れる例を読みます。",
+          "why": "保存関数へ実際のデータを渡し、メッセージの見た目ではなくfieldIdとeditorPageを検査します。UIが変わっても入力漏れへの案内という仕様を固定できます。",
+          "check": "node --experimental-strip-types --test tests/editor-draft.test.mjsを実行します。",
+          "trouble": "カード位置101は102枚目です。表示番号はindex+1なので両方を区別します。"
+        },
+        {
+          "file": "app/recall/shared/setHelpers.ts",
+          "title": "順番変更と内容変更を区別する",
+          "source": {
+            "anchor": "export function cardContentMatches",
+            "lines": 12
+          },
+          "action": "補助関数へ移り、IDから元のカードを比較する処理を確認します。",
+          "why": "配列順だけ変わっても問題・解答が同じなら学習進捗を保ちます。JSON文字列全体の比較では、順番変更でも内容変更と誤判定します。",
+          "check": "メタ情報・カード順だけの変更が進捗を保持するテストを確認します。",
+          "trouble": "本文のNFC正規化やtrimをここで加えると採点上意味のある違いを消します。"
+        },
+        {
+          "file": "app/recall/editor/prepareDraftSave.ts",
+          "title": "保存候補だけを新しく組み立てる",
+          "source": {
+            "anchor": "  const saved: StudySet",
+            "lines": 14
+          },
+          "action": "prepareDraftSaveへ戻り、createdAtとupdatedAt、進捗の条件を確認します。",
+          "why": "作成時刻は既存値を保ち、更新時刻だけ今へ変えます。問題内容が変わる場合は成績と途中進捗を外します。元のセット配列を変更せずnextSetsを生成します。",
+          "check": "本文変更後に古い進捗が消え、名前変更では残るテストを確認します。",
+          "trouble": "下書きへ既存セットを直接参照させて書き換えると、保存をキャンセルしても元セットが変わります。"
+        }
+      ],
+      "checkpoint": "node --experimental-strip-types --test tests/editor-draft.test.mjs。データ変換だけのテストが画面なしで動くことを確認する。"
+    },
+    {
+      "id": "save-commit",
+      "title": "保存に成功してから画面を更新する",
+      "goal": "検証・永続保存・表示更新の順序を、一つの操作へ接続する。",
+      "before": "検証結果validは保存未完了。",
+      "route": [
+        "app/recall/editor/useSetEditor.ts",
+        "app/recall/storage/useStudyStorage.ts",
+        "app/recall/storage/usePersistence.ts",
+        "app/recall/editor/EditorView.tsx",
+        "app/recall/RecallApp.tsx",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/editor/useSetEditor.ts",
+          "title": "保存操作の前半を小さく読む",
+          "source": {
+            "anchor": "  async function saveDraft",
+            "lines": 21
+          },
+          "action": "saveDraftの冒頭を開きます。多重保存のガード、検証、無効入力への移動を確認してから後半へ進みます。",
+          "why": "保存中に二つの確定操作を重ねないことと、不正な下書きを保存しないことを先に処理します。エラー時はreturnで先へ進ませません。",
+          "check": "未入力のタイトル、空セット、片側だけのカードを確認します。",
+          "trouble": "画面を閉じるgoToを検証前へ移すと、エラー修正の場所を失います。"
+        },
+        {
+          "file": "app/recall/editor/useSetEditor.ts",
+          "title": "待ってから共有状態を変える",
+          "source": {
+            "anchor": "await persistSetsForExplicitAction",
+            "lines": 18
+          },
+          "action": "同じ関数の後半へ移り、awaitとsetSetsの位置を一行ずつ追います。",
+          "why": "永続保存が拒否されればcatchへ進み、共有セットの成功表示へ進みません。警告付き成功もあるため、結果のfolderWarningとbrowserBackupWarningを表示に反映します。",
+          "check": "保存後の一覧に一度だけセットが追加されることを確認します。",
+          "trouble": "PromiseをawaitせずすぐsetSetsすると保存失敗でも成功したように見えます。"
+        },
+        {
+          "file": "app/recall/storage/useStudyStorage.ts",
+          "title": "公開する保存APIだけを使う",
+          "source": {
+            "anchor": "    persistSetsForExplicitAction:",
+            "lines": 5
+          },
+          "action": "保存フックの公開APIへ戻り、画面側が内部refを直接受け取っていないことを確認します。",
+          "why": "保存キューやrevisionをUIが勝手に変更すると競合検知が壊れます。保存側が手順を所有し、編集側は検証済みnextSetsを渡します。",
+          "check": "editorのimportにbrowserRevisionRefなどがないことを確認します。",
+          "trouble": "型エラーをanyで消して内部状態に触らないようにします。"
+        },
+        {
+          "file": "app/recall/editor/EditorView.tsx",
+          "title": "保存中のボタン状態へ戻る",
+          "source": {
+            "anchor": "            {explicitSaveInProgress ? \"保存中…\" : \"保存\"}",
+            "lines": 14
+          },
+          "action": "EditorViewで保存ボタンのdisabledとsaveDraftの呼び出しを検索します。この抜粋は宣言位置なので、検索結果のボタン位置も確認します。",
+          "why": "見た目のdisabledだけでなく操作関数のガードも必要です。キーボードや別操作から呼ばれても保存を重ねないためです。",
+          "check": "保存を連打し、セットが二重に作られないことを確認します。",
+          "trouble": "disabledボタンをCSSだけで薄くして、操作自体を許す実装にしません。"
+        }
+      ],
+      "checkpoint": "npm run typecheck。保存成功、検証失敗、多重操作を確認する。"
+    },
+    {
+      "id": "study-start",
+      "title": "学習設定をUIから保存可能な進捗へ渡す",
+      "goal": "一時的な開始設定と、途中再開するセッションの設定を区別する。",
+      "before": "StudyProgressのバージョンは3。旧進捗はモデルで移行する。",
+      "route": [
+        "app/model.ts",
+        "app/recall/study/useStudySession.ts",
+        "app/recall/study/StudyReadyView.tsx",
+        "app/recall/RecallApp.tsx",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/model.ts",
+          "title": "途中進捗へ必要な設定を記録する",
+          "source": {
+            "anchor": "export type StudyProgress =",
+            "lines": 22
+          },
+          "action": "モデルの進捗型を開き、direction、batchSize、allowParentheticalOmission、phaseを確認します。",
+          "why": "途中再開時に設定を画面の既定値だけから読むと、開始時と違う採点になります。セッションが使う条件を進捗内へ保存します。バージョン値は保存形式の契約です。",
+          "check": "旧versionの移行テストを確認します。",
+          "trouble": "新しい設定項目を追加するだけでversion1/2の保存が正しくなるとは限りません。読込時の既定値も必要です。"
+        },
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "開始前の設定を状態で持つ",
+          "source": {
+            "anchor": "  const [direction",
+            "lines": 14
+          },
+          "action": "学習フックの冒頭へ移り、出題方向・シャッフル・カッコ省略・グループ数を確認します。",
+          "why": "ここは新しいセッションを作る前の選択状態です。学習中はstudyRunに保存したdirectionを優先します。画面で設定を変えても、途中の進捗を書き換える経路にはしません。",
+          "check": "開始設定を変え、開始後の出題方向を確認します。",
+          "trouble": "ready画面のdirectionとstudyRun.directionを混同しません。"
+        },
+        {
+          "file": "app/recall/study/StudyReadyView.tsx",
+          "title": "カッコ省略設定を表示へつなぐ",
+          "source": {
+            "anchor": "allowParentheticalOmission}",
+            "lines": 18
+          },
+          "action": "設定チェックボックスを検索し、checkedと変更関数の接続を確認します。",
+          "why": "チェック値はbooleanで、表示文言も選択に応じて変わります。値を文字列のtrueとして渡しません。設定の意味を利用者へ表示することで、判定結果を予測できるようにします。",
+          "check": "チェックオンとオフの説明が切り替わることを確認します。",
+          "trouble": "defaultCheckedだけだと、復元した値に表示が同期しない場合があります。"
+        },
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "開始操作でモデルへ渡す",
+          "source": {
+            "anchor": "  function beginSession",
+            "lines": 20
+          },
+          "action": "フックへ戻り、カードIDの順序とcreateStudyProgressの引数を読みます。",
+          "why": "シャッフルはIDの順序を新しい配列で作り、カード本文を変えません。createStudyProgressがグループやphaseの整合した初期状態を作ります。",
+          "check": "問題数1と15、シャッフルあり・なしを確認します。",
+          "trouble": "画面で独自の進捗オブジェクトを手書きして、モデルの検証条件とずらさないようにします。"
+        }
+      ],
+      "checkpoint": "node --experimental-strip-types --test tests/model.test.mjs。開始設定を実画面で確認する。"
+    },
+    {
+      "id": "study-answer",
+      "title": "回答・不正解・再入力を一つずつ接続する",
+      "goal": "画面の条件描画から独立した学習状態遷移を理解する。",
+      "before": "phaseはquestion、retype、correct、batch-completeなど。",
+      "route": [
+        "app/recall/study/useStudySession.ts",
+        "app/model.ts",
+        "app/recall/study/StudyView.tsx",
+        "app/recall/study/StudyMessage.tsx",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "現在の問題と正解をIDから取り出す",
+          "source": {
+            "anchor": "  const currentStudyCard",
+            "lines": 17
+          },
+          "action": "currentStudyCardからexpectedAnswer/currentPromptまで読みます。",
+          "why": "モデルの現在IDを使って元のcardsから一枚を探し、出題方向で両側を入れ替えます。問題を移動するたびにカード配列そのものを削る設計ではありません。",
+          "check": "問題→解答と逆方向の両方で内容を確認します。",
+          "trouble": "findで見つからない場合に無条件でtermを読まないようにします。空のセットや変更済み進捗を考えます。"
+        },
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "回答の送信で採点を呼ぶ",
+          "source": {
+            "anchor": "  function submitAnswer",
+            "lines": 26
+          },
+          "action": "submitAnswerを開き、フォーム制御、phaseのガード、空入力、文字上限、モデル呼び出しの順を読みます。",
+          "why": "画面がquestionでないときに同じ送信を処理しません。正答はrecordCorrectStudyAnswer、不正解はrecordWrongStudyAnswerへ渡し、共通のcommitで進捗を更新します。",
+          "check": "TLSとtlsで結果が違い、不正解では再入力へ移ることを確認します。",
+          "trouble": "不正解の時点で即座に次問へ移すと、必須再入力の仕様を飛ばしてしまいます。"
+        },
+        {
+          "file": "app/model.ts",
+          "title": "再入力後も自力正解とは区別する",
+          "source": {
+            "anchor": "export function recordSuccessfulRetype",
+            "lines": 13
+          },
+          "action": "モデルへ移り、再入力成功の遷移を読みます。",
+          "why": "正答を見て写したことと、見ずに答えたことは別です。再入力成功後も再出題で自力正解する必要があり、成績の初回正答と取り違えません。",
+          "check": "再入力だけで全カード習得にならないことをモデルテストと実画面で確認します。",
+          "trouble": "retype成功時にrecordCorrectStudyAnswerを呼ぶと学習ルールが変わります。"
+        },
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "再入力欄の専用送信をつなぐ",
+          "source": {
+            "anchor": "  function submitRetype",
+            "lines": 25
+          },
+          "action": "フックへ戻り、retypeAnswerを比較してからrecordSuccessfulRetypeへ進む処理を読みます。",
+          "why": "answerとretypeAnswerは別の入力状態です。不正解の文字を残したまま正答を写すのではなく、専用欄とphaseで操作を区別します。",
+          "check": "間違った再入力では次へ進まず、正答の再入力で再出題へ進むことを確認します。",
+          "trouble": "通常回答のカッコ省略ルールと再入力の処理条件は、現在の関数の実装とテストを照合します。勝手に同じと仮定しません。"
+        },
+        {
+          "file": "app/recall/study/StudyMessage.tsx",
+          "title": "入力エラーの表示を共通化する",
+          "source": {
+            "anchor": "export function StudyMessage",
+            "lines": 10
+          },
+          "action": "StudyMessageへ移り、文字列が空なら表示しない処理を読みます。",
+          "why": "エラーメッセージの表示部品は採点しません。学習フックが決めた文言を表示し、同じ意味の属性を回答欄と再入力欄で使います。",
+          "check": "空送信や過大入力の案内を確認します。",
+          "trouble": "正解/不正解のphaseと、入力エラーのmessageは別の値です。"
+        }
+      ],
+      "checkpoint": "対象モデルテスト。実画面で不正解→誤った再入力→正しい再入力→再出題→自力正解を一周する。"
+    },
+    {
+      "id": "study-progress",
+      "title": "回答ごとの保存と途中再開をつなぐ",
+      "goal": "画面の現在状態とセット内の保存用進捗を同期し、完了時の成績を作る。",
+      "before": "保存フックがsets変更を監視する。",
+      "route": [
+        "app/recall/study/useStudySession.ts",
+        "app/recall/storage/usePersistence.ts",
+        "app/recall/study/StudyReadyView.tsx",
+        "app/recall/study/StudyView.tsx",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "進捗変更を共通commitへ集める",
+          "source": {
+            "anchor": "  function commitStudyProgress",
+            "lines": 16
+          },
+          "action": "共通commitを開き、studyRunとセット内studyProgressの二つを更新する順を確認します。",
+          "why": "現在の画面の状態を更新すると同時に、保存対象のsetsへ同じ進捗を入れます。各回答分岐で異なる保存方法を増やさず、自動保存へ共通の変更を渡します。",
+          "check": "回答後にセットのstudyProgressが変わることを確認します。",
+          "trouble": "studyRunだけ更新すると、再読み込みで続きが失われます。"
+        },
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "保存した進捗を検証して再開する",
+          "source": {
+            "anchor": "  function resumeSession",
+            "lines": 21
+          },
+          "action": "resumeSessionを読み、現在のcardsに対して再開可能か検査する条件を確認します。",
+          "why": "カード削除や本文変更後の古い進捗を無条件で使いません。設定、順序、入力欄などを保存状態から戻し、必要な画面を選びます。",
+          "check": "不正解後に再読み込みし、再入力画面へ戻ることを確認します。",
+          "trouble": "再読み込み前のReactのstateは保存ではありません。IndexedDBにある進捗を読む必要があります。"
+        },
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "次問と次グループをモデルへ渡す",
+          "source": {
+            "anchor": "  function nextQuestion",
+            "lines": 17
+          },
+          "action": "nextQuestionとbeginNextBatchを読みます。画面のifの中で進捗を直接組み立てずモデルの結果に従います。",
+          "why": "グループ内で習得したカードと再出題対象をモデルが整理します。batch-completeとセット全体completeは違う結果です。",
+          "check": "問題数1で最初のグループを終え、次グループが解放されることを確認します。",
+          "trouble": "グループ数とカード合計数の表示を混同しません。"
+        },
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "完了時にスコアと時刻を更新する",
+          "source": {
+            "anchor": "  function finishSession",
+            "lines": 21
+          },
+          "action": "finishSessionへ戻り、lastScore、lastStudiedAt、studyProgressの最終値を確認します。",
+          "why": "スコアは初回正答を基準にモデルで計算し、表示が独自に別の割合を計算しません。完了画面へ移る前に保存対象を更新します。",
+          "check": "一問を初回正解、一問を再入力経由で習得し、初回正答率が50%になることを確認します。",
+          "trouble": "習得率100%と初回正答率50%は同時に成立します。違う指標だからです。"
+        }
+      ],
+      "checkpoint": "回答後、再入力後、グループ終了後の再読み込みを確認する。全セット完了まで一周する。"
+    },
+    {
+      "id": "code-editor",
+      "title": "コード入力部品とキーボード操作を接続する",
+      "goal": "Enterの改行、Ctrl+Enterの採点、正解後の移動を区別する。",
+      "before": "CodeAnswerEditorは同梱の独立部品。textareaへ丸ごと置換しない。",
+      "route": [
+        "app/CodeAnswerEditor.tsx",
+        "app/recall/study/useStudySession.ts",
+        "app/recall/study/StudyView.tsx",
+        "tests/code-editor.test.mjs",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/CodeAnswerEditor.tsx",
+          "title": "入力部品の公開ハンドルを読む",
+          "source": {
+            "anchor": "export type CodeAnswerEditorHandle",
+            "lines": 13
+          },
+          "action": "CodeAnswerEditorの公開型を開きます。内部のCodeMirror実装を学習フックへ持ち出しません。",
+          "why": "focusなど必要な操作だけをref経由で公開します。学習フックはCodeMirrorの内部Viewへ直接依存せず、入力部品の契約に従います。",
+          "check": "型検査でCodeAnswerEditorHandleの利用先を確認します。",
+          "trouble": "ref.currentは初回はnullです。?.focus()で存在してから操作します。"
+        },
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "回答欄と再入力欄のrefを分ける",
+          "source": {
+            "anchor": "  const answerInputRef",
+            "lines": 5
+          },
+          "action": "学習フックへ移り、二つの入力refとフォームrefを確認します。",
+          "why": "Ctrl+Enterは適切なフォームを送信し、phaseが変わった後は適切な入力へフォーカスします。別の欄のrefを使うと、画面は正しくても操作先がずれます。",
+          "check": "回答→再入力の切替でカーソル位置を確認します。",
+          "trouble": "refを状態変数の代わりに使って入力表示を更新しません。"
+        },
+        {
+          "file": "app/recall/study/StudyView.tsx",
+          "title": "表示から入力部品へ値と操作を渡す",
+          "source": {
+            "anchor": "                id=\"study-answer\"",
+            "lines": 24
+          },
+          "action": "StudyViewの入力部品を開き、value、onChange、onSubmit、ref、言語の接続を照合します。再入力側の同じ部品も検索して確認します。",
+          "why": "入力部品を再利用しても、通常回答と再入力の値は混ぜません。入力上限と無効状態をPropsとして渡し、通常のEnterは改行に使います。",
+          "check": "複数行の解答を書き、Enterで改行、Ctrl+Enterで採点になることを確認します。",
+          "trouble": "文書全体にEnter送信を登録するとCodeMirrorの改行と競合します。"
+        },
+        {
+          "file": "app/recall/study/useStudySession.ts",
+          "title": "正解後のEnterだけを移動へ使う",
+          "source": {
+            "anchor": "    function handleNextQuestionKey",
+            "lines": 30
+          },
+          "action": "グローバルキー処理を開き、interactiveTargetとshouldAdvanceStudyOnEnterの条件を確認します。",
+          "why": "日本語変換中、キーリピート、修飾キー、入力やボタン上の操作を除きます。modalOpen中も処理を登録しないので、確認画面のEnterが学習へ漏れません。",
+          "check": "日本語変換確定のEnter、ボタン上のEnter、正解後の背景でのEnterを別々に確認します。",
+          "trouble": "isComposingだけでなく現在の入力部品やフォーカスも関係します。条件を一つだけ残して簡略化しません。"
+        }
+      ],
+      "checkpoint": "node --experimental-strip-types --test tests/code-editor.test.mjs tests/model.test.mjs。実画面でキーボードを確認する。"
+    },
+    {
+      "id": "flashcards",
+      "title": "フラッシュカードの表裏と順序を分ける",
+      "goal": "カードのデータを変えず、表示順と位置だけをフックで管理する。",
+      "before": "activeSetIdは入口から共通で渡される。",
+      "route": [
+        "app/recall/shared/setHelpers.ts",
+        "app/recall/flashcards/useFlashcards.ts",
+        "app/recall/flashcards/FlashcardsView.tsx",
+        "app/recall/RecallApp.tsx",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/shared/setHelpers.ts",
+          "title": "シャッフルで元配列を保持する",
+          "source": {
+            "anchor": "export function shuffleIds",
+            "lines": 10
+          },
+          "action": "補助関数を開き、最初に配列を複製することを確認します。",
+          "why": "表示順を変えるだけの操作で元セットのカード順を変更しません。ランダムに要素を交換する処理はフックから独立しています。",
+          "check": "返したIDの数と集合が元と同じであることを確認します。",
+          "trouble": "sort(() => Math.random() - 0.5)へ安易に替えると、均等な順序を作る保証がありません。"
+        },
+        {
+          "file": "app/recall/flashcards/useFlashcards.ts",
+          "title": "表示順・位置・裏返しを別状態にする",
+          "source": {
+            "anchor": "export function useFlashcards",
+            "lines": 21
+          },
+          "action": "フックを開いて状態を追います。カードを探す処理ではID順と現在位置を使います。",
+          "why": "flippedは表裏、位置は何番目、順序はID配列です。学習進捗とは別の表示状態なので、カードをめくるだけで採点結果は変わりません。",
+          "check": "別セットを開いたとき表裏と位置がリセットされることを確認します。",
+          "trouble": "activeSetの本文を入れ替えて裏返しを表現すると保存内容が変わってしまいます。"
+        },
+        {
+          "file": "app/recall/flashcards/FlashcardsView.tsx",
+          "title": "表示部品へ戻り操作を渡す",
+          "source": {
+            "anchor": "export function FlashcardsView",
+            "lines": 25
+          },
+          "action": "表示の受け取り値と現在カードの計算を確認し、裏返しボタンと次へ操作まで追います。",
+          "why": "この画面は状態更新の方法を知らず、フックの操作を使います。空のセットや最後の位置の条件を表示と操作の両方で守ります。",
+          "check": "裏返し、前後移動、シャッフル、学習への移動を確認します。",
+          "trouble": "現在位置が0のとき-1番目のカードを読む計算にならないようにします。"
+        }
+      ],
+      "checkpoint": "npm run typecheck。カードの両面と前後移動を実画面で確認する。"
+    },
+    {
+      "id": "storage-state",
+      "title": "保存の内部状態と公開APIを分ける",
+      "goal": "revisionや保存キューを画面へ漏らさず、専用フックの中で連携する。",
+      "before": "保存内容を読む前にサンプルを保存しない。",
+      "route": [
+        "app/recall/storage/useStorageState.ts",
+        "app/recall/storage/useStudyStorage.ts",
+        "app/recall/storage/constants.ts",
+        "app/recall/shared/LoadingScreen.tsx",
+        "app/recall/RecallApp.tsx"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/storage/useStorageState.ts",
+          "title": "画面に見える保存状態を宣言する",
+          "source": {
+            "anchor": "export function useStorageState",
+            "lines": 23
+          },
+          "action": "sets、hydrated、storageMode、storageWriteStateを読みます。保存先モードと現在の書込状態を別の値として扱います。",
+          "why": "folderを選んでいても書込errorになり得ます。保存先と成功状態を一つの文字列で表すと組合せが失われます。hydrated=falseは復元前を示します。",
+          "check": "各状態がStorageDialogのどの表示に使われるか追います。",
+          "trouble": "savedという表示だけで全バックアップ先の成功を推測しません。警告も確認します。"
+        },
+        {
+          "file": "app/recall/storage/useStorageState.ts",
+          "title": "再描画不要の内部参照を用意する",
+          "source": {
+            "anchor": "  const directoryHandleRef",
+            "lines": 16
+          },
+          "action": "同ファイルのref群を開き、ハンドル・世代番号・元ファイル文字列・キューを区別します。",
+          "why": "非同期保存が遅れて完了したとき、接続が変わっていないか世代番号で確認します。currentを書き換えても表示は変わらないので、画面の通知にはstateも使います。",
+          "check": "内部refがuseStudyStorageの戻り値に直接含まれないことを確認します。",
+          "trouble": "StateとRefの用途を同じにせず、画面へ見せたい値はstateへ反映します。"
+        },
+        {
+          "file": "app/recall/storage/useStudyStorage.ts",
+          "title": "保存機能を組み立てる",
+          "source": {
+            "anchor": "export function useStudyStorage",
+            "lines": 21
+          },
+          "action": "公開保存フックへ戻り、state→persistence→hydration→folder→backupsの順を読みます。",
+          "why": "低レベルI/Oと画面をつなぐ機能フックをここで組み合わせます。このファイルへ全I/Oを移すと再び巨大な一枚になるため、責務ごとに委譲します。",
+          "check": "各フックへ同じstateを渡していることを確認します。",
+          "trouble": "ReturnTypeは公開APIの型です。新しい操作を戻り値へ加えると、表示側で使う契約にも反映されます。"
+        },
+        {
+          "file": "app/recall/storage/constants.ts",
+          "title": "保存キーと復元の待ち時間を共有する",
+          "source": {
+            "anchor": "export const STORAGE_QUARANTINE_KEY",
+            "lines": 12
+          },
+          "action": "定数を開き、旧キーが互換のため残ることを確認します。",
+          "why": "ファイルを分けても保存キーまで別名にする必要はありません。今回の分割は保存データを別の場所へ移す変更ではなく、処理の配置を変えています。",
+          "check": "既存のテストがキーとタイムアウトを参照することを確認します。",
+          "trouble": "キー名を変えると古いデータが見えなくなるので、見た目の整理だけで変更しません。"
+        },
+        {
+          "file": "app/recall/RecallApp.tsx",
+          "title": "復元が終わるまで読み込み表示を出す",
+          "source": {
+            "anchor": "  if (!hydrated)",
+            "lines": 3
+          },
+          "action": "入口へ戻り、LoadingScreenへの分岐を確認します。LoadingScreenのrole/statusも開きます。",
+          "why": "フックは先に呼び、復元の結果に従って操作可能な画面を出します。条件の中でフックを呼ぶわけではありません。",
+          "check": "初回起動の読み込み表示が操作画面へ切り替わることを確認します。",
+          "trouble": "読み込みの分岐を保存監視の開始条件から独立に消すと初期値の上書きが起きる可能性があります。"
+        },
+        {
+          "file": "app/recall/shared/LoadingScreen.tsx",
+          "title": "読み込み中の見た目と意味を独立部品へ置く",
+          "source": {
+            "anchor": "export function LoadingScreen",
+            "lines": 14
+          },
+          "action": "LoadingScreenへ移り、aria-busy、視覚用のロゴ、role=statusの文言を読みます。復元の処理はここへ加えず、画面の見た目だけを編集します。",
+          "why": "保存先を確認中という意味を支援技術へ伝えます。視覚用ロゴと読み上げ文言を分けることで、ブランド文字の繰り返しを避けます。LoadingScreenは状態を所有せず、入口が表示するか決めます。",
+          "check": "起動時の表示と、復元完了後に操作画面へ切り替わることを確認します。",
+          "trouble": "ローディングの見た目を変えるためにhydratedを強制trueへしません。復元と自動保存のガードを保ちます。"
+        }
+      ],
+      "checkpoint": "node --experimental-strip-types --test tests/startup-recovery.test.mjs。npm run typecheck。"
+    },
+    {
+      "id": "hydration",
+      "title": "起動時復元と遅延・破損を一つずつ扱う",
+      "goal": "遅い読み込みと壊れた読み込みで、安全な停止を選ぶ理由を理解する。",
+      "before": "本番データを壊す実験をせず、既存テストと実習専用データを使う。",
+      "route": [
+        "app/browserStorage.ts",
+        "app/recall/storage/useStorageHydration.ts",
+        "app/recall/shared/LoadingScreen.tsx",
+        "tests/startup-recovery.test.mjs",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/browserStorage.ts",
+          "title": "読込結果を成功・欠落・異常で分ける",
+          "source": {
+            "anchor": "export type BrowserSnapshotReadResult",
+            "lines": 6
+          },
+          "action": "低レベルAPIの結果型を開きます。missingとinvalidとunavailableを区別します。",
+          "why": "データがない場合は初期値を使えますが、壊れた場合を空と扱うと上書きで元データを消します。例外を全部空配列へ置き換えないための契約です。",
+          "check": "起動復旧テストのタイムアウト・接続cleanupを確認します。",
+          "trouble": "読み取れないことはデータが存在しないことと同義ではありません。"
+        },
+        {
+          "file": "app/recall/storage/useStorageHydration.ts",
+          "title": "復元タイムアウトで画面だけ先に解放する",
+          "source": {
+            "anchor": "    const restoreTimeout",
+            "lines": 17
+          },
+          "action": "タイマーの分岐を読み、setHydrated(true)と自動上書き停止を一組で確認します。",
+          "why": "永遠に読み込み表示を続けない一方、保存内容が不明なまま初期値を上書きしません。画面を表示することと保存を許可することを別に制御します。",
+          "check": "保存領域が遅延する条件は自動テストで確認します。",
+          "trouble": "タイムアウトした後も遅れた非同期処理は到着し得ます。cancelledやinitialSetsCommittedの検査が必要です。"
+        },
+        {
+          "file": "app/recall/storage/useStorageHydration.ts",
+          "title": "ブラウザーの有効な世代を受け取る",
+          "source": {
+            "anchor": "      const browserSnapshot =",
+            "lines": 21
+          },
+          "action": "ブラウザー復元の分岐を読みます。validならsets、revision、削除済みIDを一緒に受け取ります。",
+          "why": "セット配列だけを読むと削除済みIDが失われ、古いフォルダーから復活する可能性があります。保存スナップショットを一つの契約として扱います。",
+          "check": "missingだけが旧形式への移行へ進むことを確認します。",
+          "trouble": "invalidのデータを旧形式の空状態に置き換えて保存しないようにします。"
+        },
+        {
+          "file": "app/recall/storage/useStorageHydration.ts",
+          "title": "二つの保存が違うとき黙って選ばない",
+          "source": {
+            "anchor": "                    // Do not silently pick a winner",
+            "lines": 17
+          },
+          "action": "フォルダー読込後の内容差検知を開きます。blockedにして通知を出す分岐を読みます。",
+          "why": "起動時に二つの永続コピーが異なる場合、時刻だけで勝者を選んで上書きしません。明示的な再接続で統合する機能とは違う局面です。",
+          "check": "競合保護のテストを確認し、実習では別の空フォルダーだけを接続します。",
+          "trouble": "mergeStudySetsを起動時に無条件追加して警告を消すと、安全に停止する契約を変えてしまいます。"
+        }
+      ],
+      "checkpoint": "対象起動復旧・保存テスト。起動して既存の実習セットが保持されることを確認する。"
+    },
+    {
+      "id": "persistence",
+      "title": "保存キュー・自動保存・競合を分けて理解する",
+      "goal": "非同期保存を直列化し、操作の成功と予備コピーの警告を区別する。",
+      "before": "保存のstateとrefの役割を確認済み。",
+      "route": [
+        "app/recall/storage/usePersistence.ts",
+        "app/browserStorage.ts",
+        "app/fileStorage.ts",
+        "app/recall/storage/useStudyStorage.ts",
+        "tests/fileStorage.test.mjs"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/storage/usePersistence.ts",
+          "title": "ブラウザー保存をキューへ積む",
+          "source": {
+            "anchor": "  const queueBrowserSave",
+            "lines": 25
+          },
+          "action": "queueBrowserSaveのuseCallbackを開き、前のPromiseから次をつなぐ処理を読みます。",
+          "why": "連続入力で複数の保存が走っても順番を保ちます。revisionと世代番号を読み、別のタブや古い接続の結果を誤って反映しません。useCallbackは依存が同じ間の関数参照を保ちます。",
+          "check": "キューを待つ箇所と失敗を捕捉する箇所を確認します。",
+          "trouble": "キューへの登録成功は保存完了ではありません。返されたPromiseの結果まで扱います。"
+        },
+        {
+          "file": "app/browserStorage.ts",
+          "title": "世代の比較をI/Oの中で行う",
+          "source": {
+            "anchor": "export async function saveBrowserStudySnapshot",
+            "lines": 25
+          },
+          "action": "低レベル保存を開き、expectedRevisionを確認します。",
+          "why": "保存内容を読む処理と新しい内容を書く処理をトランザクション内で比較し、古い世代の保存を拒否します。画面だけで比較すると、比較と書込の間に別タブが入れます。",
+          "check": "BrowserStorageConflictErrorの処理先を検索します。",
+          "trouble": "競合をcatchしてそのまま強制上書きに切り替えないようにします。"
+        },
+        {
+          "file": "app/recall/storage/usePersistence.ts",
+          "title": "明示保存で失敗時の状態を戻す",
+          "source": {
+            "anchor": "  async function persistSetsForExplicitAction",
+            "lines": 28
+          },
+          "action": "明示保存の前半を読み、保存中ガードと元の削除済みIDを保つ処理を確認します。",
+          "why": "セット削除やバックアップ復元は確定処理です。永続保存に失敗した場合、画面だけでなく削除IDも元へ戻して整合性を保ちます。",
+          "check": "成功時とcatchの両方でexplicitSaveInProgressの解除を確認します。",
+          "trouble": "finallyの解除がないと、一回失敗した後ずっと保存中になる可能性があります。"
+        },
+        {
+          "file": "app/recall/storage/usePersistence.ts",
+          "title": "画面非表示の最後の変更を処理する",
+          "source": {
+            "anchor": "    function flushWhenHidden",
+            "lines": 14
+          },
+          "action": "visibilitychangeのハンドラーを開き、最新setsのrefを使う理由を確認します。",
+          "why": "イベント登録時の古いsetsを閉じ込めたままにせず、最新値を読んで保存します。タブが隠れた時のフラッシュは補助であり、ブラウザー終了時の完了を無条件保証するものではありません。",
+          "check": "一枚変更後に別タブへ移動し、戻って再読み込みで保持されることを確認します。",
+          "trouble": "終了直前の非同期処理だけに保存を依存させません。通常の自動保存も必要です。"
+        }
+      ],
+      "checkpoint": "node --experimental-strip-types --test tests/fileStorage.test.mjs tests/startup-recovery.test.mjs。保存後の再読み込みを確認する。"
+    },
+    {
+      "id": "folder",
+      "title": "フォルダー接続・統合・切断を往復して作る",
+      "goal": "フォルダーAPIの権限と、安全なデータ統合を画面から切り離す。",
+      "before": "Chrome/Edgeの対応環境。実習用の空フォルダーを使う。",
+      "route": [
+        "app/fileStorage.ts",
+        "app/recall/storage/mergeStudySets.ts",
+        "tests/editor-draft.test.mjs",
+        "app/recall/storage/folderWriteLock.ts",
+        "app/recall/storage/useFolderStorage.ts",
+        "app/recall/storage/StorageDialog.tsx"
+      ],
+      "steps": [
+        {
+          "file": "app/fileStorage.ts",
+          "title": "利用可能か確認してから選択を呼ぶ",
+          "source": {
+            "anchor": "export function supportsProjectFolderStorage",
+            "lines": 17
+          },
+          "action": "支持判定とchooseProjectFolderの入口を開きます。未対応環境でメソッドを無条件に呼びません。",
+          "why": "File System Access APIはブラウザーと権限に依存します。フォルダー選択はクリックなど利用者の操作から行い、起動時に突然選択画面を出しません。",
+          "check": "未対応環境ではブラウザー保存を使えることを確認します。",
+          "trouble": "手動で選べるフォルダーとサーバーが読むプロジェクトルートは別です。"
+        },
+        {
+          "file": "app/recall/storage/mergeStudySets.ts",
+          "title": "削除済みIDと時刻で統合する",
+          "source": {
+            "anchor": "export function mergeStudySets",
+            "lines": 28
+          },
+          "action": "純粋な統合関数を開きます。deletedSetIds、bounded timestamp、同時刻時の優先を確認します。",
+          "why": "同じIDは適正範囲の更新時刻で比較し、同時刻ならブラウザー側を保ちます。極端な未来時刻を無条件に最新版とせず、削除IDは取り込みません。",
+          "check": "統合テストで同時刻、未来時刻、削除IDを確認します。",
+          "trouble": "配列を連結するだけだと同じIDが重複し、削除済みセットも復活します。"
+        },
+        {
+          "file": "app/recall/storage/folderWriteLock.ts",
+          "title": "書込の直列化を小さな関数へ集める",
+          "source": {
+            "anchor": "export async function",
+            "lines": 20
+          },
+          "action": "Web Locksの利用と未対応時の経路を読みます。",
+          "why": "複数タブが同時に同じ書込を始めることを調整します。ただしロックだけでファイル内容の競合検証は完了しないため、fileStorage側の比較も残します。",
+          "check": "fileStorageテストで書込・abort・競合を確認します。",
+          "trouble": "ロックを加えたから外部エディターの変更も消してよいわけではありません。"
+        },
+        {
+          "file": "app/recall/storage/useFolderStorage.ts",
+          "title": "接続操作で検証と統合を呼ぶ",
+          "source": {
+            "anchor": "  async function connectProjectFolder",
+            "lines": 27
+          },
+          "action": "接続フックへ戻り、選択、読込、統合、保存の順を実ファイル全体で追います。",
+          "why": "UIが選んだハンドルを受け、保存機能内部の状態へ反映します。切替中フラグや世代番号を管理し、古い保存が新フォルダーへ誤って届かないようにします。",
+          "check": "初回の空フォルダー、既存の実習セットあり、選択キャンセルを確認します。",
+          "trouble": "選択キャンセルをデータ消失エラーとして扱わず、元の保存先を保ちます。"
+        },
+        {
+          "file": "app/recall/storage/useFolderStorage.ts",
+          "title": "切断前のブラウザー反映を確認する",
+          "source": {
+            "anchor": "  async function disconnectProjectFolder",
+            "lines": 28
+          },
+          "action": "切断処理へ戻ります。ハンドルを消す前にブラウザーへ保存する条件を確認します。",
+          "why": "同期先をやめてもセットが残るようにします。ブラウザーrevision競合を無視して切断すると、別タブの変更を上書きしてしまいます。",
+          "check": "切断後の再読み込みでセットを保持し、保存先がブラウザーになることを確認します。",
+          "trouble": "表示だけfolderからbrowserへ変えても、保存済みハンドルは残ります。I/Oの解除と表示を両方行います。"
+        }
+      ],
+      "checkpoint": "対象保存テスト。実習用空フォルダーの接続・変更・切断・再起動を確認する。"
+    },
+    {
+      "id": "backup",
+      "title": "バックアップを読込・検証・確認・確定に分ける",
+      "goal": "復元前に内容を検証し、確定後の全画面の一時状態をリセットする。",
+      "before": "バックアップは自分の実習用データだけを使う。",
+      "route": [
+        "app/backupFile.ts",
+        "app/recall/storage/backupFiles.ts",
+        "app/recall/storage/useBackupManagement.ts",
+        "app/recall/storage/BackupRestoreDialog.tsx",
+        "app/recall/RecallApp.tsx",
+        "tests/backupFile.test.mjs"
+      ],
+      "steps": [
+        {
+          "file": "app/backupFile.ts",
+          "title": "復元ファイルの契約を先に読む",
+          "source": {
+            "anchor": "export type RecallBackup =",
+            "lines": 13
+          },
+          "action": "バックアップ型と解析結果を開きます。setsだけでなくバージョンと削除済みIDが含まれることを確認します。",
+          "why": "バックアップは通常のsets.jsonと同じ形ではありません。appVersionとschemaの確認、JSONのサイズ・深さの検査が必要です。ファイル名だけで中身を信用しません。",
+          "check": "node --experimental-strip-types --test tests/backupFile.test.mjsを実行します。",
+          "trouble": "通常のセットJSONを名前だけ変更してバックアップとして使いません。"
+        },
+        {
+          "file": "app/recall/storage/backupFiles.ts",
+          "title": "ファイル読み込みに上限と期限を設ける",
+          "source": {
+            "anchor": "export function readBackupFileText",
+            "lines": 26
+          },
+          "action": "命名と読み込みの補助関数を確認します。非同期の読込にタイムアウトがあることを読みます。",
+          "why": "保存UIのイベントの中へすべてのFileReader処理を置かず、I/Oの小さな境界にします。読めた文字列は次にparseRecallBackupへ渡します。 ファイルサイズの上限は呼び出すuseBackupManagement側で確認し、この補助関数は読み取りとタイムアウトを担当します。",
+          "check": "過大・壊れた入力は既存バックアップテストで確認します。",
+          "trouble": "JSON.parse成功だけで復元ボタンを出しません。スキーマ検証まで通します。"
+        },
+        {
+          "file": "app/recall/storage/useBackupManagement.ts",
+          "title": "復元候補を作り、まだ保存しない",
+          "source": {
+            "anchor": "  async function handleBackupFileSelection",
+            "lines": 26
+          },
+          "action": "バックアップ操作フックの関数一覧を見て、ファイル選択処理とconfirmBackupRestoreを分けて追います。",
+          "why": "候補の検証後に確認画面へ内容を出します。この時点では現在のsetsを変更しません。キャンセルできる状態を設けることで、誤ファイルの確定を防ぎます。",
+          "check": "選択後にキャンセルし、実習データが変わらないことを確認します。",
+          "trouble": "ファイル選択のonChangeでsetSetsを直接呼ぶと、確認前に置き換えてしまいます。"
+        },
+        {
+          "file": "app/recall/storage/BackupRestoreDialog.tsx",
+          "title": "確認の表示を操作フックへつなぐ",
+          "source": {
+            "anchor": "export function BackupRestoreDialog",
+            "lines": 27
+          },
+          "action": "確認画面へ移り、ファイル名・セット数・確定とキャンセルの操作を確認します。",
+          "why": "表示側は候補を読みますが、永続保存は確認操作から保存フックへ委譲します。保存中は確定を重ねないようにします。",
+          "check": "セット数とカード数が候補ファイルに一致することを確認します。",
+          "trouble": "モーダル外のクリックと保存中のEscapeの扱いも確認します。"
+        },
+        {
+          "file": "app/recall/RecallApp.tsx",
+          "title": "復元成功後だけ各機能をリセットする",
+          "source": {
+            "anchor": "  function handleBackupRestored",
+            "lines": 6
+          },
+          "action": "入口のコールバックへ戻ります。study、flashcards、editorをリセットして復元済みセットの一覧へ移ります。",
+          "why": "保存フックが画面フックを直接importすると循環します。成功後のコールバックで入口が各機能を連携し、以前のセットに属する入力や順序を残しません。",
+          "check": "復元後に一覧と学習開始画面が新しいデータを使うことを確認します。",
+          "trouble": "失敗時にもこのコールバックを呼ぶと、保存できていないのに画面だけ復元済みに見えます。"
+        }
+      ],
+      "checkpoint": "バックアップ対象テスト。実習用JSONの書出し、選択、キャンセル、確定を確認する。"
+    },
+    {
+      "id": "deletion",
+      "title": "セット削除を保存の確定操作にする",
+      "goal": "削除IDとセット配列を同じ保存操作で扱い、失敗時は取り消す。",
+      "before": "deleteTargetは一覧フックが所有する。",
+      "route": [
+        "app/recall/library/DeleteSetDialog.tsx",
+        "app/recall/library/useSetLibrary.ts",
+        "app/recall/storage/useStudyStorage.ts",
+        "app/recall/storage/usePersistence.ts",
+        "app/recall/storage/mergeStudySets.ts",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/library/DeleteSetDialog.tsx",
+          "title": "削除対象を表示してから操作を呼ぶ",
+          "source": {
+            "anchor": "export function DeleteSetDialog",
+            "lines": 25
+          },
+          "action": "確認画面の対象セット名とconfirmDeleteの接続を読みます。",
+          "why": "表示されている対象と操作側が削除するIDを同じdeleteTargetから読みます。検索結果の一番目など不安定な位置を削除対象にしません。",
+          "check": "検索中の対象を確認し、キャンセルで変わらないことを確認します。",
+          "trouble": "実習データだけを対象にします。確認画面は回復用バックアップではありません。"
+        },
+        {
+          "file": "app/recall/library/useSetLibrary.ts",
+          "title": "保存してから配列を更新する",
+          "source": {
+            "anchor": "  async function confirmDelete",
+            "lines": 24
+          },
+          "action": "confirmDeleteへ移り、remainingとidを作り、await persistDeletionの後にsetSetsする順を読みます。",
+          "why": "削除失敗時に画面からセットを消さないようにします。選択中セットを削除したら次のセットへ選択を移し、最後ならホームへ戻ります。",
+          "check": "一時セットを削除し、再読み込みでも戻らないことを確認します。",
+          "trouble": "filterの結果を先にsetSetsしてから保存すると、失敗しても画面に対象が戻らない場合があります。"
+        },
+        {
+          "file": "app/recall/storage/useStudyStorage.ts",
+          "title": "削除済みIDを公開操作の中で追加する",
+          "source": {
+            "anchor": "    persistDeletion:",
+            "lines": 2
+          },
+          "action": "保存フックの一行の公開APIを開きます。元の削除済みIDを引き継いで新しいSetを渡す処理です。",
+          "why": "画面へ内部deletedSetIdsRefを渡さず、削除の意味を持つ操作として公開します。ReadonlySetは呼び出し側が候補を変更しないための型契約です。",
+          "check": "mergeStudySetsの削除IDテストを実行します。",
+          "trouble": "tombstoneはJavaScriptのSet型、StudySetは学習セット型です。名前が似ていますが別です。"
+        }
+      ],
+      "checkpoint": "対象下書き・統合テスト。一時セット削除後の再読み込みと空一覧を確認する。"
+    },
+    {
+      "id": "modal",
+      "title": "共通ダイアログと一つのフォーカス制御を作る",
+      "goal": "モーダルを開いた時の制御と、閉じた後の復元を一組で扱う。",
+      "before": "現在のStorageDialogは確認候補があると非表示になる。",
+      "route": [
+        "app/useModalDialog.ts",
+        "app/recall/shared/ModalDialog.tsx",
+        "app/recall/storage/StorageDialog.tsx",
+        "app/recall/storage/BackupRestoreDialog.tsx",
+        "tests/refactoring.test.mjs",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/shared/ModalDialog.tsx",
+          "title": "枠とフォーカス制御だけを共通化する",
+          "source": {
+            "anchor": "export function ModalDialog",
+            "lines": 24
+          },
+          "action": "共通部品を開き、ref、useModalDialog、aria-labelledby、childrenの関係を読みます。",
+          "why": "childrenは枠の中へ置く各画面の内容です。共通部品へ保存や削除の処理は加えず、閉じる操作をPropsで受け取ります。",
+          "check": "StorageDialog、BackupRestoreDialog、DeleteSetDialogが同じ枠を使うことを確認します。",
+          "trouble": "childrenを文字列だけの型にすると、フォームやボタンの内容を渡せません。"
+        },
+        {
+          "file": "app/useModalDialog.ts",
+          "title": "登録と解除をセットで確認する",
+          "source": {
+            "anchor": "export function useModalDialog",
+            "lines": 26
+          },
+          "action": "フォーカス用フックを開き、開く前の要素の記録からcleanupまで実ファイルで追います。",
+          "why": "背景をinertにし、EscapeやTabを扱い、閉じると元へ戻します。画面が別のUIへ移る時もcleanupが必要です。",
+          "check": "Tabがダイアログ内を巡回し、閉じた後に開いたボタンへ戻ることを確認します。",
+          "trouble": "背景のaria-hiddenやinertを残すと、見た目が戻っても操作不能になります。"
+        },
+        {
+          "file": "app/recall/storage/StorageDialog.tsx",
+          "title": "復元確認へ切り替える時、設定モーダルを外す",
+          "source": {
+            "anchor": "  if (!storageDialogOpen",
+            "lines": 1
+          },
+          "action": "StorageDialogの最初のガードを開きます。復元候補があるとsettingsを描画しない条件です。",
+          "why": "二つのフォーカストラップが同じ背景を所有すると、後から閉じた方が隠れた状態を戻してしまう場合があります。一つの確認が背景を制御し、キャンセル時に設定を再表示します。",
+          "check": "設定→復元確認→キャンセル→設定を閉じる、設定→復元確認→確定の二経路を確認します。",
+          "trouble": "単に二つのモーダルを重ねてz-indexだけ調整しても、フォーカスと背景状態の問題は解決しません。"
+        },
+        {
+          "file": "tests/refactoring.test.mjs",
+          "title": "再発しやすい境界を検査する",
+          "source": {
+            "anchor": "test('backup confirmation",
+            "lines": 8
+          },
+          "action": "テストへ戻り、単一フォーカス管理の条件を読みます。",
+          "why": "このテストは構造の回帰条件を固定します。実際のTabや背景操作の確認をすべて代替するものではないので、実画面の二経路も確認します。",
+          "check": "node --experimental-strip-types --test tests/refactoring.test.mjsを実行します。",
+          "trouble": "ソース文字列のテストと動作テストの目的を同じにしません。"
+        }
+      ],
+      "checkpoint": "対象ダイアログテスト。Tab、Escape、キャンセル、確定、閉じた後の背景操作を確認する。"
+    },
+    {
+      "id": "import",
+      "title": "インポートをUI・解析・検証へ分ける",
+      "goal": "一度に多くのカードを受け取る処理でも、段階と責務を明確にする。",
+      "before": "実習では小さなCSVとExcelを使う。拡張子だけで信用しない。",
+      "route": [
+        "app/securityLimits.ts",
+        "app/ImportDialog.tsx",
+        "app/spreadsheetReader.ts",
+        "app/spreadsheetWorker.ts",
+        "app/model.ts",
+        "app/recall/editor/useSetEditor.ts",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/spreadsheetReader.ts",
+          "title": "Workerとの契約を先に読む",
+          "source": {
+            "anchor": "export type SpreadsheetSheet",
+            "lines": 16
+          },
+          "action": "Readerの結果型とOptionsを開きます。UIが期待するシート名と行配列を確認します。",
+          "why": "Workerは重いExcel解析を別の実行場所へ分けます。DOMを操作せず、メッセージでデータを渡します。Readerは呼び出し・キャンセル・結果の受取を担当します。",
+          "check": "spreadsheetReaderからWorkerを作るURLを確認します。",
+          "trouble": "Workerの中ではwindowやdocumentは使えません。"
+        },
+        {
+          "file": "app/spreadsheetReader.ts",
+          "title": "キャンセルと終了を揃える",
+          "source": {
+            "anchor": "export function readSpreadsheetInWorker",
+            "lines": 28
+          },
+          "action": "Readerの開始処理を読み、AbortSignal、terminate、message/errorの解除を実ファイルで追います。",
+          "why": "別ファイルを選んだ時に前の解析が後から到着し、新しいプレビューへ混ざらないようにします。時間とメモリーの上限もUIだけに任せません。",
+          "check": "起動復旧テストのWorker境界を確認します。",
+          "trouble": "選択変更時にloadingだけfalseへ戻してもWorkerは動き続けます。"
+        },
+        {
+          "file": "app/model.ts",
+          "title": "解析済み行から候補カードを作る",
+          "source": {
+            "anchor": "export function analyzeRows",
+            "lines": 28
+          },
+          "action": "モデルへ移り、空行、片側だけ、重複、上限の分類を読みます。",
+          "why": "インポートは解析できたかだけでなく、学習カードとして成立するかを再検査します。警告と採用カードを別々の結果として返します。",
+          "check": "モデルテストでヘッダー除外、空行、重複を確認します。",
+          "trouble": "Excelで見えている番号と配列indexは同じではありません。エラー行番号の変換を確認します。"
+        },
+        {
+          "file": "app/recall/editor/useSetEditor.ts",
+          "title": "確定候補を下書きへ追加する",
+          "source": {
+            "anchor": "  function importCards",
+            "lines": 22
+          },
+          "action": "編集フックへ戻り、既存カード数と上限を確認してから追加する処理を読みます。",
+          "why": "インポートを確定してもセットの本保存は別です。取り込んだカードを編集してから通常のsaveDraftを通し、同じ保存検証と進捗扱いを使います。",
+          "check": "小さなCSVを取り込み、下書きへ追加され、その後保存できることを確認します。",
+          "trouble": "finishImportで直接IndexedDBへ書く別経路を増やしません。"
+        }
+      ],
+      "checkpoint": "モデル・Worker境界の対象テスト。小さなCSV/TSV/Excelを取り込み、編集して保存する。"
+    },
+    {
+      "id": "maintenance",
+      "title": "本番の小さな変更を一つの縦の流れで実装する",
+      "goal": "「検索をセット名だけに限定する」を型→フック→表示→確認で実装する計画を立てる。",
+      "before": "完成コードの別コピーを使う。ここは変更設計の練習で、本体の既定動作を変える指示ではない。",
+      "route": [
+        "app/recall/library/useSetLibrary.ts",
+        "app/recall/library/LibraryView.tsx",
+        "app/recall/library/useSetLibrary.ts",
+        "tests",
+        "ブラウザー"
+      ],
+      "steps": [
+        {
+          "file": "app/recall/library/useSetLibrary.ts",
+          "title": "まず状態と返す値を決める",
+          "source": {
+            "anchor": "  const [search",
+            "lines": 3
+          },
+          "action": "実習コピーだけでsearchの直後へconst [titleOnly, setTitleOnly] = useState(false);を追加し、returnへtitleOnlyとsetTitleOnlyを追加します。既存のsetSearchは残します。",
+          "why": "UIより先に操作の契約を作ります。SetLibraryはReturnTypeなので、戻り値を加えると表示部品の型にも反映されます。この段階では検索動作は変えません。",
+          "check": "npm run typecheckを実行し、既存の検索が動くことを確認します。",
+          "trouble": "returnの外へ値を書かないでください。表示部品はフック内のローカル変数を直接読めません。"
+        },
+        {
+          "file": "app/recall/library/LibraryView.tsx",
+          "title": "次に表示を接続する",
+          "source": {
+            "anchor": "export function LibraryView",
+            "lines": 13
+          },
+          "action": "実習コピーでlibrary.titleOnlyとlibrary.setTitleOnlyを使うチェックボックスを検索欄の横へ追加します。checked={library.titleOnly}、onChange={(event) => library.setTitleOnly(event.target.checked)}の形です。ラベルを「セット名だけ検索」にします。",
+          "why": "表示から値と変更関数だけを使います。画面側へfilter処理は書きません。チェックが切り替わることを先に確認します。",
+          "check": "typecheck後にチェックを切り替えます。まだ検索結果が変わらない段階を確認します。",
+          "trouble": "event.target.valueではチェック状態は得られません。booleanのcheckedを使います。"
+        },
+        {
+          "file": "app/recall/library/useSetLibrary.ts",
+          "title": "フックへ戻って条件を一か所変える",
+          "source": {
+            "anchor": "    return sets.filter",
+            "lines": 11
+          },
+          "action": "実習コピーでfilter内を、titleOnlyならtitleだけ、falseなら従来の条件へ分けます。useMemoの依存配列へtitleOnlyを追加します。",
+          "why": "入力の状態と見た目の接続ができてから動作を足します。依存を加え忘れるとチェックだけ変わり検索結果が更新されません。最初のfalseで従来の動作を保つ設計です。",
+          "check": "セット名にない文字をカード本文へ入れ、チェックオフなら出る、オンなら出ない、解除すると戻ることを確認します。",
+          "trouble": "filter結果を保存しません。検索だけの変更でセット数を減らす操作はしません。"
+        }
+      ],
+      "checkpoint": "変更したフックと表示へlint。typecheck。検索条件の4ケースを記録。manual:build後にcheck。本番確認前にbuild。"
+    }
+  ],
+  "troubleshooting": [
+    [
+      "Cannot find module",
+      "importの相対パス、ファイル名、大文字小文字、拡張子を確認。../をルートへ戻る特別記号と考えず一階層ずつ数える。",
+      "typesと値のimportの区別も確認する。"
+    ],
+    [
+      "Cannot find name",
+      "変数をreturnで公開したか、Propsから取り出したか、関数の外へ誤って置いたかを確認。",
+      "存在しない変数をanyで隠さない。"
+    ],
+    [
+      "入力欄へ文字が入らない",
+      "valueは状態、onChangeはその状態の更新関数へ接続されているかを確認。",
+      "基礎実習の接続前は予定した中間状態。該当工程の次を完成させる。"
+    ],
+    [
+      "再読み込みで元に戻る",
+      "Reactのstateだけか、下書き保存か、セット確定保存かを区別。originとブラウザープロファイルを確認。",
+      "失敗通知や保存中表示を確認し、保存の成功を待つ。"
+    ],
+    [
+      "manual:verifyだけ失敗",
+      "掲載ソースと現在のファイルが違う。manual:buildしてから再検証。生成スクリプトのエラーなら先にそのアンカーを直す。",
+      "HTMLを手作業で部分修正して検査を回避しない。"
+    ],
+    [
+      "Expected ... / 括弧・タグの構文エラー",
+      "最初のエラー位置の少し前を確認。引用符、閉じ括弧、JSXの閉じタグ、カンマを確認。",
+      "抜粋のコード欄の末尾をファイルの末尾と思い込まない。"
+    ],
+    [
+      "Hookの条件付き呼び出しエラー",
+      "フックは画面関数の先頭で毎回同じ順に呼ぶ。ifやクリックハンドラーの中に移していないか確認。",
+      "表示するかどうかの条件はフックを呼んだ後のJSXやreturnに置く。"
+    ],
+    [
+      "保存中から戻らない",
+      "async処理のfinally、タイムアウト、Promiseのcatch、世代番号の検査を確認。",
+      "エラーを空catchで消す前に、期待する表示と停止条件を読む。"
+    ],
+    [
+      "ダイアログ後にクリックできない",
+      "inertとaria-hiddenの解除、cleanup、同時に存在するモーダルを確認。",
+      "z-indexだけで直ったと判断せずキーボードの復帰も確認。"
+    ],
+    [
+      "変更したのに本番表示が古い",
+      "devとstartのどちらで確認しているか、変更後のbuild、起動フォルダー、ブラウザーのURLを確認。",
+      "startはbuildを自動実行しない。"
+    ],
+    [
+      "フォルダー保存が選べない",
+      "対応ブラウザー、利用者操作から呼んでいるか、権限、secure contextを確認。",
+      "ブラウザー保存へ戻れる設計を残す。"
+    ],
+    [
+      "一つ直すと別の画面が壊れた",
+      "共有型、共通フック、model、CSSの利用先を全体検索。差分を小さくして直前の成功と比較。",
+      "画面固有の変更を共通部品へ入れた理由を再確認。"
+    ]
+  ],
+  "manualScenarios": [
+    [
+      "作成と編集",
+      "新規セットを2枚で保存→名前だけ変更→並べ替え→カード削除とundo→本文変更。保存前の入力漏れと100枚のページ境界も確認。",
+      "元データが保持され、本文変更だけで古い進捗が外れる。"
+    ],
+    [
+      "学習の一周",
+      "TLSをtlsで不正解→間違った再入力→正答再入力→再出題でTLS正解→次グループ→完了。",
+      "再入力だけで習得とせず、自力正解まで出題する。"
+    ],
+    [
+      "途中再開",
+      "回答直後、再入力画面、グループ終了で再読み込みする。",
+      "保存済み進捗と設定に戻る。"
+    ],
+    [
+      "採点の境界",
+      "大文字小文字、先頭空白、行末空白、改行、カッコ省略オン/オフを確認。",
+      "検索の正規化を採点へ持ち込まない。"
+    ],
+    [
+      "キーボード",
+      "Enter改行、Ctrl+Enter採点、正解後のEnter、日本語変換確定、モーダル内TabとEscape。",
+      "別の画面や入力へ操作が漏れない。"
+    ],
+    [
+      "保存と競合",
+      "実習セットを保存して再読み込み→実習フォルダー接続→切断→別タブ変更。",
+      "保存失敗を成功表示しない。異なる保存は保護停止する。"
+    ],
+    [
+      "バックアップ",
+      "実習データをJSONへ書出し→候補選択→キャンセル→再選択して確定。",
+      "確認前に変更しない。確定後は旧セッションを残さず背景操作が戻る。"
+    ],
+    [
+      "インポートとフラッシュカード",
+      "少数行のCSVとExcelを追加→編集して保存→表裏、前後、シャッフル。",
+      "解析候補は通常の編集・保存へ接続し、めくるだけで成績は変わらない。"
+    ]
+  ]
+}

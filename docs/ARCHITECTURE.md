@@ -109,4 +109,8 @@ npm run check
 npm run build
 ```
 
-ファイルを追加したら、`docs/manual-source/source_catalog.json`の収録対象と役割を更新してHTMLを再生成します。HTMLの基礎編には分割前の構成が含まれるため、現行構成についてはこのガイドと自動生成される完成ソース付録を参照してください。
+ファイルを追加したら、`docs/manual-source/source_catalog.json`の収録対象と役割を更新してHTMLを再生成します。
+
+現在の教材は [TOTAL RECALL 機能別開発 初心者向け完全開発マニュアル（2026-10-07改訂）](TOTAL_RECALL_機能別開発_初心者向け完全開発マニュアル_20261007.html) です。準備と22工程の基礎実習から始め、24章・100工程で機能別のファイルを往復して実装を理解し、検索設定を追加する5工程の保守実習へ進みます。コード抜粋は実ファイルの検索アンカーと照合し、一度に36行以下に分けています。
+
+完成ソースは照合用の付録です。分割前の説明849ページ相当は末尾の旧版資料として保存し、現在の実習と通常検索から分けています。手順を直す場合は`docs/manual-source/development-guide.json`、実習差分を直す場合は`beginner-workshop.mjs`または`search-workshop.mjs`を編集します。`manual:verify`で実習の全途中状態を型検査し、最終段階のlint・採点・検索テストも確認します。
