@@ -28,7 +28,7 @@ const forbiddenSegments = new Set([
   "node_modules", "dist", ".next", ".vinext", ".wrangler", "recall-data", "release",
   "__pycache__",
 ]);
-const forbiddenFileNames = new Set([".ds_store", "thumbs.db", "desktop.ini"]);
+const forbiddenFileNames = new Set([".ds_store", "thumbs.db", "desktop.ini", "foundation_pages.json"]);
 const forbiddenFileSuffixes = [".pyc", ".pyo"];
 
 function hasForbiddenReleasePath(relativePath) {

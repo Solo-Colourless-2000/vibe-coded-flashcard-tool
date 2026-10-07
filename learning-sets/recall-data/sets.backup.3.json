@@ -1,5 +1,3014 @@
 [
   {
+    "id": "set-mux3jb7x-1k3-b6a301b8-80a5-4891-bacb-547f20d23d1b",
+    "title": "Python学習_02",
+    "description": "",
+    "cards": [
+      {
+        "id": "card-mux3j7ks-13f-52224d84-9f5f-46d5-9d0f-bc60f84a8977",
+        "term": "object (オブジェクト)",
+        "definition": "Pythonで値・型・identityを持つ基本単位を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-13g-ab7b1060-03df-41c7-92e0-13753c1a43c8",
+        "term": "identity (同一性)",
+        "definition": "オブジェクトが生成されてから破棄されるまで変化しない識別上の性質は？"
+      },
+      {
+        "id": "card-mux3j7ks-13h-27a69292-7a6f-4bde-ab15-cb60c7ef6c3a",
+        "term": "id()",
+        "definition": "オブジェクトのidentityを表す整数を返す組み込み関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-13i-52d7c3da-571a-4b42-803a-af17913485c6",
+        "term": "type (型)",
+        "definition": "オブジェクトがどの操作をサポートするかを決める主要な属性は？"
+      },
+      {
+        "id": "card-mux3j7ks-13j-3751779b-0214-450a-a75c-215115911246",
+        "term": "binding (束縛)",
+        "definition": "Pythonで名前をオブジェクトへ関連付ける操作を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-13k-b6d84d7a-d944-40e4-acb2-aa73e5efea1c",
+        "term": "rebinding (再束縛)",
+        "definition": "既存の名前を別のオブジェクトへ結び直すことを何という？"
+      },
+      {
+        "id": "card-mux3j7ks-13l-f611ceab-cbdd-4ddb-a485-9c8800113cb5",
+        "term": "reference (参照)",
+        "definition": "名前やコンテナがオブジェクトを指し示す関係を一般に何という？"
+      },
+      {
+        "id": "card-mux3j7ks-13m-95608445-19dd-4b10-91c5-b973cc034317",
+        "term": "alias (エイリアス)",
+        "definition": "複数の名前が同じmutableオブジェクトを参照している状態を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-13n-196cf7fa-6988-453c-8549-1c56ada45fc3",
+        "term": "mutation (変更)",
+        "definition": "同じidentityを保ったままmutableオブジェクトの内容を変更することを何という？"
+      },
+      {
+        "id": "card-mux3j7ks-13o-63e68929-9811-4d3a-871b-155d17405c6d",
+        "term": "immutability (不変性)",
+        "definition": "生成後にオブジェクトの値を変更できない性質を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-13p-61f6b764-f42d-4bf7-9b13-37d463de24ec",
+        "term": "reference counting (参照カウント)",
+        "definition": "CPythonが主に用いる、参照数が0になったオブジェクトを解放する管理方式は？"
+      },
+      {
+        "id": "card-mux3j7ks-13q-8c1c4459-2f8f-4835-83f8-66ddb087b9a9",
+        "term": "refcount (reference count) (参照カウント)",
+        "definition": "CPythonでオブジェクトへの参照数を表す概念を短く何という？"
+      },
+      {
+        "id": "card-mux3j7ks-13r-cd01f053-1f6c-4544-a011-64b8e0169240",
+        "term": "sys.getrefcount()",
+        "definition": "CPythonでオブジェクトの参照カウントを観察できる関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-13s-6547fe33-720e-4bcb-86e3-01a52e0eef25",
+        "term": "temporary reference (一時参照)",
+        "definition": "sys.getrefcount(obj)の値が観察目的の呼び出し自体によって増え得る原因は？"
+      },
+      {
+        "id": "card-mux3j7ks-13t-4678032c-7f2a-43f5-bb5e-bbef17380a06",
+        "term": "cycle (循環参照)",
+        "definition": "複数のオブジェクトが互いを参照し続ける循環構造を短く何という？"
+      },
+      {
+        "id": "card-mux3j7ks-13u-bd620a0d-aa2b-4d31-8fe8-459900f386e1",
+        "term": "cyclic GC (GC: Garbage Collection) (循環ガベージコレクション)",
+        "definition": "CPythonで参照カウントだけでは回収できない循環参照を補助的に検出する仕組みは？"
+      },
+      {
+        "id": "card-mux3j7ks-13v-20c99071-bf3c-4c70-b5b9-c9d70fe90900",
+        "term": "gc.collect()",
+        "definition": "循環ガベージコレクションを明示的に実行する関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-13w-ba3a7b39-ff4c-4521-94e4-1b7b9f948c86",
+        "term": "gc.disable()",
+        "definition": "Pythonの循環ガベージコレクタの自動実行を無効化する関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-13x-ec6d82c2-4f63-47b3-8f37-dd69e1849150",
+        "term": "gc.enable()",
+        "definition": "無効化した循環ガベージコレクタを再び有効化する関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-13y-526b60a1-2993-4ea3-b096-c494a2322fc1",
+        "term": "gc.isenabled()",
+        "definition": "循環ガベージコレクタが有効か確認する関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-13z-ee6ba915-3b7e-449e-9add-6980469e706b",
+        "term": "generation 0 (第0世代)",
+        "definition": "世代別GCで新しく追跡されたオブジェクトが最初に属する若い世代は？"
+      },
+      {
+        "id": "card-mux3j7ks-140-a4f252ca-d467-4852-b498-19e09f6f83c8",
+        "term": "generational GC (GC: Garbage Collection) (世代別ガベージコレクション)",
+        "definition": "若いオブジェクトを高頻度、長寿命オブジェクトを低頻度で調べるGC戦略は？"
+      },
+      {
+        "id": "card-mux3j7ks-141-c26663e6-ecc6-43e9-8430-a4ea2d1d9f52",
+        "term": "reachability (到達可能性)",
+        "definition": "GCがオブジェクトを生存させるか判断するときの主要な概念は？"
+      },
+      {
+        "id": "card-mux3j7ks-142-d6fe6c73-a01d-48cf-b10a-b2ab6b672ffb",
+        "term": "unreachable (到達不能)",
+        "definition": "実行中のルートから参照経路をたどれないオブジェクトの状態は？"
+      },
+      {
+        "id": "card-mux3j7ks-143-0627f268-052b-4247-a59e-bb8bf1e274ef",
+        "term": "__del__()",
+        "definition": "オブジェクト破棄に関連して呼び出され得るfinalizerメソッドは？"
+      },
+      {
+        "id": "card-mux3j7ks-144-6d3779b6-2537-400e-b147-8dad477d4a64",
+        "term": "finalizer (ファイナライザ)",
+        "definition": "オブジェクトの破棄時処理を行う仕組みを一般に何という？"
+      },
+      {
+        "id": "card-mux3j7ks-145-ee8dafda-61ee-42e2-8dbe-8ade3caa3703",
+        "term": "weakref",
+        "definition": "参照先を生存させない参照を提供する標準モジュールは？"
+      },
+      {
+        "id": "card-mux3j7ks-146-1e7c3468-5a32-4ca7-9b26-490cca21340b",
+        "term": "weak reference (弱参照)",
+        "definition": "参照していても対象オブジェクトの寿命を延ばさない参照を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-147-9af11b27-e18d-497a-8efe-c1a6a7791330",
+        "term": "weakref.ref()",
+        "definition": "対象を生存させない弱参照オブジェクトを作る代表的な関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-148-c6eade28-a08b-4afb-b6e7-2dddafb637d7",
+        "term": "WeakValueDictionary",
+        "definition": "weakrefモジュールで値を弱参照として保持し、他に強参照がなくなると項目が消え得る辞書型は？"
+      },
+      {
+        "id": "card-mux3j7ks-149-b4bbbced-1ad3-4cd9-88ff-c8db4fb265d3",
+        "term": "strong reference (強参照)",
+        "definition": "対象オブジェクトを通常は生存させ続ける参照を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14a-7151572b-5d07-4b78-8ebb-94863a32fd13",
+        "term": "sys.getsizeof()",
+        "definition": "CPythonで、参照先を再帰的には含めずオブジェクト本体の浅いサイズをバイト数で取得する関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-14b-8f719a68-5830-44ac-a2e7-0e94871e11b1",
+        "term": "shallow size (浅いサイズ)",
+        "definition": "sys.getsizeof()が通常、参照先オブジェクトのサイズを再帰的に含めない性質を表す語は？"
+      },
+      {
+        "id": "card-mux3j7ks-14c-1d0e71b6-6c8a-4e9e-ba50-08a140d506b6",
+        "term": "object header (オブジェクトヘッダ)",
+        "definition": "CPythonオブジェクトが型情報や参照管理情報などのために持つ実装上の付加領域を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14d-a2facad8-bd68-45b0-9d79-e690fd18a7c4",
+        "term": "allocator (アロケータ)",
+        "definition": "メモリ領域を確保・再利用する仕組みを一般に何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14e-18a0bbfa-e368-496f-b864-c1bc813c02e8",
+        "term": "pymalloc",
+        "definition": "GIL有効の通常CPythonで、小さなオブジェクト向けの既定allocatorとして使われる代表的な仕組みは？"
+      },
+      {
+        "id": "card-mux3j7ks-14f-5441fe20-91f2-4d91-a545-c91ea2a24dac",
+        "term": "arena (アリーナ)",
+        "definition": "CPythonのpymallocで大きめのメモリ単位を表す用語は？"
+      },
+      {
+        "id": "card-mux3j7ks-14g-a0109802-280f-4381-824f-06d5687ef0f5",
+        "term": "pool (プール)",
+        "definition": "CPythonのpymallocでarenaを分割した中間サイズの管理単位を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14h-0dbd9889-516c-43b4-a547-7d0ed770d9f7",
+        "term": "block (ブロック)",
+        "definition": "CPythonのpymallocで個々の小さな要求へ渡される単位を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14i-0c83fefc-8909-4cab-ae00-d9dd4bcb6b44",
+        "term": "interning (インターン化)",
+        "definition": "同じ内容の文字列オブジェクトを共有して比較やメモリ効率を改善し得る実装技法は？"
+      },
+      {
+        "id": "card-mux3j7ks-14j-8b23d616-2294-4401-875d-b4a5a0d93616",
+        "term": "sys.intern()",
+        "definition": "文字列を明示的にinternする標準関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-14k-6b56e2e2-b2f5-4bf0-820a-501948255275",
+        "term": "immortal object (不死オブジェクト)",
+        "definition": "CPythonで、特定の長寿命オブジェクトを参照カウントによって通常は破棄されないよう扱う仕組み上のオブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14l-2305e963-f742-40ad-a39e-f9181065247c",
+        "term": "memory leak (メモリリーク)",
+        "definition": "不要になったメモリが解放可能にならず使用量が増え続ける問題を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14m-73abbbdf-9610-47b0-a54c-86bee5507e50",
+        "term": "tracemalloc",
+        "definition": "Pythonのメモリアロケーションを追跡してリーク調査に使える標準モジュールは？"
+      },
+      {
+        "id": "card-mux3j7ks-14n-ff24fbce-a73a-4b77-993a-70b2c407562f",
+        "term": "snapshot (スナップショット)",
+        "definition": "tracemallocである時点の割り当て状況を記録したものを何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14o-33034855-1a50-4e18-ad87-9395f1ab63c6",
+        "term": "copy.copy()",
+        "definition": "オブジェクトの浅いコピーを作る標準関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-14p-5ca26bb5-d2f3-46b9-b39c-5a4f2b827458",
+        "term": "copy.deepcopy()",
+        "definition": "ネストされた参照先も可能な範囲で再帰的に複製する標準関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-14q-c2a9bd94-8f66-46e5-aa5a-a9b505997ce9",
+        "term": "memo (メモ)",
+        "definition": "deepcopyが循環参照や重複コピーを避けるため内部で使う既コピー管理表を一般に何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14r-8b47b9a9-c296-469a-8a07-e898549ba68b",
+        "term": "copy-on-write (コピーオンライト)",
+        "definition": "fork後に親子プロセスが変更まで物理ページを共有するOSレベルの最適化を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14s-95c9c2d9-d7fd-4c26-b763-585038267c2d",
+        "term": "implementation detail (実装詳細)",
+        "definition": "CPythonの参照カウントやpymallocのようにPython言語仕様自体では保証されない性質を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14t-aee847ae-bb1f-4f52-8038-8b3d03cb762b",
+        "term": "LEGB (Local, Enclosing, Global, Built-in) (ローカル→囲み→グローバル→組み込み)",
+        "definition": "Pythonの典型的な名前探索順序Local→Enclosing→Global→Builtinsを何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14u-ba9ed939-3a90-4fbc-b9e4-0a588508a8b6",
+        "term": "local namespace (ローカル名前空間)",
+        "definition": "関数内で代入される通常の名前が属する名前空間は？"
+      },
+      {
+        "id": "card-mux3j7ks-14v-73350384-c3c2-4fdb-8d37-140e53d240ff",
+        "term": "global namespace (グローバル名前空間)",
+        "definition": "モジュール最上位で定義された名前が属する名前空間は？"
+      },
+      {
+        "id": "card-mux3j7ks-14w-a3729df6-301c-4ef7-b175-09c8d8792bb2",
+        "term": "builtins (組み込み名前空間)",
+        "definition": "通常の名前探索で最後に参照される組み込み名前空間は？"
+      },
+      {
+        "id": "card-mux3j7ks-14x-730cbc80-313e-4faa-9f7c-726dd20c304e",
+        "term": "free variable (自由変数)",
+        "definition": "内側のスコープから参照されるが、そのスコープのローカルではない変数を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14y-2cc56e89-c033-4ccd-a3f0-3f87c5acae8a",
+        "term": "closure variable (クロージャ変数)",
+        "definition": "入れ子関数が外側の関数スコープから保持して使う変数を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-14z-4cb7e154-b431-43b8-a10e-bf952adf2540",
+        "term": "cell (セル)",
+        "definition": "CPythonでclosure変数を共有するために使われる内部オブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7ks-150-59b2eccc-2b27-45a7-9f11-f6babdbc0d09",
+        "term": "__closure__",
+        "definition": "関数オブジェクトからclosure cellのタプルを確認できる属性は？"
+      },
+      {
+        "id": "card-mux3j7ks-151-8ecb4276-0ba5-4e7c-b462-177a0d12ab58",
+        "term": "co_freevars",
+        "definition": "code objectでfree variable名を保持する属性は？"
+      },
+      {
+        "id": "card-mux3j7ks-152-01f152cf-4a83-4328-89a7-0ac2925080ca",
+        "term": "co_cellvars",
+        "definition": "code objectで内側の関数から参照されるローカル名を保持する属性は？"
+      },
+      {
+        "id": "card-mux3j7ks-153-f195b657-ba49-4937-acd3-2407572879cd",
+        "term": "global",
+        "definition": "関数内の代入対象をモジュールスコープの名前として扱わせるキーワードは？"
+      },
+      {
+        "id": "card-mux3j7ks-154-f94b81b1-99b6-406d-9b43-d640edd464d3",
+        "term": "nonlocal",
+        "definition": "関数内の代入対象を最も近い外側の関数スコープの名前として扱わせるキーワードは？"
+      },
+      {
+        "id": "card-mux3j7ks-155-30bbc0c8-41cc-4b52-9e52-1e01bc4ac5a4",
+        "term": "UnboundLocalError",
+        "definition": "関数内でローカルと判定された名前を代入前に読み取ると典型的に発生する例外は？"
+      },
+      {
+        "id": "card-mux3j7ks-156-469ad3c6-698c-4478-851a-53966882b318",
+        "term": "compile time (コンパイル時)",
+        "definition": "関数内の名前がローカル変数かどうかは、通常その関数実行前のどの段階で決まる？"
+      },
+      {
+        "id": "card-mux3j7ks-157-7fac884e-3023-4558-8faa-4ca43f3d1ff3",
+        "term": "symbol table (シンボルテーブル)",
+        "definition": "コンパイラが名前のスコープ分類などを管理する内部情報を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-158-9e9ea3f1-758c-4736-b7b1-05a183caf785",
+        "term": "default argument (デフォルト引数)",
+        "definition": "関数定義時に一度評価され、その関数オブジェクトに保持される引数値を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-159-aa36a413-cb0b-49e4-9ccb-b19d3e6a1bbc",
+        "term": "__defaults__",
+        "definition": "位置引数のデフォルト値を関数オブジェクトで保持する属性は？"
+      },
+      {
+        "id": "card-mux3j7ks-15a-f8fe7e57-40c1-40c7-92d6-1d52f1d220a4",
+        "term": "__kwdefaults__",
+        "definition": "keyword-only引数のデフォルト値を関数オブジェクトで保持する属性は？"
+      },
+      {
+        "id": "card-mux3j7ks-15b-f978c24d-afa3-47ad-8c79-cc8581f48cbe",
+        "term": "late binding (遅延束縛)",
+        "definition": "closure内の名前が関数作成時の値ではなく呼び出し時の現在値を参照する性質を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-15c-b4b3192c-7c8b-4609-a76f-c3d9dd419b52",
+        "term": "default capture (デフォルト引数による値固定)",
+        "definition": "ループ変数をclosureごとに固定したいとき、デフォルト引数へ値を渡して保持する手法を短く何という？"
+      },
+      {
+        "id": "card-mux3j7ks-15d-20e718bf-0458-47db-a4f5-5ac33454180e",
+        "term": "function object (関数オブジェクト)",
+        "definition": "def文の実行によって生成され、名前へ束縛される呼び出し可能オブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7ks-15e-c6b64ef3-acdc-46f6-8527-2cc3e39880c2",
+        "term": "code object (コードオブジェクト)",
+        "definition": "Python関数のコンパイル済み命令や定数・名前情報を保持するオブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7ks-15f-c53fe5f5-43f3-4c49-9c56-9f6379e95d13",
+        "term": "__code__",
+        "definition": "Python関数からcode objectを取得する属性は？"
+      },
+      {
+        "id": "card-mux3j7ks-15g-c07095f9-7211-4eea-bf22-c58fe9bae68a",
+        "term": "frame (フレーム)",
+        "definition": "関数呼び出し中のローカル状態や実行位置などを保持する実行時オブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7ks-15h-5b71d974-347a-4924-937d-dd8c7f4e6bb4",
+        "term": "call stack (コールスタック)",
+        "definition": "入れ子になった関数呼び出しの実行コンテキストを積み重ねて管理する概念は？"
+      },
+      {
+        "id": "card-mux3j7ks-15i-0e7973b8-dbe5-4815-a5ff-14661cefa08c",
+        "term": "recursion limit (再帰上限)",
+        "definition": "CPythonで過度な再帰からインタプリタを保護するため設けられる上限を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-15j-2c58dad4-a0ef-42ef-9427-e999dbb7a433",
+        "term": "sys.getrecursionlimit()",
+        "definition": "現在の再帰上限を取得する関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-15k-2e8fe5a1-ed40-43db-a31c-8abb5ccb04d8",
+        "term": "sys.setrecursionlimit()",
+        "definition": "再帰上限を変更する関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-15l-023ba5a8-be89-463e-9fdc-4a0f07682ed0",
+        "term": "callable (呼び出し可能オブジェクト)",
+        "definition": "関数のように()で呼び出せるオブジェクトを表す一般用語は？"
+      },
+      {
+        "id": "card-mux3j7ks-15m-85749b28-45a1-46b7-9d4d-27b32afcff17",
+        "term": "__call__()",
+        "definition": "インスタンスを関数のように呼び出せるようにする特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7ks-15n-e12ee154-ca34-471a-a7f5-8a5b4053d4e4",
+        "term": "bound method (束縛済みメソッド)",
+        "definition": "instance.methodのように取得され、selfが自動的に結び付いたメソッドオブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7ks-15o-0ac9418c-020f-40c9-b17a-5d61f3adaf07",
+        "term": "__self__",
+        "definition": "bound methodで結び付いているインスタンスを参照する属性は？"
+      },
+      {
+        "id": "card-mux3j7ks-15p-dbd25b52-fd77-4f05-b8e9-0adccdf236a6",
+        "term": "__func__",
+        "definition": "bound methodから元の関数オブジェクトを参照する属性は？"
+      },
+      {
+        "id": "card-mux3j7ks-15q-d215e607-3f1e-4eb3-8edf-c71d6c5edae5",
+        "term": "descriptor (デスクリプタ)",
+        "definition": "関数がインスタンス属性として取得されたときbound methodになる仕組みに関与するプロトコルは？"
+      },
+      {
+        "id": "card-mux3j7ks-15r-0cee4833-f965-4740-b92d-0ebeef497679",
+        "term": "positional-only (位置専用)",
+        "definition": "引数名を使ったキーワード指定を禁止するパラメータ種別は？"
+      },
+      {
+        "id": "card-mux3j7ks-15s-d9be4bb4-056d-4cf1-ae6c-4923c47eb894",
+        "term": "/",
+        "definition": "関数定義でその左側をpositional-onlyパラメータにする区切り記号は？"
+      },
+      {
+        "id": "card-mux3j7ks-15t-b1b8385d-5ef4-48eb-83bc-885b1db53bc8",
+        "term": "keyword-only (キーワード専用)",
+        "definition": "呼び出し時に引数名の指定を必須にできるパラメータ種別は？"
+      },
+      {
+        "id": "card-mux3j7ks-15u-393f3fb6-9668-4967-94a1-39f2de7627ca",
+        "term": "*",
+        "definition": "関数定義でその後ろをkeyword-onlyパラメータにする区切り記号は？"
+      },
+      {
+        "id": "card-mux3j7ks-15v-0b594611-d8df-47e4-bff5-b9e79dc2850c",
+        "term": "*args",
+        "definition": "余分な位置引数をタプルとして受け取る代表的なパラメータ記法は？"
+      },
+      {
+        "id": "card-mux3j7ks-15w-a2a06ece-b067-4693-843e-94440db7f712",
+        "term": "**kwargs",
+        "definition": "余分なキーワード引数を辞書として受け取る代表的なパラメータ記法は？"
+      },
+      {
+        "id": "card-mux3j7ks-15x-fbaded36-28c0-4290-acec-6c163f02d026",
+        "term": "argument unpacking (引数アンパック)",
+        "definition": "呼び出し時に*iterableや**mappingで要素を引数へ展開する仕組みを何という？"
+      },
+      {
+        "id": "card-mux3j7ks-15y-37d70646-f01b-42d3-9222-782798bab477",
+        "term": "signature (シグネチャ)",
+        "definition": "関数のパラメータ構成や既定値などを表す概念を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-15z-0ef52f59-6d3f-4b56-beda-90289e8cb777",
+        "term": "inspect.signature()",
+        "definition": "呼び出し可能オブジェクトのsignatureを取得する標準関数は？"
+      },
+      {
+        "id": "card-mux3j7ks-160-5c34b2b6-4244-4f34-be0a-3cacf2b03bda",
+        "term": "vectorcall",
+        "definition": "CPythonで一時的なtupleやdictの生成を減らし、call overheadを下げる内部呼び出しプロトコルは？"
+      },
+      {
+        "id": "card-mux3j7ks-161-91f40c3b-bd47-4189-948f-8a4926172edd",
+        "term": "decorator (デコレータ)",
+        "definition": "関数やクラスを定義直後に別のcallableへ渡して結果で置き換える構文上の仕組みは？"
+      },
+      {
+        "id": "card-mux3j7ks-162-0e6c4faf-64a3-41e8-aced-1f690f30fcad",
+        "term": "bottom-up (ボトムアップ)",
+        "definition": "複数のデコレータを重ねたとき、適用は定義対象に近いものから外側へ進む順序を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-163-48d885cb-2256-41e3-90a3-164a48600b9c",
+        "term": "functools.wraps",
+        "definition": "ラッパー関数に元関数のメタデータを引き継ぎやすくするデコレータは？"
+      },
+      {
+        "id": "card-mux3j7ks-164-e59df1fc-29bc-410f-a712-fdad1f9d5a0f",
+        "term": "__wrapped__",
+        "definition": "functools.wrapsがラッパーから元関数をたどれるよう設定する代表的な属性は？"
+      },
+      {
+        "id": "card-mux3j7ks-165-8444ac84-c510-4833-aaf3-4a0af6ba763b",
+        "term": "partial object (partialオブジェクト)",
+        "definition": "functools.partial()が引数の一部を固定して作る呼び出し可能オブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7ks-166-acfd9de4-a41b-4b24-9f14-3d67fbcbfbba",
+        "term": "dispatch (ディスパッチ)",
+        "definition": "実行時情報に応じてどの実装を呼ぶか選ぶ仕組みを一般に何という？"
+      },
+      {
+        "id": "card-mux3j7ks-167-ccc10b4f-4607-4bc6-8fa4-9d1fe54039c5",
+        "term": "dynamic array (動的配列)",
+        "definition": "CPythonのlistが内部的に近い代表的なデータ構造は？"
+      },
+      {
+        "id": "card-mux3j7ks-168-a72112cf-cb3e-49c4-9501-af64e4e0d377",
+        "term": "overallocation (余分な容量確保)",
+        "definition": "listのappendを平均的に高速にするため、必要量より余分に容量を確保する戦略を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-169-967a1b9d-ef9b-4950-9435-9d47c36d8857",
+        "term": "amortized O(1) (償却O(1))",
+        "definition": "list.append()の一般的な平均償却計算量は？"
+      },
+      {
+        "id": "card-mux3j7ks-16a-c50f7051-7320-4c27-9e6e-802f360062a6",
+        "term": "O(n)",
+        "definition": "listの先頭へinsert(0, x)すると要素移動が必要になるため一般に何の計算量？"
+      },
+      {
+        "id": "card-mux3j7ks-16b-f26ff000-cfff-410a-9880-ad00801638b8",
+        "term": "deque",
+        "definition": "両端での追加・削除を効率よく行いたいときlistより適した標準コンテナは？"
+      },
+      {
+        "id": "card-mux3j7ks-16c-385afb03-3ec9-496f-a850-520518e0fa47",
+        "term": "hash table (ハッシュテーブル)",
+        "definition": "Pythonのdictとsetの基本実装思想に使われるデータ構造は？"
+      },
+      {
+        "id": "card-mux3j7ks-16d-ef1006a3-0b5d-45a4-96cf-51861b71eb40",
+        "term": "hash (ハッシュ値)",
+        "definition": "辞書キーを格納位置探索へ利用する整数値を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-16e-b10ac59e-1692-49ef-8076-32d8731921c2",
+        "term": "__hash__()",
+        "definition": "オブジェクトのハッシュ値生成を定義する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7ks-16f-36a092fd-ff93-4daf-9a1a-705f4e50d2c3",
+        "term": "__eq__()",
+        "definition": "辞書や集合でハッシュ衝突後のキー同一性判断にも使われる等価比較メソッドは？"
+      },
+      {
+        "id": "card-mux3j7ks-16g-2cf4d5ef-4f91-42c6-a2ea-11802f3aab06",
+        "term": "hash collision (ハッシュ衝突)",
+        "definition": "異なるキーが同じハッシュ値を持つ現象を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-16h-9ee22cfe-0385-4e33-b682-0b441e43c697",
+        "term": "open addressing (オープンアドレス法)",
+        "definition": "CPythonのdictで衝突時に別スロットを探索する方式の系統を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-16i-c9fd67ff-31b3-4158-b8c0-0a2b2dd391c0",
+        "term": "load factor (負荷率)",
+        "definition": "ハッシュ表の容量に対して使用スロットが占める割合を何という？"
+      },
+      {
+        "id": "card-mux3j7ks-16j-a9eb821b-e3a0-4f95-a97b-bf901ea0c28f",
+        "term": "resize (リサイズ)",
+        "definition": "dictの空きが減った際、より大きな内部表を確保して再配置する処理を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-16k-bf267740-8932-4cdb-9d04-cfdc1742f33a",
+        "term": "insertion order (挿入順序)",
+        "definition": "現在のPythonのdictが言語仕様として保持するキーの順序は何の順序？"
+      },
+      {
+        "id": "card-mux3j7kt-16l-c8c83889-831a-4a37-8bc4-8c1ee65545b5",
+        "term": "hashable (ハッシュ可能)",
+        "definition": "ハッシュ値が寿命中に変化せず、等価比較規則と整合するオブジェクトの性質は？"
+      },
+      {
+        "id": "card-mux3j7kt-16m-2e47babf-6703-4011-9681-d0b8fe16bf95",
+        "term": "immutable (不変)",
+        "definition": "dictキーとして使いやすい型に多い、値を変更できない性質は？"
+      },
+      {
+        "id": "card-mux3j7kt-16n-d88030c5-12a0-442d-ac29-1efe0bfca342",
+        "term": "unhashable (ハッシュ不可能)",
+        "definition": "通常のlistやdictのようにdictキーへ直接使えない性質を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-16o-edeae1b9-0347-4de4-9137-5d7326510bc0",
+        "term": "frozenset",
+        "definition": "immutableかつhashableになり得る集合型は？"
+      },
+      {
+        "id": "card-mux3j7kt-16p-38935ada-140a-4386-806e-0c120736b924",
+        "term": "tuple",
+        "definition": "要素がすべてhashableなら自身もhashableになり得る組み込みシーケンス型は？"
+      },
+      {
+        "id": "card-mux3j7kt-16q-d1db4572-0c67-42fd-b665-8b0a11af859f",
+        "term": "key sharing (キー共有)",
+        "definition": "CPythonで同じクラスの複数インスタンス辞書がキー構造を共有してメモリ節約できる最適化を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-16r-194a60a3-8081-48e6-b5cb-83878caee068",
+        "term": "compact dict (コンパクト辞書)",
+        "definition": "CPython 3.6で導入され、メモリ効率向上と挿入順序保持にも寄与したdict実装を俗に何という？"
+      },
+      {
+        "id": "card-mux3j7kt-16s-23d69a98-3d8f-451b-9c94-3c8ae36b1a1f",
+        "term": "Unicode code point (Unicodeコードポイント)",
+        "definition": "Pythonのstrが論理的に並べるUnicode文字要素の単位を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-16t-5f749d52-7c9b-4b6f-81ac-b3cb902d0d6a",
+        "term": "UTF-8 (Unicode Transformation Format - 8-bit) (UTF-8文字エンコーディング)",
+        "definition": "Pythonソースファイルの既定エンコーディングは？"
+      },
+      {
+        "id": "card-mux3j7kt-16u-ef363b22-9a3d-488e-b422-b2dd4e6f9b75",
+        "term": "encoding (エンコーディング)",
+        "definition": "文字列とbytesの対応規則を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-16v-d463bcc6-fa6a-4a61-bf55-294fca487816",
+        "term": "encode()",
+        "definition": "strを指定文字エンコーディングのbytesへ変換するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-16w-ccf24247-93fa-4ada-b11d-3a2af9b43804",
+        "term": "decode()",
+        "definition": "bytesを指定文字エンコーディングのstrへ変換するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-16x-3a303f09-9864-454f-9846-c172bd7d2bb1",
+        "term": "UnicodeDecodeError",
+        "definition": "bytesを不正な文字列としてdecodeしたとき代表的に発生する例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-16y-b6659620-7382-4b29-8772-8eb33e7b6c11",
+        "term": "interning (インターン化)",
+        "definition": "同一内容の文字列オブジェクトを共有して比較や辞書検索を効率化し得る技法は？"
+      },
+      {
+        "id": "card-mux3j7kt-16z-72f95f3d-5506-4131-bbea-8acff96056b8",
+        "term": "PEP 393 (Python Enhancement Proposal 393: Flexible String Representation) (柔軟な文字列表現)",
+        "definition": "CPythonの柔軟なUnicode文字列表現を導入したPEP番号は？"
+      },
+      {
+        "id": "card-mux3j7kt-170-34c2bf1e-d30b-4fb8-8a90-94ea102e475c",
+        "term": "small integer caching (小整数キャッシュ)",
+        "definition": "CPythonで一部の小さな整数オブジェクトを再利用する最適化を一般に何という？"
+      },
+      {
+        "id": "card-mux3j7kt-171-73637a00-259a-4d21-822b-fdc5b65705b3",
+        "term": "arbitrary precision (任意精度)",
+        "definition": "Pythonのintが固定ビット幅ではなく必要に応じて桁数を増やせる性質は？"
+      },
+      {
+        "id": "card-mux3j7kt-172-700712ca-1a0c-4b49-9904-ce79a3650575",
+        "term": "big integer (多倍長整数)",
+        "definition": "任意精度の整数実装を一般に何という？"
+      },
+      {
+        "id": "card-mux3j7kt-173-c4dc4cbe-54d7-484c-8c75-017a70b61c0f",
+        "term": "base 2^30 (基数2^30)",
+        "definition": "64-bit版CPythonでint内部のdigitが典型的に使う基数はおおむね何？"
+      },
+      {
+        "id": "card-mux3j7kt-174-0adf5f30-150c-4d83-88fc-1eb0139b04a1",
+        "term": "IEEE 754 (Institute of Electrical and Electronics Engineers Standard 754) (浮動小数点算術規格)",
+        "definition": "CPythonのfloatが通常基礎として利用する倍精度浮動小数点標準は？"
+      },
+      {
+        "id": "card-mux3j7kt-175-e34cf893-0664-4d52-8edd-5de710bd6435",
+        "term": "binary floating point (2進浮動小数点)",
+        "definition": "0.1など一部の10進小数を厳密に表現できない主因となる表現方式は？"
+      },
+      {
+        "id": "card-mux3j7kt-176-023c8bcf-1793-4fd8-8462-eddc77d829ae",
+        "term": "rounding error (丸め誤差)",
+        "definition": "浮動小数点で実数を有限ビットに近似することで生じる誤差を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-177-1e495fc7-af91-43a1-a6df-c02407c5bfb7",
+        "term": "math.isclose()",
+        "definition": "浮動小数点数を許容誤差付きで比較する標準関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-178-d51c7bd4-9be5-4a20-a472-6b890cb4ff33",
+        "term": "Decimal",
+        "definition": "10進小数を基礎とする任意精度演算を提供する標準型は？"
+      },
+      {
+        "id": "card-mux3j7kt-179-6f23d002-059d-4639-b71b-9a5c1e365785",
+        "term": "Fraction",
+        "definition": "有理数を分子と分母で厳密に表現する標準型は？"
+      },
+      {
+        "id": "card-mux3j7kt-17a-159d754c-d5ce-4954-afd0-c3d77a9fd5b0",
+        "term": "slice object (スライスオブジェクト)",
+        "definition": "a[start:stop:step]のstart等をまとめて表す内部的なオブジェクト型は？"
+      },
+      {
+        "id": "card-mux3j7kt-17b-fe56deca-a549-46a0-a85d-1b1d3e793ad4",
+        "term": "slice()",
+        "definition": "slice objectを明示的に作る組み込み型は？"
+      },
+      {
+        "id": "card-mux3j7kt-17c-c705ea6a-cf80-476f-ad67-4f3364f751b3",
+        "term": "__index__()",
+        "definition": "整数インデックスとして厳密に解釈可能なオブジェクトが実装する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-17d-6dc8ba92-5977-473b-905c-e998ac876038",
+        "term": "buffer protocol (バッファプロトコル)",
+        "definition": "bytesをコピーせず生メモリ領域へアクセスするためのPython/C間プロトコルは？"
+      },
+      {
+        "id": "card-mux3j7kt-17e-29f487ab-4be4-44a9-a741-91ec92d39406",
+        "term": "memoryview",
+        "definition": "buffer protocol対応オブジェクトをコピーせず参照できる組み込み型は？"
+      },
+      {
+        "id": "card-mux3j7kt-17f-088e48e5-c2aa-4b7b-af93-ed76321b7588",
+        "term": "zero-copy (ゼロコピー)",
+        "definition": "データ本体を複製せずビューや参照だけを渡す処理方式を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-17g-1bf3c680-5d35-4ef6-89b1-b433f2025a5d",
+        "term": "bytearray",
+        "definition": "変更可能なバイト列を表す組み込み型は？"
+      },
+      {
+        "id": "card-mux3j7kt-17h-f216bba2-33f8-4523-968e-b014b8b57439",
+        "term": "bytes",
+        "definition": "変更不可能なバイト列を表す組み込み型は？"
+      },
+      {
+        "id": "card-mux3j7kt-17i-469a26e5-c77a-463c-bd76-978b7f6c5ef5",
+        "term": "shallow copy (浅いコピー)",
+        "definition": "通常のlistでlst[:]によって作られる、要素オブジェクト自体は共有するコピー方式は？"
+      },
+      {
+        "id": "card-mux3j7kt-17j-1fdcb200-158b-4788-b141-fe082f5badff",
+        "term": "shallow copy (浅いコピー)",
+        "definition": "list.copy()が行い、要素オブジェクト自体は共有するコピー方式は？"
+      },
+      {
+        "id": "card-mux3j7kt-17k-630e5d6b-cd8e-4c05-885b-97974e81b897",
+        "term": "structural sharing (構造共有)",
+        "definition": "immutableデータ構造などで内部要素を共有しながら別の論理値を表す設計を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-17l-8bd0e6aa-5b9e-4449-8b11-dbe31dfc348f",
+        "term": "class object (クラスオブジェクト)",
+        "definition": "class文の実行によって作られる、通常はtypeのインスタンスであるオブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7kt-17m-70ecbab3-1d04-4281-b174-90a20d8962c1",
+        "term": "type (型)",
+        "definition": "通常のユーザー定義クラスを生成する標準メタクラスは？"
+      },
+      {
+        "id": "card-mux3j7kt-17n-f6e7115f-9ba4-4a4e-bfd0-8bdce226cb90",
+        "term": "metaclass (メタクラス)",
+        "definition": "クラスオブジェクト自体の生成や振る舞いを制御するクラスを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-17o-8b376a07-c37b-4c26-943d-73d61138cdf2",
+        "term": "__class__",
+        "definition": "インスタンスから所属クラスを参照できる特殊属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-17p-251771bb-063c-4770-a477-3fd17fa8d65d",
+        "term": "__dict__",
+        "definition": "通常のオブジェクトで動的属性を保持する辞書を参照する特殊属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-17q-e95b47a8-7693-4cb0-966e-98e326fbe199",
+        "term": "namespace (名前空間)",
+        "definition": "class文の本体が実行されるときに名前を収集するマッピングを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-17r-0d82a405-c499-4259-9cff-3aa9f5d1960c",
+        "term": "__prepare__()",
+        "definition": "メタクラスがclass本体実行用の名前空間を事前に用意できるメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-17s-1ad7abc9-70c7-48ba-9ad2-9d2ff7b7a5bd",
+        "term": "__new__()",
+        "definition": "クラスのインスタンス生成で新しいオブジェクトを作る段階を担当する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-17t-74b206ec-b0ac-4d2c-9f3a-829e4d7a4442",
+        "term": "__init__()",
+        "definition": "既に生成されたインスタンスを初期化する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-17u-604287d3-efae-42de-a293-5f3d65bec9f6",
+        "term": "__new__ before __init__",
+        "definition": "通常のインスタンス生成で先に呼ばれる順序は？"
+      },
+      {
+        "id": "card-mux3j7kt-17v-b9301d88-1961-4885-9e19-a1f52c6e3976",
+        "term": "object.__new__()",
+        "definition": "通常のユーザー定義クラスでインスタンス本体を生成する基礎メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-17w-1ee438d8-5b97-4445-a3ff-70319d2ad6d2",
+        "term": "MRO (Method Resolution Order) (メソッド解決順序)",
+        "definition": "多重継承で属性やメソッドを探索するクラス順序を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-17x-b7fe26cc-9a99-4cf2-ab95-6f17bb4f7280",
+        "term": "__mro__",
+        "definition": "クラスのmethod resolution orderをタプルで確認できる属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-17y-d47b9ff9-0aa3-412c-bd3d-c1a3f7dec422",
+        "term": "C3 linearization (C3線形化)",
+        "definition": "Pythonが多重継承のMRO計算に用いるアルゴリズムは？"
+      },
+      {
+        "id": "card-mux3j7kt-17z-391d7df2-6239-44dc-859c-e1618ff374a0",
+        "term": "super()",
+        "definition": "現在位置の次からMROに沿って属性探索を継続するための組み込みは？"
+      },
+      {
+        "id": "card-mux3j7kt-180-8dfc703c-ceae-4ff0-ae41-ec2d46dad8fe",
+        "term": "cooperative inheritance (協調的継承)",
+        "definition": "多重継承で各クラスがsuper()を使って次の実装へ処理を渡す設計を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-181-42528bd7-3eba-4a7a-adb9-5ee6646f9cd0",
+        "term": "diamond inheritance (ダイヤモンド継承)",
+        "definition": "共通祖先を持つ複数経路の継承関係がひし形になる構造を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-182-77bb45c8-bea6-4217-b68b-a4aa3f9b1ab5",
+        "term": "descriptor (デスクリプタ)",
+        "definition": "__get__などを実装し属性アクセスを制御できるオブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-183-bfcfc689-dab5-46a5-b29a-dda907fb8c27",
+        "term": "__get__()",
+        "definition": "descriptorが属性取得時の振る舞いを定義するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-184-d12e9e9f-421f-4d3e-8912-3ae0cf9bde70",
+        "term": "__set__()",
+        "definition": "descriptorが属性代入時の振る舞いを定義するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-185-57f46920-6d43-40db-aaef-d8fad28ef9b7",
+        "term": "__delete__()",
+        "definition": "descriptorが属性削除時の振る舞いを定義するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-186-c57e28fd-061c-466e-b77e-21476b2de2a5",
+        "term": "data descriptor (データデスクリプタ)",
+        "definition": "__set__または__delete__も実装し、通常instance __dict__より優先されるdescriptorは？"
+      },
+      {
+        "id": "card-mux3j7kt-187-9cebcc73-0e93-42af-afbc-8370df493d8d",
+        "term": "non-data descriptor (非データデスクリプタ)",
+        "definition": "__get__のみを中心に実装し、instance属性で上書きされ得るdescriptorは？"
+      },
+      {
+        "id": "card-mux3j7kt-188-1e502f49-c9c8-4815-81db-e9ef5104ef88",
+        "term": "property",
+        "definition": "getter/setterをdescriptorとして簡潔に定義する組み込み型は？"
+      },
+      {
+        "id": "card-mux3j7kt-189-402306b0-33c5-4bb2-a416-5d8786bedd88",
+        "term": "@property",
+        "definition": "メソッドを読み取り属性のように公開する代表的なデコレータは？"
+      },
+      {
+        "id": "card-mux3j7kt-18a-a773508c-a9b7-4c50-8d23-7521ae1c1d5c",
+        "term": "@x.setter",
+        "definition": "property xへsetterを追加する代表的なデコレータ記法は？"
+      },
+      {
+        "id": "card-mux3j7kt-18b-35ba4df6-e46c-4000-b755-274ac7bbd4cf",
+        "term": "non-data descriptor (非データデスクリプタ)",
+        "definition": "通常のPython関数がクラス属性として置かれ、instance経由で取得するとbound methodになる際のdescriptor種別は？"
+      },
+      {
+        "id": "card-mux3j7kt-18c-4390671d-d9c1-452d-baa5-81448e2e47be",
+        "term": "__getattribute__()",
+        "definition": "ほぼすべてのインスタンス属性アクセスで最初に関与する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18d-f184abc4-e77b-4838-ac6b-05c771a6b7ec",
+        "term": "__getattr__()",
+        "definition": "通常の属性探索で見つからなかった場合にのみ呼ばれる特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18e-d5ff4e3d-d042-4220-9547-fca4515d2841",
+        "term": "__setattr__()",
+        "definition": "属性代入を横取りして制御できる特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18f-19f429c7-a075-4340-abbd-4b75cd8d3c20",
+        "term": "__delattr__()",
+        "definition": "属性削除を横取りして制御できる特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18g-a2cc0349-4993-48ba-86be-0f6d7d36607a",
+        "term": "object.__getattribute__()",
+        "definition": "独自__getattribute__内で通常の探索を再利用し無限再帰を避ける代表的な呼び出し先は？"
+      },
+      {
+        "id": "card-mux3j7kt-18h-0da5f0a0-6f4e-4498-9166-3e1dfb666f68",
+        "term": "__slots__",
+        "definition": "インスタンスが持てる属性名を宣言し、通常のinstance __dict__を省略できる仕組みは？"
+      },
+      {
+        "id": "card-mux3j7kt-18i-93a3e1e8-445a-4e2f-bca0-570ca655c1a0",
+        "term": "memory saving (メモリ節約)",
+        "definition": "大量インスタンスで__slots__を使う代表的な利点は？"
+      },
+      {
+        "id": "card-mux3j7kt-18j-954bfb07-c98e-4341-99a7-5d93e74712f6",
+        "term": "__weakref__",
+        "definition": "__slots__使用クラスで弱参照を許可したい場合にslotsへ含める特殊名は？"
+      },
+      {
+        "id": "card-mux3j7kt-18k-c34e9866-813c-43ac-99e4-155e0380225b",
+        "term": "name mangling (名前マングリング)",
+        "definition": "__xのような名前をクラス名を含む形へ変換して衝突を減らす仕組みは？"
+      },
+      {
+        "id": "card-mux3j7kt-18l-30e72e3f-ff4b-460d-819a-79009fdb2c02",
+        "term": "_Class__x",
+        "definition": "Class内の__xが典型的に変換される名前形式は？"
+      },
+      {
+        "id": "card-mux3j7kt-18m-b086117e-d40d-4bea-8956-c1d5a36caf63",
+        "term": "encapsulation (カプセル化)",
+        "definition": "外部から内部実装へ直接依存しにくくする設計概念を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-18n-76f1a4da-9057-45e0-9657-5c6d2309cfe8",
+        "term": "__repr__()",
+        "definition": "開発者向けの曖昧さの少ない文字列表現を返す特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18o-3d6eabd1-a638-4ac4-8120-5cd65711f363",
+        "term": "__str__()",
+        "definition": "ユーザー向けの読みやすい文字列表現を返す特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18p-94a7e738-4fe1-429a-b22b-40d4125910c0",
+        "term": "__format__()",
+        "definition": "format()やf-stringの書式指定で利用される特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18q-296eae96-9a3e-496d-b08b-3572ec1ef489",
+        "term": "__bytes__()",
+        "definition": "bytes(obj)でバイト表現を定義する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18r-cae14988-e2bf-4d15-ae98-ec631ea603ca",
+        "term": "__bool__()",
+        "definition": "bool(obj)で真偽値を直接定義する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18s-90c05c9c-39d5-49e0-8516-d0d2445b4ac4",
+        "term": "__len__()",
+        "definition": "__bool__がない場合にtruth value判定へ利用され得る特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18t-51f7af20-7b39-473d-a79d-412f381edecf",
+        "term": "__eq__()",
+        "definition": "比較演算子==の等価比較をカスタマイズする特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18u-2eaa96d2-c141-496a-98c5-f13276d1ca03",
+        "term": "__lt__()",
+        "definition": "<演算の比較をカスタマイズする特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18v-66304736-8ffd-44d7-b5e7-6373675e3567",
+        "term": "NotImplemented",
+        "definition": "二項演算や比較で相手型を処理できないことを知らせるため返す特殊値は？"
+      },
+      {
+        "id": "card-mux3j7kt-18w-1518bd69-1442-4281-9fd2-3965c644f300",
+        "term": "__hash__()",
+        "definition": "hash(obj)や辞書キーで使うハッシュ値を定義する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18x-4c5adf1f-7b42-4fdc-a00e-bd1e680e969c",
+        "term": "unhashable (ハッシュ不可能)",
+        "definition": "__eq__を独自定義し__hash__を適切に持たないmutableクラスが通常なる性質は？"
+      },
+      {
+        "id": "card-mux3j7kt-18y-ea575512-5f9f-405a-a9fd-4a05764aa3b2",
+        "term": "__iter__()",
+        "definition": "オブジェクトからiteratorを取得するプロトコルメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-18z-b1e85689-4b8e-4f59-a045-712957d02447",
+        "term": "__next__()",
+        "definition": "iteratorが次の要素を返すために実装する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-190-25d8372a-2b51-41be-935a-3520c9869687",
+        "term": "__contains__()",
+        "definition": "in演算子のmembership testを直接カスタマイズする特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-191-0a11482e-5c0c-4c51-8e1b-4dd89aede448",
+        "term": "__getitem__()",
+        "definition": "obj[key]による要素取得を定義する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-192-5b15c13d-0596-44cb-88f5-de017807bc70",
+        "term": "__setitem__()",
+        "definition": "obj[key] = valueによる要素代入を定義する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-193-edec007b-4c4e-43eb-817e-ba68d4df3c20",
+        "term": "__missing__()",
+        "definition": "dictサブクラスで存在しないキーアクセス時の処理を定義できるメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-194-79968d19-d16c-4138-b466-7a30008066cf",
+        "term": "__enter__()",
+        "definition": "同期context managerがwithブロック開始時に呼ばれるメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-195-cdf12bef-e5a3-4042-91c0-aa1d2ede6cd2",
+        "term": "__exit__()",
+        "definition": "同期context managerがwithブロック終了時に呼ばれるメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-196-0f810476-6425-42d4-9021-b52a630d4185",
+        "term": "__aenter__()",
+        "definition": "非同期context managerがasync with開始時にawaitされるメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-197-1034074a-38fc-48c4-ab6e-cec94e9aaaf8",
+        "term": "__aexit__()",
+        "definition": "非同期context managerがasync with終了時にawaitされるメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-198-1aae3855-3df8-44f6-a561-1c6e25803a28",
+        "term": "__init_subclass__()",
+        "definition": "サブクラスが定義されたとき親クラス側で初期設定を行えるフックは？"
+      },
+      {
+        "id": "card-mux3j7kt-199-8983c676-b190-4de8-ad42-5a943e10c6a8",
+        "term": "__set_name__()",
+        "definition": "descriptorが所有クラスと割り当てられた属性名を知るためclass作成時に呼ばれるフックは？"
+      },
+      {
+        "id": "card-mux3j7kt-19a-26c80ba6-d46a-48e9-8fd8-94f83b0e6ad9",
+        "term": "__class_getitem__()",
+        "definition": "C[T]のようなクラスの添字アクセスを主に型パラメータ用途で定義するフックは？"
+      },
+      {
+        "id": "card-mux3j7kt-19b-d6b9f0ff-575d-42f6-ab57-79fa53a4dcdd",
+        "term": "__mro_entries__()",
+        "definition": "class定義のbase表現を実際の基底クラスタプルへ変換するため使われる特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-19c-81f31b94-1803-40c1-8abd-5ad1d52fd60b",
+        "term": "__instancecheck__()",
+        "definition": "isinstance()の判定をメタクラス側でカスタマイズできる特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-19d-e16cb535-c673-4792-afd0-410e0ba30eaa",
+        "term": "__subclasscheck__()",
+        "definition": "issubclass()の判定をメタクラス側でカスタマイズできる特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-19e-488104c6-02ca-46fe-8f7a-5df2de5ae773",
+        "term": "abstract base class (抽象基底クラス)",
+        "definition": "共通インターフェースを宣言し、未実装メソッドを持てる基底クラスを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-19f-0aca2204-b03c-460f-b898-a9c207bf5eff",
+        "term": "ABCMeta",
+        "definition": "abcモジュールでabstract base classを支えるメタクラスは？"
+      },
+      {
+        "id": "card-mux3j7kt-19g-8f19fe37-f2b4-48a2-acc2-e62d06e90f16",
+        "term": "@abstractmethod",
+        "definition": "サブクラスで実装が必要な抽象メソッドを示すデコレータは？"
+      },
+      {
+        "id": "card-mux3j7kt-19h-f00787e9-6994-426f-8875-b40821b8407b",
+        "term": "virtual subclass (仮想サブクラス)",
+        "definition": "継承関係を書かずABCへregisterされ、issubclass上は適合すると扱われるクラスを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-19i-89a31d37-dcb8-4411-a499-97a965d4e0ec",
+        "term": "duck typing (ダックタイピング)",
+        "definition": "具体的な継承型より、必要な操作を持つかでオブジェクトを扱うPython的な設計思想は？"
+      },
+      {
+        "id": "card-mux3j7kt-19j-94b3bfd5-fe3d-42b1-bce1-386cce9f9b3a",
+        "term": "iterable (イテラブル)",
+        "definition": "iter()でiteratorを取得できるオブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-19k-ef0d1cf8-bb66-47c0-8bdd-9f0fc5fabc0e",
+        "term": "iterator (イテレータ)",
+        "definition": "__next__()で要素を1つずつ返し、自身もiterableであるオブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-19l-8ea0b2da-cdc6-4636-95c6-6f73e4a78076",
+        "term": "iter()",
+        "definition": "iterableからiteratorを取得する組み込み関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-19m-ee48213e-191d-46c0-9904-ab3351e53649",
+        "term": "next()",
+        "definition": "iteratorから次の要素を1つ取得する組み込み関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-19n-25c6da98-138d-44ae-afb5-c3795c2fbb20",
+        "term": "StopIteration",
+        "definition": "同期iteratorが要素終了を知らせるため発生させる例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-19o-0f503d4b-a18b-4a08-a824-049ca3e4082d",
+        "term": "iterator protocol (イテレータプロトコル)",
+        "definition": "__iter__と__next__を中心とする反復の規約を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-19p-991a2f3b-4ed9-40d8-b99e-e62d56b332ba",
+        "term": "self",
+        "definition": "通常のiteratorで__iter__()が返すべき代表的な値は？"
+      },
+      {
+        "id": "card-mux3j7kt-19q-e1cfd16e-ef82-4e31-ba00-b4b2dcb9f641",
+        "term": "one-shot (1回限り)",
+        "definition": "多くのiteratorが一度消費すると最初から再利用できない性質を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-19r-a4b11585-95b2-431e-9c82-66a7ef568fa3",
+        "term": "lazy evaluation (遅延評価)",
+        "definition": "必要になった時点で要素や結果を計算する評価方式を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-19s-b7b7f7b1-df46-4cb5-84ed-4440123ff995",
+        "term": "generator (ジェネレータ)",
+        "definition": "yieldで実行状態を中断・再開できる特殊なiteratorを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-19t-3e1189e5-ee3e-474e-a5df-822870d1bf71",
+        "term": "yield",
+        "definition": "generatorで値を返しつつ実行状態を保存して中断するキーワードは？"
+      },
+      {
+        "id": "card-mux3j7kt-19u-403164d1-02b0-42e0-a4de-ed368be6ca8a",
+        "term": "suspended (一時停止状態)",
+        "definition": "yield後、generatorがローカル状態と実行位置を保持して停止している状態を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-19v-86003f46-cec9-4494-b801-2a7c6cb898d9",
+        "term": "generator frame (ジェネレータフレーム)",
+        "definition": "generatorが中断中のローカル変数や実行位置を保持するframeを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-19w-839f82b1-e303-475a-b5ce-d86402efb3df",
+        "term": "send()",
+        "definition": "generatorへ値を送り、停止中のyield式の結果として受け取らせるメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-19x-e35f4f68-2cba-4538-be64-3a0fdc19c7c3",
+        "term": "throw()",
+        "definition": "generatorの停止位置へ例外を注入するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-19y-44311644-38e4-4eef-a259-6f691535d829",
+        "term": "close()",
+        "definition": "generatorへGeneratorExitを送って終了を要求するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-19z-e872339a-71b2-4235-a092-09d1c315693d",
+        "term": "GeneratorExit",
+        "definition": "generator.close()によりgenerator内部へ送られる特殊な例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-1a0-2a178357-28fa-4a4f-8b6f-d6f078291f1f",
+        "term": "yield from",
+        "definition": "別のiterableやsubgeneratorへ反復処理を委譲する構文は？"
+      },
+      {
+        "id": "card-mux3j7kt-1a1-00253116-7a56-4945-ac66-f452194567a3",
+        "term": "delegation (委譲)",
+        "definition": "yield fromがsubgeneratorへsend/throwなども引き渡す仕組みを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1a2-dbf4cf4e-9d2b-4c7f-8610-2e547bfd01e9",
+        "term": "StopIteration.value",
+        "definition": "subgeneratorのreturn値をyield from式が受け取る際に使われる属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1a3-5bd42975-fc0d-430d-92fb-ce383c945509",
+        "term": "generator expression (ジェネレータ式)",
+        "definition": "(x for x in xs)のように遅延評価される内包形式を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1a4-4783634d-b222-4805-80ec-bb507046fe8f",
+        "term": "list comprehension (リスト内包表記)",
+        "definition": "全要素をその場でlistへ実体化する[x for x in xs]形式を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1a5-a749274e-91b9-4809-84e1-9dbb58c253f2",
+        "term": "iterator exhaustion (イテレータの消費完了)",
+        "definition": "iteratorを最後まで読み切り、その後next()が終了を返す状態を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1a6-5d90879e-6f06-482a-9624-e65a9a3cc1d8",
+        "term": "tee()",
+        "definition": "1つのiteratorから複数の独立した見かけのiteratorを作るitertools関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1a7-92365523-9cb2-469c-a050-4bd0225310f9",
+        "term": "buffering (バッファリング)",
+        "definition": "itertools.tee()で複製側の進み方に差があると内部に未消費要素を保持する仕組みを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1a8-bdc84cf2-1851-47e8-85db-a8032262636e",
+        "term": "sentinel (番兵値)",
+        "definition": "iter(callable, value)で反復終了を示す比較対象値を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1a9-a55a411d-05df-455d-9adc-ac5d13c60be0",
+        "term": "async iterable (非同期イテラブル)",
+        "definition": "__aiter__()で非同期iteratorを返すオブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1aa-8d42b168-c949-4b20-b261-c6169de340e3",
+        "term": "async iterator (非同期イテレータ)",
+        "definition": "__anext__()がawaitableを返す非同期反復オブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ab-fac44454-c884-407f-aa0a-71eb84b1b014",
+        "term": "__aiter__()",
+        "definition": "async for開始時に非同期iteratorを取得する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ac-a8ec47fa-e831-4738-bacd-6ea16419dd10",
+        "term": "__anext__()",
+        "definition": "非同期iteratorが次の要素を非同期に提供する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ad-279b5f9b-3e7b-4c8a-a863-b35ecec99204",
+        "term": "StopAsyncIteration",
+        "definition": "非同期iteratorが反復終了を知らせる例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ae-22996972-9464-4570-be35-8558db3793a2",
+        "term": "async for",
+        "definition": "非同期iteratorを順次awaitしながら反復する構文は？"
+      },
+      {
+        "id": "card-mux3j7kt-1af-86e138e0-847b-4340-b032-fa00d542f174",
+        "term": "coroutine (コルーチン)",
+        "definition": "async def呼び出しで作られ、awaitによって実行を進められるオブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ag-0ade1a88-1230-487f-bd4d-4a0de62ceab9",
+        "term": "coroutine object (コルーチンオブジェクト)",
+        "definition": "async def関数を呼び出しただけで得られ、まだ完了まで実行されていないオブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ah-addba097-bcda-45e4-b187-4b8599fbf198",
+        "term": "awaitable (await可能オブジェクト)",
+        "definition": "await式の対象にできるオブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ai-b312c2a7-5e20-4e24-aa6d-debd2438e768",
+        "term": "__await__()",
+        "definition": "独自オブジェクトをawait可能にするため実装する特殊メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1aj-61af8c82-bec2-47f9-8b3b-683722b6fafa",
+        "term": "Task",
+        "definition": "asyncioでcoroutineの実行をevent loopへスケジュールする高水準オブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ak-edbbbf50-527f-40dc-a125-e45b57cebf02",
+        "term": "Future",
+        "definition": "将来得られる結果または例外を表す低水準awaitableは？"
+      },
+      {
+        "id": "card-mux3j7kt-1al-4ddb0fc8-e5d0-4378-8ebf-ccbcf95494f2",
+        "term": "event loop (イベントループ)",
+        "definition": "asyncioでreadyなTaskやcallback、I/Oイベントを順次処理する中心機構は？"
+      },
+      {
+        "id": "card-mux3j7kt-1am-9fb31ea8-ed8d-4090-9208-93a598a0a19a",
+        "term": "cooperative scheduling (協調的スケジューリング)",
+        "definition": "Task自身がawaitなどで制御を返すことを前提に並行実行する方式は？"
+      },
+      {
+        "id": "card-mux3j7kt-1an-206d0c1f-df7b-4855-8cb8-9b4206944675",
+        "term": "await",
+        "definition": "coroutineがawaitableの完了を待ち、その間event loopへ制御を返し得るキーワードは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ao-8e38ec4d-f50f-465b-abb9-cab2af9887dc",
+        "term": "asyncio.create_task()",
+        "definition": "coroutineをTaskとしてスケジュールする代表的な関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ap-6bb48438-ff27-41b5-a089-bc8c68d738ba",
+        "term": "weak reference (弱参照)",
+        "definition": "asyncio event loopがTaskに対して保持する参照の性質として注意すべきものは？"
+      },
+      {
+        "id": "card-mux3j7kt-1aq-2efc9ac7-49ff-44c8-ae38-717348a5d813",
+        "term": "CancelledError",
+        "definition": "asyncio Taskへcancel()が要求された際、通常次の実行機会に注入される例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ar-5ca4eddd-ddfd-4e76-845e-4f301865d0f8",
+        "term": "cancellation (キャンセル)",
+        "definition": "非同期Taskへ処理中止を協調的に要求する仕組みを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1as-0936c6df-4019-4cbb-b3dd-a174a6444883",
+        "term": "TaskGroup",
+        "definition": "関連Taskを構造化して管理し、終了時にまとめて待機できるasyncio機能は？"
+      },
+      {
+        "id": "card-mux3j7kt-1at-af8f6093-0068-47bd-82da-8496b3d54f43",
+        "term": "structured concurrency (構造化並行処理)",
+        "definition": "子Taskの寿命を明確なスコープ内へ束ねる並行処理設計を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1au-18f30b88-1a62-4f55-aaef-4ce4320d52e4",
+        "term": "asyncio.gather()",
+        "definition": "複数awaitableを同時進行させ、結果をまとめて待つ代表的な関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1av-4cf19442-9868-4807-a36c-f2c66bba7418",
+        "term": "asyncio.sleep()",
+        "definition": "event loopをブロックせず指定時間待機するcoroutine関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1aw-012bfb65-c075-4926-bcc6-47ab6a8e86a7",
+        "term": "blocking call (ブロッキング呼び出し)",
+        "definition": "event loopのthread上で長時間実行すると他Taskを止める同期処理を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ax-6c79dd5d-79f9-4864-b1e0-d66746627ff6",
+        "term": "asyncio.to_thread()",
+        "definition": "ブロッキングな同期関数を別threadで実行しawaitする高水準関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ay-75d64e6e-5d04-428a-a472-265068ae8b77",
+        "term": "async generator (非同期ジェネレータ)",
+        "definition": "async def内でyieldを使って作る非同期iteratorの一種は？"
+      },
+      {
+        "id": "card-mux3j7kt-1az-37239178-f3f7-4325-8678-f15addd33ee7",
+        "term": "aclose()",
+        "definition": "async generatorへ終了と後処理を要求するawaitableメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1b0-c0b27087-5648-4d8a-92dd-2ec12464722c",
+        "term": "asend()",
+        "definition": "async generatorへ値を送りながら次のyieldまで進めるメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1b1-d7a1a1e5-5db7-4240-a372-67b2c8136964",
+        "term": "athrow()",
+        "definition": "async generatorの停止位置へ例外を注入するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1b2-dc54e4bc-ec78-44d5-beda-c8f05c6f6885",
+        "term": "exception object (例外オブジェクト)",
+        "definition": "エラー発生時に型・メッセージ・関連情報を保持するPythonオブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7kt-1b3-69ec4f5a-3035-4a41-8a58-0855f8c5b762",
+        "term": "exception class (例外クラス)",
+        "definition": "raiseで生成・送出される例外オブジェクトの型を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1b4-62330853-206b-4acb-bab8-580dfc1f7d32",
+        "term": "traceback (トレースバック)",
+        "definition": "例外発生までに通ったframeや行番号を連鎖として記録する情報は？"
+      },
+      {
+        "id": "card-mux3j7kt-1b5-8880e4b6-a31d-4947-b3c3-a1cc33a7cc6f",
+        "term": "__traceback__",
+        "definition": "例外オブジェクトからtracebackを参照する属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1b6-9f797553-36e1-435b-b77b-d746d2336651",
+        "term": "raise",
+        "definition": "例外を明示的に送出するキーワードは？"
+      },
+      {
+        "id": "card-mux3j7kt-1b7-f7e71908-9fa0-4749-a5bb-b437c004fdb2",
+        "term": "re-raise (再送出)",
+        "definition": "except内で引数なしraiseを使い、現在処理中の例外を再送出することを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1b8-75c5266f-6cea-4277-83d4-a03c737529dc",
+        "term": "exception chaining (例外チェーン)",
+        "definition": "ある例外の処理中に別の例外が起きた因果関係を保持する仕組みは？"
+      },
+      {
+        "id": "card-mux3j7kt-1b9-76c70586-8f01-4458-b1cc-6f9d673fc403",
+        "term": "raise ... from ...",
+        "definition": "例外の直接原因を明示してchainingする構文は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ba-6f8709a5-a3e1-4b2e-b428-36d3e3bb04d8",
+        "term": "__cause__",
+        "definition": "raise X from Yで明示的な原因例外を保持する属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bb-ae9577b2-87f1-47b3-9ce0-47c20cec973a",
+        "term": "__context__",
+        "definition": "例外処理中に別例外が暗黙発生したとき元の例外を保持する属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bc-4ee9ad35-3409-443d-9e10-7762a5059f62",
+        "term": "from None",
+        "definition": "例外表示で暗黙contextを抑制したいときraise文へ付ける指定は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bd-f94db38f-1e7d-4ca3-a025-a97c113122b4",
+        "term": "finally",
+        "definition": "例外の有無にかかわらず原則として終了時に実行する節は？"
+      },
+      {
+        "id": "card-mux3j7kt-1be-6b5885ca-f398-4117-b1e9-c95f2e0475f2",
+        "term": "else",
+        "definition": "tryブロックが例外なしで完了した場合だけ実行する節は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bf-fd0e1b3c-56b5-42d2-b15e-7098aa081688",
+        "term": "BaseException",
+        "definition": "Pythonの組み込み例外階層の最上位クラスは？"
+      },
+      {
+        "id": "card-mux3j7kt-1bg-45680e2c-f6d6-4ac7-ad97-d49be2502936",
+        "term": "Exception",
+        "definition": "通常のアプリケーション例外を捕捉する基底として広く使われるクラスは？"
+      },
+      {
+        "id": "card-mux3j7kt-1bh-782c4115-22b7-4579-b3f6-bb5d14b789b2",
+        "term": "SystemExit",
+        "definition": "sys.exit()が送出し、通常ExceptionではなくBaseException直下に属する例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bi-6459b108-1a1e-4460-a1f6-db076d82a37d",
+        "term": "KeyboardInterrupt",
+        "definition": "Ctrl+Cなどの割り込みをPythonへ通知する代表的な例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bj-8c072b26-fb7a-4544-87d2-61b653bc55a2",
+        "term": "GeneratorExit",
+        "definition": "generator終了要求を表し、通常ExceptionではなくBaseException直下に属する例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bk-b20b2bf5-c90f-4866-a732-9dc5b46fb808",
+        "term": "ExceptionGroup",
+        "definition": "複数の独立した例外を1つにまとめて伝播できる例外型は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bl-168bd4fa-b572-4928-af31-624f6940ee34",
+        "term": "except*",
+        "definition": "ExceptionGroup内の該当例外群を型ごとに処理する構文は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bm-76eb61d8-82db-420c-805f-d51b3bba6e82",
+        "term": "EAFP (Easier to Ask Forgiveness than Permission) (事前確認より例外処理を優先する方針)",
+        "definition": "まず操作を試し、失敗時に例外処理するPythonで一般的な設計スタイルは？"
+      },
+      {
+        "id": "card-mux3j7kt-1bn-bc381bc6-0d56-41fb-91dd-7f8472affa94",
+        "term": "LBYL (Look Before You Leap) (実行前に条件を確認する方針)",
+        "definition": "操作前に条件を細かく確認してから実行する設計スタイルは？"
+      },
+      {
+        "id": "card-mux3j7kt-1bo-c02eeda9-1fa6-4300-adbe-644cf491c72e",
+        "term": "context manager (コンテキストマネージャ)",
+        "definition": "リソース取得と解放などの前後処理をwith文へ統合するオブジェクトを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1bp-276b96fe-f2ca-4952-b155-cbca7da1b975",
+        "term": "with",
+        "definition": "context managerのenter/exitプロトコルを利用する構文は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bq-b1138165-62f0-4224-a030-88542000fc12",
+        "term": "__enter__()",
+        "definition": "同期context managerでwith本体へ渡す値を返すメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1br-90fb1fea-c997-4369-a882-bab1c7d5ee41",
+        "term": "__exit__()",
+        "definition": "同期context managerで例外情報を受け取り後処理するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1bs-5c70d101-a1e4-45f9-b5e5-79a3dbfdb428",
+        "term": "truthy (真と評価される値)",
+        "definition": "__exit__()が例外発生時にこの種類の値を返すと、その例外を抑制できる？"
+      },
+      {
+        "id": "card-mux3j7kt-1bt-7af99723-8179-45b1-998e-3e601e47bb1b",
+        "term": "@contextmanager",
+        "definition": "contextlibでgenerator関数1つから同期context managerを作るデコレータは？"
+      },
+      {
+        "id": "card-mux3j7kt-1bu-61d05c35-6581-4d61-97d8-b9644238b2be",
+        "term": "yield",
+        "definition": "@contextmanagerでリソース取得と解放処理の境界を示す文は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bv-1124e721-2ced-4d71-894e-6b762829aebe",
+        "term": "try/finally",
+        "definition": "@contextmanager内部で確実な解放処理を書くための基本構造は？"
+      },
+      {
+        "id": "card-mux3j7kt-1bw-c8831a3d-56b0-4cc3-93e4-9e0128daa7a7",
+        "term": "contextlib.ExitStack",
+        "definition": "実行時に数が決まる複数context managerやcleanupをまとめて管理するクラスは？"
+      },
+      {
+        "id": "card-mux3j7kt-1bx-d5bee36e-3ca4-492f-8926-8274cb36858a",
+        "term": "LIFO (Last In, First Out) (後入れ先出し)",
+        "definition": "ExitStackに登録した終了処理が通常実行される順序は？"
+      },
+      {
+        "id": "card-mux3j7kt-1by-3ecda99f-d1e1-4ac9-b31d-e6c9fa338649",
+        "term": "callback()",
+        "definition": "ExitStackへ任意のcleanup関数を登録するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1bz-3baf5a48-3e77-463e-9bfb-a03189ec5038",
+        "term": "enter_context()",
+        "definition": "ExitStackへcontext managerを開始・登録するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1c0-4c735345-1f0d-4251-8958-b0abd7dfe6c1",
+        "term": "AsyncExitStack",
+        "definition": "非同期context managerを動的にまとめて管理するcontextlibクラスは？"
+      },
+      {
+        "id": "card-mux3j7kt-1c1-8d106ef4-e682-4382-9cb6-f6c37818c082",
+        "term": "async with",
+        "definition": "非同期context managerを利用する構文は？"
+      },
+      {
+        "id": "card-mux3j7kt-1c2-6974cec4-2828-4994-ab5f-79ce81a19257",
+        "term": "@asynccontextmanager",
+        "definition": "contextlibでasync generator関数から非同期context managerを作るデコレータは？"
+      },
+      {
+        "id": "card-mux3j7kt-1c3-7bd194f7-7f3f-4662-b833-d515b3bf7256",
+        "term": "deterministic cleanup (決定的なリソース解放)",
+        "definition": "withによってGC時期に依存せずリソースを明示的スコープ終了時に解放する考え方は？"
+      },
+      {
+        "id": "card-mux3j7kt-1c4-3ffeeaa9-f248-4aa0-b231-5a7664b5f462",
+        "term": "resource leak (リソースリーク)",
+        "definition": "ファイルやsocketなどを閉じずOS資源を消費し続ける問題を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1c5-fecabdbb-24c4-46b8-aee6-4a68ce9df884",
+        "term": "RAII-like (RAII: Resource Acquisition Is Initialization) (RAIIに類似)",
+        "definition": "PythonのwithがC++のRAIIに似て、スコープで資源寿命を管理する性質を表す言い方は？"
+      },
+      {
+        "id": "card-mux3j7kt-1c6-03b20e3c-911b-48d5-98ba-3d77f1dc3b3b",
+        "term": "module object (モジュールオブジェクト)",
+        "definition": "import成功後、実行済み名前空間を保持して利用されるオブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7kt-1c7-c9d870c7-14f6-4fb7-b2e8-e3f7088f1c96",
+        "term": "sys.modules",
+        "definition": "既にロードされたモジュールを名前から引く主要なimportキャッシュは？"
+      },
+      {
+        "id": "card-mux3j7kt-1c8-69d47eb5-d82a-46fa-b91e-21c492dd57dd",
+        "term": "module cache (モジュールキャッシュ)",
+        "definition": "同じmoduleを通常何度も実行し直さず再利用するためのsys.modulesの役割を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1c9-4eb96ff9-6e60-4b07-9baf-1550f92bc1dd",
+        "term": "ModuleSpec",
+        "definition": "sys.modulesに対象がない場合、import machineryがfinderを通じて次に探索するmodule情報オブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ca-c5566e2b-d3c3-43a6-9564-3664ac6a238f",
+        "term": "sys.meta_path",
+        "definition": "importでmeta path finderを順に問い合わせるためのリストは？"
+      },
+      {
+        "id": "card-mux3j7kt-1cb-12f1c5e3-5939-4224-ab02-7846f97130b0",
+        "term": "meta path finder (メタパスファインダ)",
+        "definition": "通常のsys.path探索より前段でmodule specを探索できるfinderを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1cc-ed89e318-f5c4-4bde-903d-356c1c77229c",
+        "term": "find_spec()",
+        "definition": "finderがmodule specを返すため実装する主要メソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1cd-cf90ed38-6d57-4003-936f-0c453f0663f9",
+        "term": "ModuleSpec",
+        "definition": "import対象の名前・loader・originなどの情報をまとめたオブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ce-59fd8b99-d6e9-4c05-a957-81e657788904",
+        "term": "loader (ローダ)",
+        "definition": "module objectの生成やコード実行を担当するimport機構上のオブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7kt-1cf-9dd3e35f-d66d-4067-8100-f77a93dad2bf",
+        "term": "create_module()",
+        "definition": "loaderがmodule object生成をカスタマイズできるメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1cg-481654ed-1540-4516-b776-e7675e17d207",
+        "term": "exec_module()",
+        "definition": "loaderがmoduleのコードを実行して名前空間を初期化するメソッドは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ch-6929008f-81ec-430e-8e5e-eac503146dfc",
+        "term": "sys.path",
+        "definition": "通常のトップレベルmodule探索で参照されるパス一覧は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ci-71cfd400-05e3-471f-99b4-9a50e8ff3fd6",
+        "term": "PathFinder",
+        "definition": "sys.pathやpackageの__path__などのpath entryを使ってmoduleを探索する標準meta path finderは？"
+      },
+      {
+        "id": "card-mux3j7kt-1cj-20afcf06-764e-4443-9347-37e6c4513855",
+        "term": "sys.path_hooks",
+        "definition": "path entryに対応するfinder生成方法を登録するhook一覧は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ck-cddcbf53-33ac-45ce-8995-52f80cd4c22a",
+        "term": "sys.path_importer_cache",
+        "definition": "各path entryに対して見つけたfinderなどをキャッシュする辞書は？"
+      },
+      {
+        "id": "card-mux3j7kt-1cl-1f6d64d8-3cf1-466d-9738-dc94fab2eb16",
+        "term": "import hook (インポートフック)",
+        "definition": "importの探索・読み込み挙動を拡張する仕組みを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1cm-442e9e98-cf63-4366-a198-00623e6b0df2",
+        "term": "absolute import (絶対インポート)",
+        "definition": "トップレベルpackage名から明示的に探索するimport形式は？"
+      },
+      {
+        "id": "card-mux3j7kt-1cn-8a35d500-aabb-4ad5-aa2b-1bdf7948b7ce",
+        "term": "relative import (相対インポート)",
+        "definition": ".や..を使い現在packageを基準にするimport形式は？"
+      },
+      {
+        "id": "card-mux3j7kt-1co-9d66773f-533e-42a9-b55d-74a3c4d2fee9",
+        "term": "__package__",
+        "definition": "relative importの基準package判断に使われるmodule属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1cp-dab26a62-298d-4b60-adb5-2828f25fafe6",
+        "term": "__spec__",
+        "definition": "moduleが自身のModuleSpecを保持する代表的な属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1cq-70a3fb4b-e6ca-4be1-b085-83d03a347828",
+        "term": "__loader__",
+        "definition": "moduleをロードしたloader情報を保持する属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1cr-7a4d6d78-2ee4-43ba-9ead-11f8000bfac1",
+        "term": "__file__",
+        "definition": "ファイル由来moduleで元ファイル位置を示すことが多い属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1cs-03aa235f-799e-40d5-a44d-f6c2ea65763e",
+        "term": "__path__",
+        "definition": "packageがsubmodule探索先を保持するために持つ属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ct-36cc13ac-26f4-40a5-8324-bac86911907b",
+        "term": "package (パッケージ)",
+        "definition": "submoduleを持てるmoduleとして扱われるimport上の単位は？"
+      },
+      {
+        "id": "card-mux3j7kt-1cu-ba292b43-a1ca-4714-8d58-11eed632768e",
+        "term": "regular package (通常パッケージ)",
+        "definition": "通常__init__.pyを持つ従来型packageを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1cv-9262e41a-bc73-4e53-a755-7e7b8c5ca38d",
+        "term": "namespace package (名前空間パッケージ)",
+        "definition": "__init__.pyなしでも複数directoryに分散して構成できるpackageは？"
+      },
+      {
+        "id": "card-mux3j7kt-1cw-988553b6-99ac-4177-9d94-a9899d251a35",
+        "term": "__init__.py",
+        "definition": "regular packageの初期化コードとして実行される代表的なファイルは？"
+      },
+      {
+        "id": "card-mux3j7kt-1cx-35d0cc4b-f813-4839-85f2-a150531bb96c",
+        "term": "__main__.py",
+        "definition": "python -m packageでpackage実行時に対象となる代表的なファイルは？"
+      },
+      {
+        "id": "card-mux3j7kt-1cy-4f8c8660-b6ad-431b-853d-a23141f01141",
+        "term": "python -m",
+        "definition": "moduleをimport検索規則で見つけてスクリプトとして実行する起動方法は？"
+      },
+      {
+        "id": "card-mux3j7kt-1cz-39464c0e-09b1-4751-bdac-d879bb0a54ac",
+        "term": "__main__",
+        "definition": "直接実行されるトップレベルcodeが通常与えられるmodule名は？"
+      },
+      {
+        "id": "card-mux3j7kt-1d0-3155b2f5-e400-4e4e-a393-a0e1fbf0f989",
+        "term": "circular import (循環インポート)",
+        "definition": "module AとBがimport中に互いをimportする依存関係を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1d1-bc42eb13-5a43-4d73-818e-6573d86232fd",
+        "term": "partially initialized module (部分初期化済みモジュール)",
+        "definition": "circular import時にsys.modulesへ登録済みだが実行完了前のmodule状態を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1d2-a9a2b295-6c0e-4b02-9e65-6fe3f43ec622",
+        "term": "ImportError",
+        "definition": "import対象は見つかってもimport処理上の問題で発生し得る基底例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-1d3-d810b0a5-57ea-449a-a9b0-d40438b78bc7",
+        "term": "ModuleNotFoundError",
+        "definition": "要求したmoduleを探索して見つけられない場合に発生するImportError派生例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-1d4-ae377a09-d7d6-4033-9a37-cce1b318c9b3",
+        "term": "importlib",
+        "definition": "Pythonのimport machineryをPythonコードから扱う標準packageは？"
+      },
+      {
+        "id": "card-mux3j7kt-1d5-886b795e-75d3-4bd4-ad19-48d8d7ff3612",
+        "term": "import_module()",
+        "definition": "importlibで文字列指定したmoduleを動的にimportする代表的な関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1d6-0696c6d5-db41-4eec-8734-e23c6527474d",
+        "term": "importlib.reload()",
+        "definition": "既にimport済みmoduleのコードを再実行して更新する関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1d7-0fadfcd8-1e87-4673-837e-010929b77fc1",
+        "term": "bytecode cache (バイトコードキャッシュ)",
+        "definition": "再import時のコンパイル負荷を減らすため保存される.pycなどのキャッシュを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1d8-25afa442-cd14-41bd-9767-774ffcfbab62",
+        "term": "__pycache__",
+        "definition": "通常.pycファイルが保存されるdirectory名は？"
+      },
+      {
+        "id": "card-mux3j7kt-1d9-dffcb525-9552-4921-949d-6a0c3205d459",
+        "term": ".pyc",
+        "definition": "Pythonソースから生成されるCPythonのbytecode cacheファイル拡張子は？"
+      },
+      {
+        "id": "card-mux3j7kt-1da-ee6579a1-2ec0-4ed8-8f3e-eae954e1c34e",
+        "term": "source hash/timestamp (ソースハッシュ／タイムスタンプ)",
+        "definition": "pycが元ソースと整合するか判断するため利用される代表的な検証情報は？"
+      },
+      {
+        "id": "card-mux3j7kt-1db-87d6d071-ace9-4119-ae6c-d9168856f35a",
+        "term": "site-packages",
+        "definition": "多くのPython環境で外部packageがインストールされる代表的directory名は？"
+      },
+      {
+        "id": "card-mux3j7kt-1dc-0ae34f55-bbe2-4864-8f7a-dc4d9afaa7d3",
+        "term": "virtual environment (仮想環境)",
+        "definition": "projectごとにPython実行環境とpackage群を分離する仕組みは？"
+      },
+      {
+        "id": "card-mux3j7kt-1dd-4888af07-d7af-442d-9093-ed7ed9fc5438",
+        "term": "sys.prefix",
+        "definition": "現在のPython環境のprefixを示し、virtual environment判定にも使えるsys属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1de-0eb8288a-5ed0-4855-9cfb-104105569b4b",
+        "term": "sys.base_prefix",
+        "definition": "virtual environment使用時も元のbase Python prefixを示すsys属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1df-c3b49465-c9a7-43e2-b4d4-8192f86f1bc8",
+        "term": "parse (構文解析)",
+        "definition": "Pythonソースを文法規則に従って構造として読み取る処理を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1dg-c3b88cc4-5a84-4b02-9ae8-5f766185e3e4",
+        "term": "AST (Abstract Syntax Tree) (抽象構文木)",
+        "definition": "Pythonコードの構文構造を木として表現する中間表現は？"
+      },
+      {
+        "id": "card-mux3j7kt-1dh-1220914d-529b-408b-b03b-a43a4446336b",
+        "term": "ast module (astモジュール)",
+        "definition": "PythonコードをASTとして解析・操作する標準モジュールは？"
+      },
+      {
+        "id": "card-mux3j7kt-1di-73901d3d-dad2-4f03-8a05-0f903c3093e2",
+        "term": "compile()",
+        "definition": "ソース文字列やASTをcode objectへコンパイルする組み込み関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1dj-c313a418-c9c4-408a-b58e-82ea0afac528",
+        "term": "code object (コードオブジェクト)",
+        "definition": "コンパイル結果としてbytecode・定数・名前情報などを保持するオブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7kt-1dk-445d61d6-af88-488b-8975-a85eef687358",
+        "term": "bytecode (バイトコード)",
+        "definition": "CPythonがcode object内で実行する低水準命令列を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1dl-43c517d5-7aad-4447-add2-f004dce54d62",
+        "term": "opcode (オペコード)",
+        "definition": "bytecodeの個々の操作種類を表す命令コードを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1dm-f0713ac9-156b-4b16-8d0a-0ad376d42ecd",
+        "term": "dis",
+        "definition": "CPython bytecodeを逆アセンブルして確認する標準モジュールは？"
+      },
+      {
+        "id": "card-mux3j7kt-1dn-98152905-a0f7-463f-924b-a7909db144ff",
+        "term": "dis.dis()",
+        "definition": "関数やcode objectのbytecodeを表示する代表的な関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1do-a2c4678d-381a-401a-b917-c9d4a6059de0",
+        "term": "implementation detail (実装詳細)",
+        "definition": "CPython bytecodeがPython言語仕様ではなく変更され得る性質を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1dp-9bae2a45-1809-4914-b279-3e2c10f93cdb",
+        "term": "evaluation loop (評価ループ)",
+        "definition": "CPythonがbytecode命令を順次解釈・実行する中心ループを一般に何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1dq-d05db799-9b06-406e-af8d-90ba862aadbd",
+        "term": "evaluation stack (評価スタック)",
+        "definition": "CPythonのbytecode実行で、中間値をpush/popして演算に使うframe内のstackを一般に何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1dr-df83a355-fb5c-421f-b801-0fbbb2d41042",
+        "term": "frame object (フレームオブジェクト)",
+        "definition": "実行中codeのinstruction位置・local/global参照・stack状態などを保持するオブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ds-6f69c36d-eeca-47a8-b0fb-96cb99bfd7d6",
+        "term": "f_locals",
+        "definition": "frameのローカル名前空間を参照する代表的な属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1dt-e31bc728-69d6-49f7-8850-6ad1c3c0b0df",
+        "term": "f_globals",
+        "definition": "frameのグローバル名前空間を参照する属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1du-66dd5a91-e8f8-4c4d-8cf4-fd20bb4a9204",
+        "term": "f_back",
+        "definition": "呼び出し元frameへの参照を保持する属性は？"
+      },
+      {
+        "id": "card-mux3j7kt-1dv-fb5ba49d-3696-4f6c-a5a7-16ec8154e585",
+        "term": "sys._getframe()",
+        "definition": "現在または呼び出し側frameを取得できるCPython由来のsys関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1dw-6fa60541-bb73-4e06-8758-8bc320bd98cf",
+        "term": "constant folding (定数畳み込み)",
+        "definition": "コンパイル時に定数式を事前計算して実行時処理を減らす最適化は？"
+      },
+      {
+        "id": "card-mux3j7kt-1dx-94de3627-47da-4d63-9aa1-d0872d3d89b0",
+        "term": "AST optimization (AST: Abstract Syntax Tree) (抽象構文木の最適化)",
+        "definition": "CPythonがbytecode生成前のAST段階で定数式の簡略化などを行う最適化を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1dy-260ab584-ac9d-4ad0-828d-35021ff74c80",
+        "term": "specialization (特殊化)",
+        "definition": "実行時の型などに応じbytecode処理を特化して高速化するCPython最適化を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1dz-7225e81a-afca-45e2-ae0a-f44a57720c62",
+        "term": "adaptive interpreter (適応型インタプリタ)",
+        "definition": "CPython 3.11以降で、実行時情報を観察してbytecode命令をspecializeする方式を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1e0-27150f2c-15e6-4625-bf2c-a8a75c476d39",
+        "term": "inline cache (インラインキャッシュ)",
+        "definition": "属性探索などの直近情報をbytecode近傍に保持して高速化するキャッシュは？"
+      },
+      {
+        "id": "card-mux3j7kt-1e1-b2605f36-e59f-43bf-a7b0-b318e01e7e67",
+        "term": "CACHE",
+        "definition": "CPython bytecodeでinline cache用領域を示すopcode名は？"
+      },
+      {
+        "id": "card-mux3j7kt-1e2-0ffa6fc8-70fc-41c1-aa1a-5b8adf33c28f",
+        "term": "adaptive=True",
+        "definition": "disでspecialized bytecodeを表示するため使える代表的な指定は？"
+      },
+      {
+        "id": "card-mux3j7kt-1e3-2318bbd3-bc8e-4558-a8a8-42645d43ec03",
+        "term": "GIL (Global Interpreter Lock) (グローバルインタプリタロック)",
+        "definition": "通常ビルドのCPythonで同一interpreter内のPython bytecode実行を原則1threadに制限するlockは？"
+      },
+      {
+        "id": "card-mux3j7kt-1e4-627abbb4-daee-4e3f-931f-6b2ed645295b",
+        "term": "global interpreter lock (グローバルインタプリタロック)",
+        "definition": "GILの正式名称は？"
+      },
+      {
+        "id": "card-mux3j7kt-1e5-39d457e1-7b4a-4c17-a08b-6dcc872f4986",
+        "term": "one thread (1スレッド)",
+        "definition": "GIL有効な通常CPythonで同時にPython bytecodeを実行できるthread数は原則いくつ？"
+      },
+      {
+        "id": "card-mux3j7kt-1e6-5151d62e-2fcd-4e03-b63f-365b5d9e9119",
+        "term": "blocking I/O (I/O: Input/Output) (ブロッキングI/O)",
+        "definition": "通常CPythonがGILを解放することが多い代表的な処理種類は？"
+      },
+      {
+        "id": "card-mux3j7kt-1e7-1c6ed88d-0e3c-488a-8ef4-a3430dfe4d68",
+        "term": "C extension (C拡張)",
+        "definition": "GILを明示的に解放して長時間のnative処理を並列化できることがある拡張コードを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1e8-97caecb8-0438-4d4b-9274-f6b078182227",
+        "term": "free-threaded build (フリースレッドビルド)",
+        "definition": "CPython 3.13以降で、GILを無効化して複数threadの並列実行を可能にする選択可能なbuildを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1e9-87e23349-66d8-427a-abdb-f0f71493ff7c",
+        "term": "--disable-gil",
+        "definition": "CPythonをfree-threaded対応で構成するとき使われる代表的なconfigure optionは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ea-389d2380-0fa8-4332-a871-58d16b780ed1",
+        "term": "sys._is_gil_enabled()",
+        "definition": "対応CPythonで現在GILが有効か調べる関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1eb-29ffa509-fed6-4c40-b0da-7992eb47a683",
+        "term": "thread state (スレッド状態)",
+        "definition": "CPython C APIで各OS threadのPython実行状態を保持する構造概念を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ec-d3952382-56cc-4926-8714-72b1da88cf64",
+        "term": "reference count update (参照カウント更新)",
+        "definition": "GILが従来保護してきたCPython object model上の代表的な共有操作は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ed-589e5ae7-50f5-40ca-9b56-4bd9a38c8925",
+        "term": "race condition (競合状態)",
+        "definition": "複数threadの実行順序によって結果が変わる不具合を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ee-b76ac759-1a20-4da0-a6f8-76de51146d5a",
+        "term": "atomicity (原子性)",
+        "definition": "操作が途中状態を他から観測されず1単位で完了する性質を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ef-bdc7785d-b9a5-4c87-9781-f5a0f666135e",
+        "term": "not guaranteed (保証されない)",
+        "definition": "Pythonの1行の式だから複数threadに対して必ずatomicである、という保証は？"
+      },
+      {
+        "id": "card-mux3j7kt-1eg-7a33a08d-aa7c-42a3-8473-ff466469cd20",
+        "term": "sys.setswitchinterval()",
+        "definition": "CPythonのthread切り替え間隔の目安を設定する関数は？"
+      },
+      {
+        "id": "card-mux3j7kt-1eh-5665568e-929c-4215-9ba3-c65b6f282ed1",
+        "term": "C stack (Cスタック)",
+        "definition": "CPython 3.11以降、多くのPython-to-Python関数呼び出しで新たに消費しなくなったnative側の呼び出しstackは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ei-6d6eec21-30f9-40de-8616-d4fbda49ca2e",
+        "term": "RecursionError",
+        "definition": "再帰深度がinterpreter上限を超えた際に通常発生する例外は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ej-7d6f8d20-cf2c-4e2e-b4df-be98a413402a",
+        "term": "interned string (インターン済み文字列)",
+        "definition": "名前探索などの効率化のため同一文字列を共有できる特殊な文字列を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ek-adf97eb8-a546-49ee-bfab-c0cfea406362",
+        "term": "mimalloc",
+        "definition": "CPython 3.13以降のfree-threaded buildで、Python object allocationに使われる既定かつ必須のallocatorは？"
+      },
+      {
+        "id": "card-mux3j7kt-1el-48d5abe4-07e6-4a0b-a44d-6b955a15fff5",
+        "term": "free list (フリーリスト)",
+        "definition": "特定型の解放済みオブジェクト領域を再利用のため保持する内部キャッシュを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1em-eddcd6e0-3f20-4896-9905-e59f365ffebb",
+        "term": "garbage collection (ガベージコレクション)",
+        "definition": "到達不能オブジェクトを検出して資源を回収する仕組みを一般に何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1en-6166d8a2-bbc5-4040-ad82-d7fb1584552a",
+        "term": "reference cycle (循環参照)",
+        "definition": "参照カウントが0にならないのに外部から到達不能になる代表的原因は？"
+      },
+      {
+        "id": "card-mux3j7kt-1eo-f58a7e89-6a11-492e-81ab-9bc16f908d67",
+        "term": "ob_refcnt",
+        "definition": "GIL有効の通常CPythonのPyObject headerで、参照カウントを保持する代表的なfield名は？"
+      },
+      {
+        "id": "card-mux3j7kt-1ep-315687f7-b0de-4ab8-8672-9e5211dc91e5",
+        "term": "ob_type",
+        "definition": "CPython object headerで型オブジェクトへの参照を保持する代表的フィールド名は？"
+      },
+      {
+        "id": "card-mux3j7kt-1eq-e44a02fc-7c55-4fce-a27c-47db9cc2b40f",
+        "term": "PyObject",
+        "definition": "CPython C APIで基本オブジェクトの共通先頭構造を表す型名は？"
+      },
+      {
+        "id": "card-mux3j7kt-1er-40f5fc17-6b5c-431e-93bd-8070652d2ea9",
+        "term": "PyVarObject",
+        "definition": "可変長要素数を持つCPython objectの共通基礎構造を表す型名は？"
+      },
+      {
+        "id": "card-mux3j7kt-1es-ffe4f71e-3199-44ad-995f-53aa83950156",
+        "term": "extension module (拡張モジュール)",
+        "definition": "C/C++などnative codeで実装されPythonからimportできるmoduleを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1et-6c1599b8-d507-4aca-b715-b57f95e86ee7",
+        "term": "C API (API: Application Programming Interface) (C言語API)",
+        "definition": "CPython内部オブジェクトやinterpreter機能をnative codeから操作する公式インターフェースは？"
+      },
+      {
+        "id": "card-mux3j7kt-1eu-1bd32d45-485e-4920-9c19-675539342214",
+        "term": "Stable ABI (ABI: Application Binary Interface) (安定ABI)",
+        "definition": "CPython version間で拡張binary互換性を高めるため限定APIに基づくABIを何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ev-6a3a9926-2991-450e-8ebe-300ebbe5a492",
+        "term": "Limited C API (API: Application Programming Interface) (制限付きC API)",
+        "definition": "CPythonのC APIのうち、複数のPython 3.xマイナーバージョン間で互換性を保ちやすくするために公開範囲を限定したAPIは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ew-cf841385-2cb6-4dac-826e-ab9d4fadf50a",
+        "term": "FFI (Foreign Function Interface) (外部関数インターフェース)",
+        "definition": "Pythonと他言語の関数やデータを橋渡しする仕組みを一般に何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ex-465b1499-fb64-4d17-83db-e8331c2a5f20",
+        "term": "ctypes",
+        "definition": "共有libraryのC関数をPythonから呼び出せる標準FFIモジュールは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ey-8f75f445-9486-4c0a-bcd1-dd0ee095351b",
+        "term": "ABI (Application Binary Interface) (アプリケーションバイナリインターフェース)",
+        "definition": "関数呼び出し規約やbinary layoutなどbinary互換性の規約を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1ez-7a465655-2c93-4dbe-b336-1b46aee97cc4",
+        "term": "JIT (Just-In-Time compilation) (実行時コンパイル)",
+        "definition": "実行時にcodeをnative codeへコンパイルして高速化する方式を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1f0-ff9c6640-fab0-4497-98a6-3300c52904bc",
+        "term": "experimental JIT (JIT: Just-In-Time compilation) (実験的JIT)",
+        "definition": "Python 3.14系CPythonで利用可能な実験的JIT機能を簡潔に何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1f1-d3f4235a-1ee4-4743-8094-b27f46d444f8",
+        "term": "profile-guided optimization (プロファイル誘導最適化)",
+        "definition": "実行プロファイル情報を使いbinaryを最適化するビルド手法を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1f2-354a3468-5fe6-40ae-894d-f76f72bd6db2",
+        "term": "PGO (Profile-Guided Optimization) (プロファイル誘導最適化)",
+        "definition": "profile-guided optimizationの一般的な略称は？"
+      },
+      {
+        "id": "card-mux3j7kt-1f3-286f1933-ef54-4e9c-8b92-707934efcca0",
+        "term": "concurrency (並行性)",
+        "definition": "複数の処理を時間的に重ねて進行させる概念を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1f4-7979e5a0-9b2f-4fe0-8969-96a040c0f76e",
+        "term": "parallelism (並列性)",
+        "definition": "複数の処理を物理的に同時実行する概念を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1f5-de7e2aa8-3758-4620-9f54-e9492cff88d9",
+        "term": "thread (スレッド)",
+        "definition": "同一process内でmemory空間を共有しながら実行される軽量な実行単位は？"
+      },
+      {
+        "id": "card-mux3j7kt-1f6-f16083df-bbd1-48fd-8de8-c1e48594e7cf",
+        "term": "process (プロセス)",
+        "definition": "通常独立した仮想memory空間を持つOS上の実行単位は？"
+      },
+      {
+        "id": "card-mux3j7kt-1f7-bbb92d03-3699-453d-955f-5faef1b3dc82",
+        "term": "threading",
+        "definition": "Pythonでthreadベースの並行処理を提供する標準モジュールは？"
+      },
+      {
+        "id": "card-mux3j7kt-1f8-c3bdc546-fcd2-4683-9e8e-3568c5dfdab1",
+        "term": "multiprocessing",
+        "definition": "複数processを利用して並列処理を行う標準packageは？"
+      },
+      {
+        "id": "card-mux3j7kt-1f9-f6e052bb-8830-468d-9c5a-74c807f64512",
+        "term": "shared memory (共有メモリ)",
+        "definition": "複数threadが自然に共有し、複数processでは特別な仕組みが必要なmemory領域は？"
+      },
+      {
+        "id": "card-mux3j7kt-1fa-7ed86487-7732-404d-a115-bd95da747374",
+        "term": "IPC (Inter-Process Communication) (プロセス間通信)",
+        "definition": "process間でdataを交換する仕組みの総称は？"
+      },
+      {
+        "id": "card-mux3j7kt-1fb-7519c531-fc03-4034-beda-70170f006462",
+        "term": "pickle",
+        "definition": "multiprocessingでPython objectをprocess間送信する際に頻繁に使われるserialization形式は？"
+      },
+      {
+        "id": "card-mux3j7kt-1fc-949b800f-a20f-4d03-832c-ddb69e8a1174",
+        "term": "serialization (シリアライズ)",
+        "definition": "objectを保存・送信用のbyte表現などへ変換する処理を何という？"
+      },
+      {
+        "id": "card-mux3j7kt-1fd-8471e386-9c42-40e4-aaf5-cecd112a3882",
+        "term": "Lock",
+        "definition": "複数thread/processから共有資源への同時アクセスを排他する同期primitiveは？"
+      },
+      {
+        "id": "card-mux3j7kt-1fe-11386d62-7c47-480f-b73f-c6234b2cdc4a",
+        "term": "RLock",
+        "definition": "同じthreadが複数回acquireできる再入可能lockは？"
+      },
+      {
+        "id": "card-mux3j7kt-1ff-202f3fb6-21e3-41a6-8560-9a96bc8b1075",
+        "term": "deadlock (デッドロック)",
+        "definition": "複数実行主体が互いのlock解放を待ち続け進めなくなる状態は？"
+      },
+      {
+        "id": "card-mux3j7kt-1fg-b309478f-2937-4678-acaf-5e0b6d626b93",
+        "term": "livelock (ライブロック)",
+        "definition": "実行主体が動作を続けるが互いに譲り合うなどして実質的に進展しない状態は？"
+      },
+      {
+        "id": "card-mux3j7ku-1fh-c127105b-72aa-4aed-b6b5-3f7b81a2053b",
+        "term": "starvation (飢餓状態)",
+        "definition": "あるthreadやtaskが資源・CPU機会を長時間得られない状態は？"
+      },
+      {
+        "id": "card-mux3j7ku-1fi-10841725-a01b-46f8-8194-e7a6c5a63042",
+        "term": "Semaphore",
+        "definition": "同時に資源へ入れる実行主体数をcountで制限する同期primitiveは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fj-bcca743b-68d3-48a9-927f-94241ffaa7de",
+        "term": "Condition",
+        "definition": "状態変化を待つthreadと通知するthreadを協調させる同期primitiveは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fk-f69bbf72-9b0c-4de0-abe3-4a338026c669",
+        "term": "Event",
+        "definition": "boolean flagのような状態でthread間通知を行う同期primitiveは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fl-5ab27069-83cb-4d0e-b8b1-048784604ebf",
+        "term": "Barrier",
+        "definition": "一定数のthreadが同一点へ到達するまで互いに待つ同期primitiveは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fm-3e852db4-5835-49ed-acf8-7cea3da96537",
+        "term": "queue.Queue",
+        "definition": "queueモジュールでproducerとconsumer間にthread-safeにitemを受け渡す代表的なクラスは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fn-457b3a08-7813-4980-97af-e6026fefac26",
+        "term": "producer-consumer (プロデューサ・コンシューマ)",
+        "definition": "生成側と処理側をqueueで分離する代表的な並行設計patternは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fo-996e2b2b-7d54-4487-b115-2d41ca4e4410",
+        "term": "ThreadPoolExecutor",
+        "definition": "concurrent.futuresでthread poolを扱うexecutorは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fp-0bf9a8ba-0588-4d08-b1b8-f0ea829ae846",
+        "term": "ProcessPoolExecutor",
+        "definition": "concurrent.futuresでprocess poolを扱うexecutorは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fq-7a5d5592-428e-4a9d-ba1f-727084675aac",
+        "term": "Future",
+        "definition": "concurrent.futuresで非同期実行の将来結果を表すオブジェクトは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fr-c6815c91-7dcd-46bf-bda4-6dbcf96662d5",
+        "term": "submit()",
+        "definition": "Executorへcallableを投入しFutureを返すメソッドは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fs-45706612-1039-4069-b4db-ba3decad9e63",
+        "term": "map()",
+        "definition": "Executorで複数入力へ同じ関数を適用する高水準メソッドは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ft-7e8b9f4f-a919-446a-a222-d1f7d9ebbd15",
+        "term": "CPU-bound (CPU: Central Processing Unit) (CPUバウンド)",
+        "definition": "計算量が大きくCPU時間が主なボトルネックとなる処理を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1fu-9f4a37d2-7bc7-44a7-8507-094ef6bf10c6",
+        "term": "I/O-bound (I/O: Input/Output) (I/O待ち中心)",
+        "definition": "disk/network待ちが主なボトルネックとなる処理を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1fv-eb6ca8af-31ea-44ba-a745-66a6bb759e5f",
+        "term": "multiprocessing",
+        "definition": "GIL有効CPythonで純PythonのCPU-bound処理を複数coreへ広げる代表的選択肢は？"
+      },
+      {
+        "id": "card-mux3j7ku-1fw-23d35482-2ae8-449b-98be-5c338ded54f6",
+        "term": "threading",
+        "definition": "GIL有効CPythonでもI/O待ちが多い処理で有効になりやすい並行処理手段は？"
+      },
+      {
+        "id": "card-mux3j7ku-1fx-349e2c60-3a80-45d5-b02d-7d735d600ae6",
+        "term": "asyncio",
+        "definition": "多数のI/O-bound taskを単一thread中心に協調実行する標準frameworkは？"
+      },
+      {
+        "id": "card-mux3j7ku-1fy-6cf02d11-69b0-4eb4-b19f-e2446ba71457",
+        "term": "event-driven (イベント駆動)",
+        "definition": "I/O完了などのeventに応じて処理を進める設計方式は？"
+      },
+      {
+        "id": "card-mux3j7ku-1fz-9f1b257d-92d7-4b77-a807-60e18ad41496",
+        "term": "non-blocking I/O (I/O: Input/Output) (ノンブロッキングI/O)",
+        "definition": "処理完了までthreadを止め続けず、後でready状態を確認できるI/O方式は？"
+      },
+      {
+        "id": "card-mux3j7ku-1g0-16d99eba-9e0e-43ff-924d-44bbc42baf9c",
+        "term": "selector (セレクタ)",
+        "definition": "複数socketなどのI/O readinessをまとめて監視するOS抽象を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1g1-73616dcb-ad25-4ce3-a0ca-4d1f7a845cfb",
+        "term": "asyncio.run()",
+        "definition": "top-level coroutineをevent loopで実行する代表的な入口関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1g2-e55989c0-3e2f-4ef0-bc66-0040db7ed399",
+        "term": "asyncio.get_running_loop()",
+        "definition": "coroutine内などで現在実行中のasyncio event loopを取得する関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1g3-aeefff95-4311-44a8-ba44-8afe5b41abd6",
+        "term": "backpressure (バックプレッシャー)",
+        "definition": "consumerが追いつかないときproducer側の生成速度を抑える設計概念は？"
+      },
+      {
+        "id": "card-mux3j7ku-1g4-1e76dd10-e588-4970-9b54-810a740533b1",
+        "term": "bounded queue (有界キュー)",
+        "definition": "容量上限を持たせproducerへbackpressureをかけやすいqueueを何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1g5-14cd994a-4ce2-4e72-ba74-16ca8b931db4",
+        "term": "cancellation propagation (キャンセル伝播)",
+        "definition": "親taskの中止が待機中の子処理へ伝わる性質を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1g6-a2dc34dd-a2f0-4f26-a540-92f8cdbdb0cc",
+        "term": "asyncio.shield()",
+        "definition": "asyncioで内側のawaitableを呼び出し元Taskのcancelから保護する関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1g7-f7e653fb-a2a7-4f7a-81c5-fa8bc13232ec",
+        "term": "timeout (タイムアウト)",
+        "definition": "処理待ち時間に上限を設け、超過時に中止や例外処理を行う仕組みは？"
+      },
+      {
+        "id": "card-mux3j7ku-1g8-5771c236-2608-4e3a-be54-f26dd522f537",
+        "term": "asyncio.timeout()",
+        "definition": "一定時間を超えたasync処理をtimeout扱いする非同期context managerは？"
+      },
+      {
+        "id": "card-mux3j7ku-1g9-7202bf72-6e0f-40c0-8741-729678901fed",
+        "term": "race condition (競合状態)",
+        "definition": "check-then-actの間に他threadが状態を変更して誤動作する問題は？"
+      },
+      {
+        "id": "card-mux3j7ku-1ga-8514e443-9b6b-4f67-ac11-0486196541cb",
+        "term": "critical section (クリティカルセクション)",
+        "definition": "共有状態へアクセスするため同時実行を制限すべきcode領域は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gb-cf9d90c8-7a1a-488d-9d23-cbee59ca4365",
+        "term": "thread safety (スレッドセーフ性)",
+        "definition": "複数threadから同時使用しても正しい動作を保てる性質は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gc-1e993f0c-d257-44bb-a4b9-54eecf905904",
+        "term": "process safety (プロセスセーフ性)",
+        "definition": "複数processから共有資源を扱っても正しさを保てる性質は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gd-7169b044-ef35-4b96-a479-6d6fac53621b",
+        "term": "fork (フォーク)",
+        "definition": "親processの実行状態を複製してchildを作るPOSIX系のprocess開始方式は？"
+      },
+      {
+        "id": "card-mux3j7ku-1ge-96f2cfd1-7a78-4642-967e-5a14ef659c99",
+        "term": "spawn (スポーン)",
+        "definition": "新しいPython interpreterを起動してchild processを作る開始方式は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gf-74c32077-dfb0-4d67-b03d-7d8c78af1445",
+        "term": "forkserver (フォークサーバ)",
+        "definition": "専用server processからforkしてchildを作るmultiprocessing開始方式は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gg-4eeb55a4-4ba5-42d3-bcbb-02a07b9d3043",
+        "term": "__main__ guard",
+        "definition": "spawn利用時などにchildでtop-level codeが意図せず再実行されるのを防ぐ定番構造は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gh-a9e1e9c2-73c6-4b16-ac4a-4135147f1b2d",
+        "term": "type hint (型ヒント)",
+        "definition": "変数・引数・戻り値などの期待型を注釈する情報を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1gi-ea21534c-7598-4e89-8488-65d2737a1763",
+        "term": "annotation (アノテーション)",
+        "definition": "Pythonオブジェクト上に保存され得る型などの注釈情報を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1gj-2fdff313-dd08-49cf-9d7e-721423399004",
+        "term": "__annotations__",
+        "definition": "関数やmodule/classに記録された注釈を保持する代表的な属性は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gk-20a38dd7-b676-47fb-a763-08a0d070cf62",
+        "term": "static type checker (静的型チェッカー)",
+        "definition": "コード実行前にtype hintの整合性を解析するtoolを何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1gl-31b309ae-dd07-413c-9d8d-370668694f8c",
+        "term": "runtime enforcement (実行時型強制)",
+        "definition": "通常のPython type hintが自動では行わない、実行時の型強制を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1gm-2b5d5f56-3f6d-4936-80cb-58b3aae6e0b2",
+        "term": "typing.Any",
+        "definition": "静的型検査で任意の型として扱える特殊型は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gn-dc68f6c8-1197-423e-91e0-f1ee48c7bdba",
+        "term": "Union",
+        "definition": "複数候補型のいずれかを表すtyping上の概念は？"
+      },
+      {
+        "id": "card-mux3j7ku-1go-f31622c1-7b33-4d05-ae33-35c84b2d217b",
+        "term": "|",
+        "definition": "Python 3.10以降でint | strのようにunion型を書く演算子は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gp-a2e151b2-f8a5-4d86-89ee-5763472692fc",
+        "term": "Optional[T]",
+        "definition": "TまたはNoneを表す従来のtyping表記は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gq-c94ea858-1e6b-460e-b107-eda32923a9fa",
+        "term": "TypeVar",
+        "definition": "generic関数やclassで型変数を表すtyping機能は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gr-b0ee6b4b-a49d-4cee-bab6-11532b4c17a4",
+        "term": "generic (ジェネリック)",
+        "definition": "型パラメータを受け取り複数の具体型で再利用できる抽象化を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1gs-f1b95840-fdb5-4145-bde7-4ea520e582d2",
+        "term": "covariance (共変性)",
+        "definition": "派生型側の関係を保つ方向でgeneric型のsubtypingが成立する性質は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gt-d5a56d12-6406-4aba-be51-1110e68cf4b0",
+        "term": "contravariance (反変性)",
+        "definition": "派生型関係と逆方向でgeneric型のsubtypingが成立する性質は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gu-be8c21fc-2456-43a9-b767-c3d2f3448ef4",
+        "term": "invariance (不変性)",
+        "definition": "型引数が異なると原則subtyping関係を認めない性質は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gv-4a6e164f-d80e-4af4-a26e-ef77567e17d8",
+        "term": "Protocol",
+        "definition": "継承ではなく必要な属性・method構造で静的subtypingを表すtyping機能は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gw-5921d64f-7c60-4556-b91a-96be1af557f8",
+        "term": "structural typing (構造的型付け)",
+        "definition": "明示的継承よりオブジェクトの構造に基づいて型適合を判断する方式は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gx-cf309413-7856-4944-9bfb-1d48ee0be2e5",
+        "term": "nominal typing (公称型付け)",
+        "definition": "class名や明示的継承関係を中心に型適合を判断する方式は？"
+      },
+      {
+        "id": "card-mux3j7ku-1gy-622a8fcc-44a9-420b-b44f-a3c6e5169e82",
+        "term": "@runtime_checkable",
+        "definition": "Protocolをisinstance等で限定的に確認可能にするデコレータは？"
+      },
+      {
+        "id": "card-mux3j7ku-1gz-2a6d94eb-5cc0-463b-af2d-6dc798adbf0f",
+        "term": "TypedDict",
+        "definition": "辞書のkeyごとの期待型を静的に記述するtyping機能は？"
+      },
+      {
+        "id": "card-mux3j7ku-1h0-aa2915ca-65db-4205-ba23-06cd7e319069",
+        "term": "Literal",
+        "definition": "特定の具体値そのものを型として制約するtyping機能は？"
+      },
+      {
+        "id": "card-mux3j7ku-1h1-05710a92-ad7f-4b33-b559-f6bd96a0e829",
+        "term": "Final",
+        "definition": "再代入すべきでない名前やoverrideすべきでない属性を静的に示すtyping機能は？"
+      },
+      {
+        "id": "card-mux3j7ku-1h2-29fa337b-6c04-4a8d-a71f-8fbe6d197bee",
+        "term": "ClassVar",
+        "definition": "注釈対象がinstance fieldではなくclass variableであることを示すtyping機能は？"
+      },
+      {
+        "id": "card-mux3j7ku-1h3-a49e0536-b0b7-414d-83c4-230b1005cd6b",
+        "term": "Self",
+        "definition": "methodが自身のclass型を返すことを表現しやすくするtyping型は？"
+      },
+      {
+        "id": "card-mux3j7ku-1h4-cd2dacfa-16c2-47b3-a666-327202193d22",
+        "term": "Never",
+        "definition": "正常に値を返さないcode pathなどを表すbottom typeは？"
+      },
+      {
+        "id": "card-mux3j7ku-1h5-942826ea-7f15-4943-8ead-8949085e1d35",
+        "term": "overload",
+        "definition": "同一関数の複数signatureをtype checkerへ示すtypingデコレータは？"
+      },
+      {
+        "id": "card-mux3j7ku-1h6-48e5a202-faee-4793-8df1-b144a9470b8a",
+        "term": "dataclass (データクラス)",
+        "definition": "主にdata保持用classの__init__等を自動生成する仕組みは？"
+      },
+      {
+        "id": "card-mux3j7ku-1h7-1e977fa7-6dce-48dc-bdb4-0abd70b2e0db",
+        "term": "@dataclass",
+        "definition": "classをdataclassとして処理するデコレータは？"
+      },
+      {
+        "id": "card-mux3j7ku-1h8-0eca911f-0293-437f-a69a-a00020e68b2d",
+        "term": "field()",
+        "definition": "dataclass fieldのdefault_factory等を細かく指定する関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1h9-0a9083d2-8cd5-4a54-9aef-281bce8ebe97",
+        "term": "default_factory",
+        "definition": "mutableなdefault値をinstanceごとに新規生成するdataclass指定は？"
+      },
+      {
+        "id": "card-mux3j7ku-1ha-44a07e81-4a26-41cd-aa22-053c8fb2323b",
+        "term": "frozen=True",
+        "definition": "dataclassでinstance属性変更を原則禁止する指定は？"
+      },
+      {
+        "id": "card-mux3j7ku-1hb-dc97eae8-693d-46fe-8c6b-5297e745cf76",
+        "term": "slots=True",
+        "definition": "dataclassで__slots__を生成する指定は？"
+      },
+      {
+        "id": "card-mux3j7ku-1hc-cee19159-f7d3-4fc4-b132-945aec39778b",
+        "term": "__post_init__()",
+        "definition": "dataclass自動生成__init__の後に追加初期化を行うhookは？"
+      },
+      {
+        "id": "card-mux3j7ku-1hd-eacb503c-1b4b-4f19-8799-5d823b1ea297",
+        "term": "NamedTuple",
+        "definition": "tuple互換でfield名と型注釈を持つ軽量recordを作るtyping機能は？"
+      },
+      {
+        "id": "card-mux3j7ku-1he-0b270ab8-d4f4-4254-b4c4-fbc569596900",
+        "term": "Enum",
+        "definition": "限定された名前付き定数集合をclassとして表現する標準基底は？"
+      },
+      {
+        "id": "card-mux3j7ku-1hf-62ed162d-0c3b-40c9-b005-033265305aa0",
+        "term": "IntEnum",
+        "definition": "memberがintとしても振る舞うEnum派生型は？"
+      },
+      {
+        "id": "card-mux3j7ku-1hg-481191f2-f5c0-4bc3-b10f-c4da02169616",
+        "term": "text I/O (I/O: Input/Output) (テキストI/O)",
+        "definition": "strを扱いencoding/decodingを自動で行うI/O層を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1hh-22b46e49-5c1e-45bd-9bc3-2b0377cc6d2e",
+        "term": "binary I/O (I/O: Input/Output) (バイナリI/O)",
+        "definition": "bytesをそのまま扱うI/O層を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1hi-5a095a64-1000-42fd-9f23-797801a23eda",
+        "term": "buffered I/O (I/O: Input/Output) (バッファ付きI/O)",
+        "definition": "OSのraw I/O回数を減らすためmemory bufferを介するI/O層は？"
+      },
+      {
+        "id": "card-mux3j7ku-1hj-11c104b2-85f8-4a36-a101-91438bdb1182",
+        "term": "raw I/O (I/O: Input/Output) (生I/O)",
+        "definition": "bufferを極力介さずOSの低水準streamへ近いI/O層は？"
+      },
+      {
+        "id": "card-mux3j7ku-1hk-b8802431-baed-4c56-b5ed-9080a75d08ee",
+        "term": "io module (ioモジュール)",
+        "definition": "Pythonのstream I/O抽象を提供する標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1hl-802f4cd9-16f7-4cae-8a67-aa1fbada888a",
+        "term": "TextIOWrapper",
+        "definition": "binary bufferへencoding/decodingを重ねてtext streamを提供する代表的classは？"
+      },
+      {
+        "id": "card-mux3j7ku-1hm-9c9747b5-28de-4fb0-aa75-9f770b9085e9",
+        "term": "encoding (エンコーディング)",
+        "definition": "text fileの文字とbytesの相互変換規則は？"
+      },
+      {
+        "id": "card-mux3j7ku-1hn-db36c7ab-f681-4891-abf0-3502f0471382",
+        "term": "newline translation (改行変換)",
+        "definition": "text modeでOSや設定に応じ改行表現を変換する仕組みは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ho-c46b238e-2186-479b-aa5d-6e0a04359773",
+        "term": "buffering (バッファリング)",
+        "definition": "小さなread/writeをmemoryへまとめてI/O回数を減らす技法は？"
+      },
+      {
+        "id": "card-mux3j7ku-1hp-e6c570eb-1903-4e85-b35c-e215a4636c3d",
+        "term": "flush()",
+        "definition": "buffer中の出力を下位streamへ書き出すmethodは？"
+      },
+      {
+        "id": "card-mux3j7ku-1hq-78ece4d3-897f-4658-bcd1-ef935422a508",
+        "term": "os.fsync()",
+        "definition": "OS buffer中のfile dataをstorageへ同期するよう要求するosモジュールの関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1hr-8b8387d7-3521-40f5-9af0-a99eb5d50145",
+        "term": "file descriptor (ファイルディスクリプタ)",
+        "definition": "OSがopen fileなどを識別する小さな整数handleを何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1hs-32ab713a-6f33-4cfb-95c1-f2bd4f6fe333",
+        "term": "fileno()",
+        "definition": "Python file objectからfile descriptorを取得するmethodは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ht-564035f4-aeb9-4797-9b9a-5dd6812557db",
+        "term": "seek()",
+        "definition": "fileの現在位置を指定offsetへ移動するmethodは？"
+      },
+      {
+        "id": "card-mux3j7ku-1hu-b133b3c5-5329-4ab4-a7ea-aa8892b78393",
+        "term": "tell()",
+        "definition": "fileの現在位置を取得するmethodは？"
+      },
+      {
+        "id": "card-mux3j7ku-1hv-fd2cdefc-921a-4fec-87bf-dc72389bb95b",
+        "term": "mmap",
+        "definition": "file内容を仮想memoryへmapしてアクセスする標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1hw-28c98203-4eee-467a-960a-45c996365f95",
+        "term": "memory mapping (メモリマッピング)",
+        "definition": "fileと仮想memory領域を対応付けるOS機能を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1hx-8a81cbef-8777-4bee-8d00-a5b3ffc5b752",
+        "term": "zero-copy (ゼロコピー)",
+        "definition": "余分なuser-space copyを減らしてdata transferする設計を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1hy-9cdadc9b-7837-49d8-a760-c71cb8bfb2e5",
+        "term": "memoryview",
+        "definition": "buffer protocolを通じてbytes-like dataへcopyなしでviewを作る型は？"
+      },
+      {
+        "id": "card-mux3j7ku-1hz-5432751c-d238-4347-9fcd-553b83e79220",
+        "term": "pickle",
+        "definition": "任意のPython object graphをPython固有形式へserializeする標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1i0-fee23a2b-a4f4-4a5c-a63c-0e100e02fa95",
+        "term": "unsafe (安全でない)",
+        "definition": "信頼できないpickle dataをloadsすることのsecurity評価は？"
+      },
+      {
+        "id": "card-mux3j7ku-1i1-6540615b-b09f-430b-a476-4ab3bd4388ef",
+        "term": "arbitrary code execution (任意コード実行)",
+        "definition": "悪意あるpickleをunpickleすると引き起こし得る重大なsecurity影響は？"
+      },
+      {
+        "id": "card-mux3j7ku-1i2-b353b973-2352-4854-a3f1-49639be4996d",
+        "term": "json",
+        "definition": "言語間で比較的共有しやすいtext形式のserializationを扱う標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1i3-17d04f80-ecf6-4eea-9be9-0d0f6119ea2a",
+        "term": "JSON object (JSON: JavaScript Object Notation) (JSONオブジェクト)",
+        "definition": "Python dictがJSON化されたとき対応するJSON側の主要型は？"
+      },
+      {
+        "id": "card-mux3j7ku-1i4-61a07c1b-aeb6-4558-8b1a-38c06e0798fe",
+        "term": "UTF-8 (Unicode Transformation Format - 8-bit) (UTF-8文字エンコーディング)",
+        "definition": "JSONをnetworkやfileへbytesとして保存する際によく使われるencodingは？"
+      },
+      {
+        "id": "card-mux3j7ku-1i5-c8eefd59-2fc6-44c4-aedc-7d915ee30e44",
+        "term": "struct",
+        "definition": "C風のbinary dataをformat stringでpack/unpackする標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1i6-8d073b57-3c21-4e26-9a05-50ffba31a0ec",
+        "term": "pack()",
+        "definition": "Python値を指定binary layoutのbytesへ変換するstruct関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1i7-aab37e7e-99b4-49a1-8039-6fa746c01b1b",
+        "term": "unpack()",
+        "definition": "binary bytesから指定layoutのPython値tupleを復元するstruct関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1i8-d1caa694-477a-4ba1-acb6-ab3e727ea225",
+        "term": "endianness (エンディアン)",
+        "definition": "multi-byte整数をどちら側のbyteから並べるかという規則は？"
+      },
+      {
+        "id": "card-mux3j7ku-1i9-926e93d5-9a72-471c-a168-067751808ead",
+        "term": "little-endian (リトルエンディアン)",
+        "definition": "least significant byteを低address側へ置くbyte orderは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ia-3ea186a9-914e-4eda-aeed-c04259dcbcb4",
+        "term": "big-endian (ビッグエンディアン)",
+        "definition": "most significant byteを低address側へ置くbyte orderは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ib-b9dbed33-41df-42d6-bd96-ec8a23f175c8",
+        "term": "socket",
+        "definition": "network通信endpointを扱う標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ic-9e8cb669-ebb6-4053-8706-ee0f82401f60",
+        "term": "stream socket (ストリームソケット)",
+        "definition": "TCPで一般に使われる接続指向socket種別は？"
+      },
+      {
+        "id": "card-mux3j7ku-1id-b5282076-6d42-420a-9960-7338ab9fe99b",
+        "term": "datagram socket (データグラムソケット)",
+        "definition": "UDPで一般に使われるmessage指向socket種別は？"
+      },
+      {
+        "id": "card-mux3j7ku-1ie-aef5813a-a837-49a0-afb0-b003719356d3",
+        "term": "partial read (部分読み取り)",
+        "definition": "streamから要求byte数より少ないdataしか一度に取得できない現象を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1if-f29c71e6-3d3b-4f44-95eb-028c6a3c131b",
+        "term": "partial write (部分書き込み)",
+        "definition": "socket等で一度のwrite/sendが全dataを書けない現象を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1ig-7b3958d3-b7f7-4f91-bd3d-d8297777fea0",
+        "term": "sendall()",
+        "definition": "TCP socketで全bytes送信を試みる高水準methodは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ih-45145ee3-48bb-46cc-bdf8-ee119cfde421",
+        "term": "EOF (End of File) (ファイル終端)",
+        "definition": "streamの入力終端を表す概念は？"
+      },
+      {
+        "id": "card-mux3j7ku-1ii-5fe4cc49-014d-4180-9a71-fed797ff1e89",
+        "term": "context manager (コンテキストマネージャ)",
+        "definition": "fileを確実にcloseするためopen()結果とwithで利用する仕組みは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ij-f19e8e8f-cdca-4d0a-84f8-7f0d327adc43",
+        "term": "atomic replace (原子的置換)",
+        "definition": "temporary fileへ書いてからrename/replaceし、中途半端な更新を見せにくくする保存patternは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ik-2383a9cf-44a8-4aa1-a871-dfb2d2902863",
+        "term": "Big O (O記法)",
+        "definition": "入力サイズ増加に対する処理量の増え方を漸近的に表す記法は？"
+      },
+      {
+        "id": "card-mux3j7ku-1il-814250ce-e202-4b24-88c0-6c9869f914a0",
+        "term": "time complexity (時間計算量)",
+        "definition": "algorithmの入力規模に対する実行時間増加傾向を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1im-8b2b4b2e-103e-442b-a5ef-e13d6174c2d4",
+        "term": "space complexity (空間計算量)",
+        "definition": "algorithmの入力規模に対する追加memory使用量増加傾向を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1in-5bfe0139-1c54-46ba-a8c1-a2ced77e84cf",
+        "term": "profiling (プロファイリング)",
+        "definition": "programのどこに時間や資源が使われているか実測する作業を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1io-d84cd590-2676-4daf-a06d-0f76d7aa42ca",
+        "term": "cProfile",
+        "definition": "Python function単位の実行時間などを測る標準profiler moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ip-77f7a4ff-3498-43e5-b63a-c1d229b45106",
+        "term": "pstats",
+        "definition": "cProfile結果を集計・sortして分析する標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1iq-14a10932-f500-4367-96c8-835384303b52",
+        "term": "timeit",
+        "definition": "小さなPython code片の実行時間を繰り返し測定する標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ir-ed6f15bb-505b-485a-ac48-a863be5f8b7c",
+        "term": "benchmark (ベンチマーク)",
+        "definition": "性能比較のため条件を整えて処理時間やthroughputを測る試験を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1is-49987bca-3ddc-4d6c-840b-ea6308692f96",
+        "term": "microbenchmark (マイクロベンチマーク)",
+        "definition": "ごく小さな処理単位だけを測るbenchmarkを何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1it-514caa6e-3785-43cf-aef1-cece7c0bbfb5",
+        "term": "warm-up (ウォームアップ)",
+        "definition": "cacheやspecialization等が安定するまで事前実行するbenchmark手順を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1iu-913403f8-0216-4387-81df-5c1e5884ce56",
+        "term": "memoization (メモ化)",
+        "definition": "同じ入力の関数結果をcacheして再計算を避ける最適化は？"
+      },
+      {
+        "id": "card-mux3j7ku-1iv-41912191-1582-4900-8893-e1f24ac6ca73",
+        "term": "functools.cache",
+        "definition": "引数ごとの結果を無制限にmemoizeする標準デコレータは？"
+      },
+      {
+        "id": "card-mux3j7ku-1iw-ac15a738-65d6-4cbf-9f7f-798136cbdc73",
+        "term": "functools.lru_cache",
+        "definition": "最近使われていないentryを捨てられるmemoizationデコレータは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ix-98767a7f-06c0-4d6b-aa5a-3def82d8cdc4",
+        "term": "cache hit (キャッシュヒット)",
+        "definition": "要求結果が既にcache内にあり再計算不要な状態は？"
+      },
+      {
+        "id": "card-mux3j7ku-1iy-d7763fb2-a647-4660-8782-7ba47eaefd15",
+        "term": "cache miss (キャッシュミス)",
+        "definition": "要求結果がcacheに存在せず計算・取得が必要な状態は？"
+      },
+      {
+        "id": "card-mux3j7ku-1iz-825bd92b-85d4-4707-bc28-f12d48f15b4c",
+        "term": "locality (局所性)",
+        "definition": "近い時間や位置のdataへ繰り返しアクセスする傾向を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1j0-1f144df4-c551-431b-9573-7fc49133bd0c",
+        "term": "vectorization (ベクトル化)",
+        "definition": "Python loopを減らしnative側でまとめてdata処理する最適化思想は？"
+      },
+      {
+        "id": "card-mux3j7ku-1j1-2ff87ec1-be2c-4acb-b383-65285a7833c1",
+        "term": "algorithmic improvement (アルゴリズム改善)",
+        "definition": "micro最適化より先に検討すべき、計算量自体を改善する最適化は？"
+      },
+      {
+        "id": "card-mux3j7ku-1j2-64c5ff74-d9ef-45ae-95a1-1076eb708d5c",
+        "term": "lazy loading (遅延読み込み)",
+        "definition": "必要になるまでresourceやmodule dataの読み込みを遅らせる手法は？"
+      },
+      {
+        "id": "card-mux3j7ku-1j3-77934c6f-4f8c-43e4-a2c5-8d2d2bca9599",
+        "term": "pdb",
+        "definition": "Python標準のinteractive debugger moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1j4-43cac461-ce90-47b1-b2bb-6280cc83ce99",
+        "term": "breakpoint()",
+        "definition": "設定済みdebuggerへ実行を中断して入る組み込み関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1j5-1766de32-dbb8-45db-b6a6-2dde28fab32f",
+        "term": "post-mortem debugging (事後デバッグ)",
+        "definition": "未処理例外後のtraceback状態からdebuggerを開始する手法は？"
+      },
+      {
+        "id": "card-mux3j7ku-1j6-9030ff11-f24a-404d-a761-bbd9dcdfb78a",
+        "term": "logging",
+        "definition": "実行状況をlevel付きrecordとして残す標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1j7-9f19dc4d-cc32-4ef4-a8fc-7725a7654ebd",
+        "term": "DEBUG",
+        "definition": "loggingで詳細な診断情報に使う代表的なlevelは？"
+      },
+      {
+        "id": "card-mux3j7ku-1j8-ae92df25-cb1a-4120-b784-d1210259af23",
+        "term": "INFO",
+        "definition": "通常動作の主要event記録に使うlogging levelは？"
+      },
+      {
+        "id": "card-mux3j7ku-1j9-3798fd09-bee0-47c0-b5d6-770d6a0e61f2",
+        "term": "WARNING",
+        "definition": "異常ではないが注意すべき状況に使うlogging levelは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ja-e934bca6-6307-43a3-ba5b-424cbc3be25a",
+        "term": "ERROR",
+        "definition": "処理の一部が失敗したことを示すlogging levelは？"
+      },
+      {
+        "id": "card-mux3j7ku-1jb-65ae8c05-9e2f-40ee-8d07-ce903c6b9250",
+        "term": "CRITICAL",
+        "definition": "program継続が困難な重大問題に使う最高位の標準logging levelは？"
+      },
+      {
+        "id": "card-mux3j7ku-1jc-c2fc648d-5b1e-437a-9b06-14cb40fc8551",
+        "term": "unit test (単体テスト)",
+        "definition": "小さなfunction/class単位の振る舞いを独立に検証するtestは？"
+      },
+      {
+        "id": "card-mux3j7ku-1jd-3b07029d-fed1-4d38-bbd5-3f0a9170bcc1",
+        "term": "unittest",
+        "definition": "Python標準のxUnit系testing framework moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1je-3b55e861-9208-4bf5-870e-567188f8729a",
+        "term": "assert",
+        "definition": "条件がfalseならAssertionErrorを発生させるdebug/testing向け文は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jf-20ddc0f0-a0e7-4ec2-a04c-d0683d763108",
+        "term": "-O",
+        "definition": "CPython起動時にassert文などを除去し得るoptimization optionは？"
+      },
+      {
+        "id": "card-mux3j7ku-1jg-2cadf194-4907-4ad9-a678-d3504a7289ca",
+        "term": "mock (モック)",
+        "definition": "外部依存をtest用の代替objectへ置き換える技法は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jh-929ce933-3357-4f86-9c61-c40e01f11656",
+        "term": "unittest.mock",
+        "definition": "mock objectを提供する標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1ji-40b86fd7-0454-451b-b0de-57e5baf10e22",
+        "term": "patch()",
+        "definition": "test中だけ属性や名前を一時的にmockへ差し替えるunittest.mock機能は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jj-2d8d293a-2f05-4228-a7dc-0b27bbd71ab1",
+        "term": "dependency injection (依存性注入)",
+        "definition": "依存objectを内部生成せず外部から渡しtestしやすくする設計は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jk-7d18a473-575c-4372-bdf7-1434ea9b1f85",
+        "term": "property-based testing (プロパティベーステスト)",
+        "definition": "多数の自動生成入力に対し成立すべき性質を検証するtest方式は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jl-13f4b7a1-afac-4de8-a886-eb8134b34a87",
+        "term": "fuzzing (ファジング)",
+        "definition": "大量の予測困難・異常入力を与えてcrashや脆弱性を探すtest方式は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jm-37545e2f-c17a-44ef-b1db-63ba0b2531cf",
+        "term": "static analysis (静的解析)",
+        "definition": "実行せずsource codeを解析してbugや品質問題を検出する手法は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jn-f80adc68-f7fd-4f26-ba53-a0bcac7b6c34",
+        "term": "linting (リンティング)",
+        "definition": "style違反や怪しいcode patternを静的に検出する作業を何という？"
+      },
+      {
+        "id": "card-mux3j7ku-1jo-bf3c840c-61a2-4cdb-8e98-1c2260cdade4",
+        "term": "code coverage (コードカバレッジ)",
+        "definition": "test実行でsourceのどの部分が通過したか測る指標は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jp-a4d9d7ca-dff0-417d-aa2d-99676db6944d",
+        "term": "branch coverage (分岐カバレッジ)",
+        "definition": "ifなどの分岐方向がtestでどこまで実行されたか測る指標は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jq-53f31ce1-9893-45d5-a748-a9ad8081cd37",
+        "term": "SQL injection (SQL: Structured Query Language) (SQLインジェクション)",
+        "definition": "文字列連結でSQLへ外部入力を埋め込むと起き得る代表的脆弱性は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jr-2e62ba1f-c776-4a00-9cc3-df7517e323b2",
+        "term": "parameterized query (パラメータ化クエリ)",
+        "definition": "SQL injectionを防ぐため値とSQL構文を分離して渡す方法は？"
+      },
+      {
+        "id": "card-mux3j7ku-1js-cbcd18d7-46f8-4eaa-942b-58f2b415845e",
+        "term": "command injection (コマンドインジェクション)",
+        "definition": "外部入力をshell commandへ不適切に連結したとき起き得る脆弱性は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jt-7b8e1984-61c1-4fa7-8ebb-29bf00fbf309",
+        "term": "shell=False",
+        "definition": "subprocessでshell解釈を避けるため原則維持したい既定指定は？"
+      },
+      {
+        "id": "card-mux3j7ku-1ju-d846232a-0bcf-46b6-8dc7-7d6673b91001",
+        "term": "argument list (引数リスト)",
+        "definition": "subprocessでcommandをshell文字列連結せず安全に渡す代表的な形式は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jv-277492c9-6823-46f2-95a9-5744470e1377",
+        "term": "eval()",
+        "definition": "信頼できない文字列へ使うと任意code実行につながる組み込み関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jw-d065fa7c-3e83-4171-a2fc-d4451c57f284",
+        "term": "exec()",
+        "definition": "信頼できないPython code文字列へ使うべきでない実行関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jx-6ae730e3-a8c5-4e26-bcd9-9c9c2a28744e",
+        "term": "ast.literal_eval()",
+        "definition": "任意のPythonコードを実行せず、Pythonのliteralやcontainer表現だけを解析・評価する標準関数は？"
+      },
+      {
+        "id": "card-mux3j7ku-1jy-87ab8620-006b-45e3-94eb-1fc832f2eabe",
+        "term": "secrets",
+        "definition": "tokenやpassword関連の暗号学的乱数生成に使う標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1jz-919db566-839d-413a-b7b2-d7f6b84de538",
+        "term": "random",
+        "definition": "simulation用途には適するがsecurity token生成には原則不適な標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1k0-6afc5bac-d318-4b2e-a570-78c38d87bf1c",
+        "term": "hashlib",
+        "definition": "SHA-256などcryptographic hash関数を提供する標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1k1-8a245be3-d76a-4eb6-9ee8-a6d87697c1cf",
+        "term": "hmac",
+        "definition": "秘密key付きmessage authentication codeを扱う標準moduleは？"
+      },
+      {
+        "id": "card-mux3j7ku-1k2-ee02697d-bbdd-4efb-bf9c-7b72bdd175fa",
+        "term": "hmac.compare_digest()",
+        "definition": "秘密値などをtiming差が出にくい方法で比較する標準関数は？"
+      }
+    ],
+    "createdAt": "2026-10-06T19:53:23.853Z",
+    "updatedAt": "2026-10-06T19:53:23.853Z"
+  },
+  {
     "id": "set-mux3j2zq-13a-5eedb2d9-0760-468f-8eb1-1f18d05e1329",
     "title": "Python学習_01",
     "description": "",

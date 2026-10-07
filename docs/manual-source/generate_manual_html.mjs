@@ -7,7 +7,6 @@ import { renderDevelopmentGuide } from "./render-development-guide.mjs";
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
 export const ROOT = resolve(dirname(SCRIPT_PATH), "../..");
 export const MANUAL_SOURCE = join(ROOT, "docs", "manual-source");
-export const FOUNDATION_PATH = join(MANUAL_SOURCE, "foundation_pages.json");
 export const SOURCE_CATALOG_PATH = join(MANUAL_SOURCE, "source_catalog.json");
 export const TEMPLATE_PATH = join(MANUAL_SOURCE, "manual-template.html");
 export const MANUAL_REVISION = "2026-10-07";
@@ -17,176 +16,6 @@ export const OUTPUT = join(
   "docs",
   MANUAL_FILE_NAME,
 );
-
-export const AFFECTED_FOUNDATION_PAGES = new Set([
-  ...range(4, 5),
-  ...range(31, 43),
-  ...range(87, 93),
-  ...range(97, 101),
-  ...range(108, 117),
-  ...range(131, 174),
-  ...range(192, 193),
-  ...range(574, 577),
-  ...range(606, 607),
-  ...range(612, 624),
-  ...range(629, 638),
-  ...range(643, 647),
-  ...range(656, 657),
-]);
-
-const FOUNDATION_SECTIONS = [
-  {
-    id: "foundation-cover",
-    label: "基礎編",
-    title: "旧版の表紙と改訂方針",
-    start: 1,
-    end: 1,
-  },
-  {
-    id: "part-0",
-    label: "Part 0",
-    title: "この本の使い方と開発ループ",
-    start: 2,
-    end: 2,
-  },
-  {
-    id: "part-1",
-    label: "Part 1",
-    title: "開発前に理解する最小限の言葉",
-    start: 3,
-    end: 3,
-  },
-  {
-    id: "part-2",
-    label: "Part 2",
-    title: "Windows / Arch Linuxに開発環境を用意する",
-    start: 4,
-    end: 13,
-  },
-  {
-    id: "part-3",
-    label: "Part 3",
-    title: "最小画面を起動し、最初の縦切りを通す",
-    start: 14,
-    end: 28,
-  },
-  {
-    id: "part-4",
-    label: "Part 4",
-    title: "上限・厳密採点・学習進捗をmodelへ積み上げる",
-    start: 29,
-    end: 86,
-  },
-  {
-    id: "part-5",
-    label: "Part 5",
-    title: "localStorage依存をやめ、IndexedDB主保存へ",
-    start: 87,
-    end: 107,
-  },
-  {
-    id: "part-6",
-    label: "Part 6",
-    title: "全体バックアップJSONを書き出し・復元できる",
-    start: 108,
-    end: 130,
-  },
-  {
-    id: "part-7",
-    label: "Part 7",
-    title: "プロジェクトフォルダー保存をトランザクション化する",
-    start: 131,
-    end: 174,
-  },
-  {
-    id: "part-8",
-    label: "Part 8",
-    title: "インポートを検査 → Worker解析 → 再検証へ分離する",
-    start: 175,
-    end: 220,
-  },
-  {
-    id: "part-9",
-    label: "Part 9",
-    title: "モーダルとCodeMirrorを独立コンポーネントとして作る",
-    start: 221,
-    end: 260,
-  },
-  {
-    id: "part-10",
-    label: "Part 10",
-    title: "page.tsxを状態の司令塔として段階的につなぐ",
-    start: 261,
-    end: 299,
-  },
-  {
-    id: "part-11",
-    label: "Part 11",
-    title: "10,000カード上限を維持しながら編集画面を作る",
-    start: 300,
-    end: 350,
-  },
-  {
-    id: "part-12",
-    label: "Part 12",
-    title: "学習・再入力・再出題をUIへ接続する",
-    start: 351,
-    end: 406,
-  },
-  {
-    id: "part-13",
-    label: "Part 13",
-    title: "CSSとアクセシビリティを機能単位で仕上げる",
-    start: 407,
-    end: 514,
-  },
-  {
-    id: "part-14",
-    label: "Part 14",
-    title: "loopbackサーバーとHTTP防御を最後に共通化する",
-    start: 515,
-    end: 550,
-  },
-  {
-    id: "part-15",
-    label: "Part 15",
-    title: "テスト、CI、SBOM、source release",
-    start: 551,
-    end: 569,
-  },
-  {
-    id: "part-16",
-    label: "Part 16",
-    title: "完成後の手動試験",
-    start: 570,
-    end: 570,
-  },
-  {
-    id: "part-17",
-    label: "Part 17",
-    title: "よくある失敗と切り分け",
-    start: 571,
-    end: 571,
-  },
-  {
-    id: "part-18",
-    label: "Part 18",
-    title: "実際の開発のようにファイルを少しずつ往復するミニループ集",
-    start: 572,
-    end: 848,
-  },
-  {
-    id: "part-19",
-    label: "Part 19",
-    title: "完成ファイル一覧と責務",
-    start: 849,
-    end: 849,
-  },
-];
-
-function range(start, end) {
-  return Array.from({ length: end - start + 1 }, (_, index) => start + index);
-}
 
 export function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
@@ -206,15 +35,6 @@ export function escapeHtml(value) {
   );
 }
 
-const LINE_REFERENCE_PATTERN = /[0-9０-９]+(?:[〜～~－-][0-9０-９]+)?行目/gu;
-
-function renderLegacyProse(value) {
-  return escapeHtml(value).replace(LINE_REFERENCE_PATTERN, (label, offset) => {
-    const lineBreak = offset === 0 ? "" : "<br>";
-    return `${lineBreak}<span class="line-reference">${label}</span>`;
-  });
-}
-
 function normalizeNewlines(value) {
   return value.replace(/\r\n?/gu, "\n");
 }
@@ -223,28 +43,6 @@ function sourceLines(value) {
   const lines = normalizeNewlines(value).split("\n");
   if (lines.at(-1) === "") lines.pop();
   return lines;
-}
-
-export async function loadFoundation() {
-  const foundation = JSON.parse(await readFile(FOUNDATION_PATH, "utf8"));
-  if (
-    foundation.schemaVersion !== 1 ||
-    foundation.pageCount !== 849 ||
-    !Array.isArray(foundation.pages) ||
-    foundation.pages.length !== 849
-  ) {
-    throw new Error("Invalid HTML foundation manual source");
-  }
-  foundation.pages.forEach((page, index) => {
-    if (
-      page.page !== index + 1 ||
-      typeof page.text !== "string" ||
-      !page.text.trim()
-    ) {
-      throw new Error(`Invalid foundation page ${index + 1}`);
-    }
-  });
-  return foundation;
 }
 
 async function loadCatalog() {
@@ -267,205 +65,8 @@ async function loadCatalog() {
   return catalog;
 }
 
-function applyCurrentCorrections(value) {
-  return value
-    .replaceAll(">=22.13.0 <24", ">=22.13.0 <25")
-    .replaceAll("22.13.0以上24未満", "22.13.0以上25未満")
-    .replaceAll("かつ <24", "かつ <25")
-    .replaceAll("74/74合格", "76/76合格")
-    .replaceAll("75/75合格", "76/76合格");
-}
-
-function cleanFoundationLines(page) {
-  const lines = sourceLines(applyCurrentCorrections(page.text)).map((line) =>
-    line.trimEnd(),
-  );
-  if (lines[0]?.trim() === "RECALL - コードエディター版 完全開発マニュアル")
-    lines.shift();
-  if (lines[0]?.trim() === String(page.page)) lines.shift();
-  if (page.page === 515 && lines[0]?.trim() === "14" && lines[1]?.trim()) {
-    lines.splice(0, 2, `14 ${lines[1].trim()}`);
-  }
-  return lines.filter(
-    (line) =>
-      !line.includes("再監査差替え対象：") &&
-      !line.includes("最終再確認版：差分は冒頭章"),
-  );
-}
-
-function joinProse(lines) {
-  let result = "";
-  for (const raw of lines) {
-    const line = raw.trim();
-    if (!line) continue;
-    if (!result) {
-      result = line;
-      continue;
-    }
-    const asciiBoundary =
-      /[A-Za-z0-9)\]}'".,;:]$/u.test(result) &&
-      /^[A-Za-z0-9(\[{'"]/u.test(line);
-    const likelySplitIdentifier =
-      /[A-Za-z0-9_.][A-Z]$/u.test(result) && /^[a-z]{1,8}(?:\b|$)/u.test(line);
-    result += asciiBoundary && !likelySplitIdentifier ? ` ${line}` : line;
-  }
-  return result;
-}
-
-function isMajorHeading(line) {
-  return /^(?:[0-9]{1,2})\s+\S/u.test(line) && !/^\d{4}\s*\|/u.test(line);
-}
-
-function renderFoundationLines(lines) {
-  const html = [];
-  let paragraph = [];
-  let bullets = [];
-  let code = [];
-
-  function flushParagraph() {
-    if (!paragraph.length) return;
-    html.push(`<p>${renderLegacyProse(joinProse(paragraph))}</p>`);
-    paragraph = [];
-  }
-
-  function flushBullets() {
-    if (!bullets.length) return;
-    html.push(
-      `<ul>${bullets.map((line) => `<li>${renderLegacyProse(joinProse([line]))}</li>`).join("")}</ul>`,
-    );
-    bullets = [];
-  }
-
-  function flushCode() {
-    if (!code.length) return;
-    html.push(
-      `<div class="code-wrap"><button class="copy-btn" type="button">コピー</button><pre><code>${escapeHtml(code.join("\n"))}</code></pre></div>`,
-    );
-    code = [];
-  }
-
-  function flushAll() {
-    flushParagraph();
-    flushBullets();
-    flushCode();
-  }
-
-  for (const raw of lines) {
-    const trimmed = raw.trim();
-    if (!trimmed) {
-      flushAll();
-      continue;
-    }
-    if (/^\d{4}\s*\|/u.test(trimmed) || (/^>>/u.test(trimmed) && code.length)) {
-      flushParagraph();
-      flushBullets();
-      code.push(trimmed);
-      continue;
-    }
-    flushCode();
-    if (/^[•・]\s*/u.test(trimmed)) {
-      flushParagraph();
-      bullets.push(trimmed.replace(/^[•・]\s*/u, ""));
-      continue;
-    }
-    flushBullets();
-    if (isMajorHeading(trimmed)) {
-      flushParagraph();
-      html.push(`<h2>${escapeHtml(trimmed)}</h2>`);
-    } else if (/^ステップ\s*\d|^ステップ\d/u.test(trimmed)) {
-      flushParagraph();
-      html.push(`<h3>${escapeHtml(trimmed)}</h3>`);
-    } else if (
-      /^(?:このコード欄の行別・詳細解説|このコードを行番号に沿って読む|確認すること|最重要ルール|版の条件)$/u.test(
-        trimmed,
-      )
-    ) {
-      flushParagraph();
-      html.push(`<h4>${escapeHtml(trimmed)}</h4>`);
-    } else if (
-      /^[0-9０-９]+(?:[〜～~－-][0-9０-９]+)?行目(?:\s|$|[：:])/u.test(trimmed)
-    ) {
-      flushParagraph();
-      html.push(
-        `<div class="line-explanation-title">${renderLegacyProse(trimmed)}</div>`,
-      );
-    } else {
-      paragraph.push(raw);
-    }
-  }
-  flushAll();
-  return html.join("");
-}
-
-export function renderLegacyPage(page) {
-  const affected = AFFECTED_FOUNDATION_PAGES.has(page.page);
-  const pageHash = sha256(normalizeNewlines(page.text));
-  const banner = '<div class="replacement-banner"><strong>旧版資料・現在の実習には使いません:</strong> 分割前の構成を保存した履歴資料です。page.tsxへ機能を集める手順や旧行番号は現行実装に適用せず、目次の「現在の開発手順」を使ってください。</div>';
-  return `<article class="legacy-page${affected ? " affected" : ""}" data-source-page="${page.page}" data-source-sha256="${pageHash}"><div class="page-origin">旧版基礎解説 p.${page.page}（HTML移行済み）</div>${banner}${renderFoundationLines(cleanFoundationLines(page))}</article>`;
-}
-
 function renderCodeBlock(value, className = "code-wrap") {
   return `<div class="${className}"><button class="copy-btn" type="button">コピー</button><pre><code>${escapeHtml(value)}</code></pre></div>`;
-}
-
-function findSlice(value, startNeedle, endNeedle) {
-  const start = value.indexOf(startNeedle);
-  if (start < 0) throw new Error(`Missing source slice start: ${startNeedle}`);
-  const end = value.indexOf(endNeedle, start + startNeedle.length);
-  if (end < 0) throw new Error(`Missing source slice end: ${endNeedle}`);
-  return value.slice(start, end).trimEnd();
-}
-
-async function currentChangesSection() {
-  const proxy = await readFile(join(ROOT, "proxy.ts"), "utf8");
-  const model = await readFile(join(ROOT, "app", "model.ts"), "utf8");
-  const page = await readFile(
-    join(ROOT, "app", "recall", "study", "StudyReadyView.tsx"),
-    "utf8",
-  );
-  const packageJson = await readFile(join(ROOT, "package.json"), "utf8");
-  const csp = findSlice(
-    proxy,
-    "function createContentSecurityPolicy",
-    "function applyBaseSecurityHeaders",
-  );
-  const progress = findSlice(
-    model,
-    "export type StudyProgress = {",
-    "export type StudySet = {",
-  );
-  const matcher = findSlice(
-    model,
-    "export function matchesStudyAnswer",
-    "function appendUnique",
-  );
-  const settingStart = page.indexOf(
-    '<label className="shuffle-setting parenthesis-setting">',
-  );
-  const settingEnd = page.indexOf(
-    '<div className="strict-rule">',
-    settingStart,
-  );
-  if (settingStart < 0 || settingEnd < 0)
-    throw new Error("Missing parenthetical setting UI slice");
-  const setting = page.slice(settingStart, settingEnd).trimEnd();
-  const packageScripts = JSON.parse(packageJson).scripts;
-  return `
-    <div class="section-hero"><div class="section-kicker">CURRENT OVERRIDE</div><h1>2026-10-07 最新差分</h1><div class="lead">TOTAL RECALL 0.2.1の機能別構成に合わせた改訂です。現在の本文は準備・基礎実習・24章の実装手順で、旧版資料は末尾に分けています。</div></div>
-    <div class="latest-grid">
-      <article class="latest-card"><h3>画面・状態管理・保存を機能別に分離</h3><p>app/page.tsxはルートの入口、app/recall/RecallApp.tsxは画面とフックの組み立てを担当します。library、editor、study、flashcards、storage、navigation、sharedに責務を分け、既存の操作と保存形式を維持します。現在の本文は型・フック・表示・保存・テストの往復を説明します。全ファイルの責務はdocs/ARCHITECTURE.mdと照合用の完成ソースを参照してください。</p></article>
-      <article class="latest-card"><h3>本番読み込みを修正</h3><p>Vinextの起動用インラインbootstrapをCSPが遮断しないようにし、loading shellから操作画面へ遷移します。同一originのscriptとscript属性禁止は維持します。</p></article>
-      <article class="latest-card"><h3>カッコ省略を選択可能に</h3><p>学習開始前に半角 (...) 内を省略できるか選択できます。設定はStudyProgress version 3へ保存し、version 1/2は従来どおり省略可として移行します。</p></article>
-      <article class="latest-card"><h3>Node.js 24対応</h3><p>対応範囲はNode.js &gt;=22.13.0 &lt;25です。機能分割後はWindows・Node.js 24.20.0で85件のtest、型検査、ESLint、本番buildを確認しました。本文の実習は各途中状態も別途検証します。詳細はdocs/VALIDATION.mdを参照してください。</p></article>
-      <article class="latest-card"><h3>HTMLへ一本化</h3><p>本編と付録を1つの自己完結型HTMLへ統合しました。以後は <code>npm run manual:build</code> と <code>npm run manual:verify</code> で更新・検証し、PDFは使用しません。</p></article>
-    </div>
-    <h2>本番CSPとloading shellの修正</h2>${renderCodeBlock(csp)}
-    <h2>途中進捗へ保存するカッコ省略設定</h2>${renderCodeBlock(progress)}
-    <h2>設定に従う正答判定</h2>${renderCodeBlock(matcher)}
-    <h2>学習開始前の選択UI</h2>${renderCodeBlock(setting)}
-    <h2>HTMLマニュアルの更新コマンド</h2>${renderCodeBlock(`npm run manual:build\nnpm run manual:verify\n\n# 総合確認\nnpm run check\nnpm run build`, "terminal-wrap")}
-    <p class="callout info">現在のpackage scriptsでは、manual:verifyも総合検査へ含めます。マニュアルに収録したソースのSHA-256や行数が現在のファイルと一致しない場合は、検証が失敗して更新漏れを知らせます。</p>
-    <p hidden>${escapeHtml(JSON.stringify(packageScripts))}</p>`;
 }
 
 function explainGroup(relativePath, lineNumbers, lines) {
@@ -528,7 +129,7 @@ function explainGroup(relativePath, lineNumbers, lines) {
   else
     purpose =
       "前後の宣言・式・設定と組み合わさり、このファイルの責務を段階的に構成します。";
-  return `<p><strong>${escapeHtml(lineLabel)}</strong>　${escapeHtml(purpose)} <span class="source-preview">対象コード: ${escapeHtml(preview)}</span> 参照時は行番号と実ファイルの位置を照合します。作業は改訂本文の小さな差分の順に進めます。</p>`;
+  return `<p><strong>${escapeHtml(lineLabel)}</strong>　${escapeHtml(purpose)} <span class="source-preview">対象コード: ${escapeHtml(preview)}</span> 参照時は行番号と実ファイルの位置を照合します。作業は本文の小さな差分の順に進めます。</p>`;
 }
 
 function renderExplanations(relativePath, lines) {
@@ -573,16 +174,18 @@ async function renderSourceAppendix(catalog) {
       `<details class="source-file" data-file="${escapeHtml(relativePath)}"><summary>${escapeHtml(relativePath)}<span class="source-meta">${lines.length.toLocaleString("ja-JP")} lines / sha256 ${digest}</span></summary><div class="source-role"><strong>このファイルの役割:</strong> ${escapeHtml(catalog.roles[relativePath] ?? "現行プロジェクトを構成するファイルです。")}</div><div class="code-wrap"><pre><code>${escapeHtml(numbered)}</code></pre></div><div class="source-explanations"><h4>行番号に沿った逐次解説</h4>${renderExplanations(relativePath, lines)}</div></details>`,
     );
   }
-  return `<div class="section-hero"><div class="section-kicker">CURRENT SOURCE</div><h1>付録A - TOTAL RECALL 0.2.1 完成ソース</h1><div class="lead">現在の${catalog.sourceFiles.length}プロジェクトファイルから自動生成した、行番号・SHA-256・役割付きの照合資料です。開発の順番は改訂本文を使います。</div></div><button type="button" class="nav-btn" id="returnToLesson" hidden>本文の工程へ戻る</button><div class="source-intro"><strong>重要:</strong> 基礎解説の途中状態や古いversion記述と衝突した場合、この付録を優先してください。全文検索でファイル名・関数名・設定キーを検索できます。ここは完成状態の照合専用です。ファイル全文を一括で入力する教材ではありません。本文の小さな変更を順に進めます。</div>${files.join("")}`;
+  return `<div class="section-hero"><div class="section-kicker">CURRENT SOURCE</div><h1>付録A - TOTAL RECALL 0.2.1 完成ソース</h1><div class="lead">現在の${catalog.sourceFiles.length}プロジェクトファイルから自動生成した、行番号・SHA-256・役割付きの照合資料です。開発の順番は本文の工程を使います。</div></div><button type="button" class="nav-btn" id="returnToLesson" hidden>本文の工程へ戻る</button><div class="source-intro"><strong>重要:</strong> 本文で指定したファイルと検索アンカーを使い、対応する部分を照合してください。全文検索でファイル名・関数名・設定キーを検索できます。ここは完成状態の照合専用です。ファイル全文を一括で入力する教材ではありません。本文の小さな変更を順に進めます。</div>${files.join("")}`;
 }
 
-function htmlOperationsSection(foundation, catalog) {
-  return `<div class="section-hero"><div class="section-kicker">HTML-ONLY WORKFLOW</div><h1>付録B - HTMLマニュアルの更新と検証</h1><div class="lead">2026-08-31以降はPDFを廃止し、この自己完結型HTMLだけを生成・更新します。</div></div>
-    <div class="update-note"><strong>運用方針:</strong> 現在の本文はdevelopment-guide.json、基礎実習はbeginner-workshop.mjs、保守実習はsearch-workshop.mjsから作ります。render-development-guide.mjsが短い抜粋と実習を描画し、verify-workshop.mjsが途中状態を検査します。旧版履歴はfoundation_pages.json、完成ソース付録は現行ファイル、画面構造はmanual-template.htmlから再生成します。外部CDN・外部フォント・外部JavaScriptは使用しません。</div>
-    <table class="status-table"><thead><tr><th>項目</th><th>現在値</th></tr></thead><tbody><tr><td>旧版本文から移行した基礎解説</td><td>${foundation.pageCount}ページ相当</td></tr><tr><td>差し替え注意付き基礎ページ</td><td>${AFFECTED_FOUNDATION_PAGES.size}ページ</td></tr><tr><td>完成ソース付録</td><td>${catalog.sourceFiles.length}ファイル</td></tr><tr><td>旧PDFの移行元SHA-256</td><td><code>${escapeHtml(foundation.formerPdfSha256)}</code></td></tr><tr><td>配布形式</td><td>UTF-8・単一HTML・オフライン閲覧対応</td></tr></tbody></table>
-    <h2>更新手順</h2>${renderCodeBlock(`npm run manual:build\nnpm run manual:verify`, "terminal-wrap")}
-    <ol><li>アプリまたは説明文を修正します。</li><li><code>npm run manual:build</code>で現行ソース、SHA-256、行番号、逐次解説をHTMLへ反映します。</li><li><code>npm run manual:verify</code>で基礎解説849ページ相当、完成ソース${catalog.sourceFiles.length}ファイル、目次、検索・コピー用script、外部依存なしを検査します。</li><li><code>npm run check</code>と<code>npm run build</code>を通してから配布します。</li></ol>
-    <p class="callout warn"><strong>PDFへ戻さない:</strong> 今後の更新ではPDF生成script、PDF用baseline、フォント埋め込み、ページ画像検査は使用しません。印刷や保存が必要な場合は、このHTMLの印刷用スタイルを利用します。</p>`;
+function htmlOperationsSection(catalog, development) {
+  return `<div class="section-hero"><div class="section-kicker">MANUAL WORKFLOW</div><h1>付録B - HTMLマニュアルの更新と検証</h1><div class="lead">本文、実習、実ファイルの照合資料を編集元から再生成し、アプリの実装と一致させます。</div></div>
+    <div class="update-note"><strong>編集するファイル:</strong> 本文はdevelopment-guide.json、基礎実習はbeginner-workshop.mjs、保守実習はsearch-workshop.mjsです。render-development-guide.mjsが短い抜粋と実習を描画し、verify-workshop.mjsが各途中状態を検査します。付録の収録対象と役割はsource_catalog.json、画面構造はmanual-template.htmlで管理します。</div>
+    <table class="status-table"><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody><tr><td>機能別の手順</td><td>${development.guide.chapters.length}章・${development.excerpts.length}工程</td></tr><tr><td>基礎実習</td><td>${development.workshopSteps}工程</td></tr><tr><td>保守実習</td><td>${development.searchWorkshopSteps}工程</td></tr><tr><td>完成ソース付録</td><td>${catalog.sourceFiles.length}ファイル</td></tr><tr><td>配布形式</td><td>UTF-8・単一HTML・オフライン閲覧対応</td></tr></tbody></table>
+    <h2>編集元から更新する手順</h2><ol><li>本文の説明を直す場合はdevelopment-guide.jsonの該当工程を探し、実ファイル、検索アンカー、理由、期待する結果を一緒に照合します。</li><li>実習を直す場合は、入力する順序と変更前・変更後の範囲を確認します。一つのファイル全体をまとめて置換する手順にしません。</li><li>本番ソースを追加した場合はsource_catalog.jsonへファイル名と役割を加え、本文からの参照先も確認します。</li><li>プロジェクトのルートで、次のコマンドを一行ずつ実行します。先のコマンドが成功してから次へ進みます。</li></ol>
+    ${renderCodeBlock("npm run manual:build\nnpm run manual:verify", "terminal-wrap")}
+    <p>manual:buildは実ファイルのコード、行番号、SHA-256をHTMLへ反映します。manual:verifyは本文とソースの検索位置、教材の途中状態、HTML/CSS/scriptの構文、目次・内部リンク、コピー・検索用の要素、外部依存がないことを検査します。生成したHTMLを直接直すと次の生成で失われるため、編集元へ戻って修正します。</p>
+    <h2>アプリと配布物を確認する</h2>${renderCodeBlock("npm run check\nnpm run build\nnpm run release:prepare\nnpm run release:verify", "terminal-wrap")}
+    <p>配布前は本文のファイル名リンク、本文へ戻る操作、検索、コードのコピー、文字サイズ、集中表示、狭い画面、印刷表示をブラウザーでも確認します。release:prepareは配布フォルダーを作り直すため、生成先へ手作業の唯一の原本を保存しません。HTMLは外部CDN・外部フォント・外部JavaScriptを読み込まず、ファイル単体で閲覧できます。</p>`;
 }
 
 function sectionNavigation(sections, index) {
@@ -596,85 +199,49 @@ function tocButton(section) {
 }
 
 export async function buildManualHtml() {
-  const [foundation, catalog, template] = await Promise.all([
-    loadFoundation(),
+  const [catalog, template, packageText] = await Promise.all([
     loadCatalog(),
     readFile(TEMPLATE_PATH, "utf8"),
+    readFile(join(ROOT, "package.json"), "utf8"),
   ]);
+  const packageJson = JSON.parse(packageText);
   const development = await renderDevelopmentGuide(ROOT, catalog);
-  const foundationByPage = new Map(
-    foundation.pages.map((page) => [page.page, page]),
-  );
   const sections = [
-    { id: "home", label: "はじめに", title: "2026-10-07改訂版の使い方", group: "現在の開発手順" },
+    { id: "home", label: "はじめに", title: "TOTAL RECALLの作成・保守手順", group: "開発手順" },
     ...development.sections,
-    { id: "part-r", label: "改訂内容", title: "2026-10-07 機能別構成と現在の仕様", group: "現在の資料" },
-    { id: "appendix-a", label: "付録A・照合用", title: "現在の全ファイルと完成ソース", group: "現在の資料" },
-    { id: "appendix-b", label: "付録B", title: "HTMLマニュアルの更新と検証", group: "現在の資料" },
-    ...FOUNDATION_SECTIONS.map((section) => ({ ...section, label: "旧 " + section.label, title: "旧版資料：" + section.title, group: "旧版資料（実習には使いません）", history: true })),
+    { id: "appendix-a", label: "付録A・照合用", title: "全ファイルと完成ソース", group: "照合・更新資料" },
+    { id: "appendix-b", label: "付録B", title: "HTMLマニュアルの更新と検証", group: "照合・更新資料" },
   ];
-
-  const home = `<div class="cover"><div class="cover-card"><div class="cover-logo">TOTAL RECALL</div><h1>機能別開発<br>初心者向け完全開発マニュアル</h1><div class="cover-sub">アプリ 0.2.1 / 2026-10-07改訂</div><div class="cover-meta">Windowsの作業例 / Node.js &gt;=22.13.0 &lt;25 / 検証環境24.20.0</div><div class="principle"><strong>関連するファイルを往復し、小さな差分と確認を積み重ねます。</strong><br>準備→基礎語句→基礎実習${development.workshopSteps}工程→機能別の実装${development.guide.chapters.length}章→検証と配布の順で進めます。各工程に開くファイル、編集位置、短いコード、理由、期待する結果、失敗時の確認先を示します。</div><div class="feature-grid"><div class="feature"><b>途中も確かめる実習</b>型、表示、フック、採点、テストを別ファイルに作り、接続を少しずつ広げます。</div><div class="feature"><b>現在のコードと照合</b>検索アンカーと行番号を実ソースから検証します。完成ソースは付録の照合資料です。</div><div class="feature"><b>旧版との区別</b>分割前の資料は末尾だけに保存し、通常の全文検索から除外します。</div></div><p>ファイル名：<code>${MANUAL_FILE_NAME}</code></p><a class="start-reading manual-jump" href="#learn-prepare" data-target="learn-prepare">準備の章から読み始める →</a></div></div>`;
-  const bodies = new Map();
-  bodies.set("home", home);
-  for (const [id, body] of development.bodies) bodies.set(id, body);
-  bodies.set("part-r", await currentChangesSection());
-  for (const section of FOUNDATION_SECTIONS) {
-    const pages = range(section.start, section.end)
-      .map((pageNumber) => {
-        const page = foundationByPage.get(pageNumber);
-        if (!page) throw new Error(`Missing foundation page ${pageNumber}`);
-        return renderLegacyPage(page);
-      })
-      .join("");
-    bodies.set(
-      section.id,
-      `<div class="section-hero"><div class="section-kicker">HISTORICAL REFERENCE</div><h1>${escapeHtml(section.label)} - ${escapeHtml(section.title)}</h1><div class="lead">2026年8月以前の構成を記録した資料です。現在の開発手順ではありません。</div></div><div class="update-note"><strong>現在の手順へ進む:</strong> <a class="manual-jump" href="#learn-prepare" data-target="learn-prepare">準備・基礎実習・機能別実装の本文</a>を使用してください。元のページ番号と文章を履歴として保存しています。現在のファイル分割と異なる指示は実習へ適用しません。</div>${pages}`,
-    );
-  }
+  const home = `<div class="cover"><div class="cover-card"><div class="cover-logo">TOTAL RECALL</div><h1>機能別開発<br>初心者向け完全開発マニュアル</h1><div class="cover-sub">アプリ ${escapeHtml(packageJson.version)} / ${MANUAL_REVISION}版</div><div class="cover-meta">Windowsの作業例 / Node.js ${escapeHtml(packageJson.engines.node)} / 検証環境24.20.0</div><div class="principle"><strong>関連するファイルを往復し、小さな差分と確認を積み重ねます。</strong><br>準備→基礎語句→基礎実習${development.workshopSteps}工程→機能別の実装${development.guide.chapters.length}章・${development.excerpts.length}工程→保守実習${development.searchWorkshopSteps}工程→検証と配布の順で進めます。各工程に開くファイル、編集位置、短いコード、理由、期待する結果、失敗時の確認先を示します。</div><div class="feature-grid"><div class="feature"><b>途中も確かめる実習</b>型、表示、フック、採点、テストを別ファイルに作り、接続を少しずつ広げます。</div><div class="feature"><b>実ファイルと照合</b>検索アンカーと行番号を実ソースから検証します。完成ソースは付録の照合資料です。</div><div class="feature"><b>作業と確認をつなぐ</b>書く場所、処理の理由、期待する画面を確認してから次の小さな工程へ進みます。</div></div><p>ファイル名：<code>${MANUAL_FILE_NAME}</code></p><a class="start-reading manual-jump" href="#learn-prepare" data-target="learn-prepare">準備の章から読み始める →</a></div></div>`;
+  const bodies = new Map([["home", home], ...development.bodies]);
   bodies.set("appendix-a", await renderSourceAppendix(catalog));
-  bodies.set("appendix-b", htmlOperationsSection(foundation, catalog));
-
-  const renderedSections = sections
-    .map(
-      (section, index) =>
-        `<section class="manual-section" id="${section.id}" data-title="${escapeHtml(section.title)}"${section.history ? ' data-history="true"' : ""}>${bodies.get(section.id)}${sectionNavigation(sections, index)}</section>`,
-    )
-    .join("");
+  bodies.set("appendix-b", htmlOperationsSection(catalog, development));
+  const renderedSections = sections.map((section, index) => {
+    const body = bodies.get(section.id);
+    if (!body) throw new Error("Missing manual section: " + section.id);
+    return `<section class="manual-section" id="${section.id}" data-title="${escapeHtml(section.title)}">${body}${sectionNavigation(sections, index)}</section>`;
+  }).join("");
   let currentGroup = "";
-  const toc = sections
-    .map((section) => {
-      const group =
-        section.group !== currentGroup
-          ? `<div class="toc-group-title">${section.group}</div>`
-          : "";
-      currentGroup = section.group;
-      return group + tocButton(section);
-    })
-    .join("");
-  const html = template
-    .replace("<!--MANUAL_TOC-->", () => toc)
-    .replace("<!--MANUAL_SECTIONS-->", () => renderedSections);
-  if (
-    html === template ||
-    html.includes("<!--MANUAL_TOC-->") ||
-    html.includes("<!--MANUAL_SECTIONS-->")
-  ) {
-    throw new Error(
-      "Manual template placeholders were not replaced exactly once",
-    );
+  const toc = sections.map((section) => {
+    const group = section.group !== currentGroup ? `<div class="toc-group-title">${escapeHtml(section.group)}</div>` : "";
+    currentGroup = section.group;
+    return group + tocButton(section);
+  }).join("");
+  const html = template.replace("<!--MANUAL_TOC-->", () => toc).replace("<!--MANUAL_SECTIONS-->", () => renderedSections);
+  if (html === template || html.includes("<!--MANUAL_TOC-->") || html.includes("<!--MANUAL_SECTIONS-->")) {
+    throw new Error("Manual template placeholders were not replaced exactly once");
   }
-  return { html, foundation, catalog, sections, development };
+  return { html, catalog, sections, development };
 }
 
 async function main() {
-  const { html, foundation, catalog, sections } = await buildManualHtml();
+  const { html, catalog, sections, development } = await buildManualHtml();
   const temporary = `${OUTPUT}.tmp`;
   await writeFile(temporary, html, { encoding: "utf8", mode: 0o644 });
   await rm(OUTPUT, { force: true });
   await rename(temporary, OUTPUT);
   console.log(
-    `MANUAL_HTML_CREATED sections=${sections.length} foundation_pages=${foundation.pageCount} source_files=${catalog.sourceFiles.length} bytes=${Buffer.byteLength(html)} sha256=${sha256(Buffer.from(html, "utf8"))}`,
+    `MANUAL_HTML_CREATED sections=${sections.length} teaching_steps=${development.excerpts.length} source_files=${catalog.sourceFiles.length} bytes=${Buffer.byteLength(html)} sha256=${sha256(Buffer.from(html, "utf8"))}`,
   );
 }
 

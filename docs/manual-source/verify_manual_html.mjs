@@ -1,10 +1,8 @@
-import { readdir, readFile, stat } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import { cssLanguage } from "@codemirror/lang-css";
 import { htmlLanguage } from "@codemirror/lang-html";
 import {
-  AFFECTED_FOUNDATION_PAGES,
-  MANUAL_SOURCE,
   MANUAL_FILE_NAME,
   MANUAL_REVISION,
   OUTPUT,
@@ -44,7 +42,7 @@ async function walk(directory) {
 }
 
 async function main() {
-  const [{ html: expected, foundation, catalog, sections, development }, actual, packageText, readme] = await Promise.all([
+  const [{ html: expected, catalog, sections, development }, actual, packageText, readme] = await Promise.all([
     buildManualHtml(),
     readFile(OUTPUT, "utf8"),
     readFile(join(ROOT, "package.json"), "utf8"),
@@ -56,7 +54,7 @@ async function main() {
   requireCondition(/<meta\s+charset="utf-8"\s*\/?[>]/u.test(actual), "Missing UTF-8 declaration");
   requireCondition(!actual.includes("<!--MANUAL_"), "Unresolved manual template placeholder");
   requireCondition(!actual.includes("\0"), "HTML contains a NUL character");
-  requireCondition(Buffer.byteLength(actual) > 5_000_000, "HTML is unexpectedly small");
+  requireCondition(Buffer.byteLength(actual) > 300_000, "HTML is unexpectedly small");
   const htmlErrors = syntaxErrors(htmlLanguage.parser, actual);
   requireCondition(htmlErrors.length === 0, `HTML parser errors: ${htmlErrors.slice(0, 20).join(", ")}`);
   const styleMatches = matches(actual, /<style>([\s\S]*?)<\/style>/gu);
@@ -71,10 +69,6 @@ async function main() {
   requireCondition(
     compactStyle.includes('font-family:ui-monospace,"CascadiaMono","SFMono-Regular",Consolas'),
     "Manual code blocks must prefer Windows Latin monospace fonts",
-  );
-  requireCondition(
-    compactStyle.includes(".legacy-pagebr+.line-reference{display:inline-block;margin-top:0.55em;}"),
-    "Line-by-line explanations must visually separate each line reference",
   );
   requireCondition(
     /id="searchBtn"[^>]*>\s*Search\s*<\/button/u.test(actual),
@@ -103,44 +97,6 @@ async function main() {
   const referencedIds = matches(actual, /getElementById\(\s*["']([^"']+)["']\s*\)/gu).map((match) => match[1]);
   for (const id of referencedIds) requireCondition(allIds.includes(id), `Inline script references missing id: ${id}`);
 
-  const legacyPages = matches(actual, /<article class="legacy-page(?: affected)?" data-source-page="(\d+)" data-source-sha256="([a-f0-9]{64})"/gu);
-  requireCondition(legacyPages.length === foundation.pageCount, `Expected ${foundation.pageCount} foundation pages, found ${legacyPages.length}`);
-  legacyPages.forEach((match, index) => {
-    requireCondition(Number(match[1]) === index + 1, `Foundation page sequence mismatch at ${index + 1}`);
-    const sourceText = foundation.pages[index].text.replace(/\r\n?/gu, "\n");
-    requireCondition(match[2] === sha256(sourceText), `Foundation page ${index + 1} text hash mismatch`);
-  });
-  requireCondition(matches(actual, /class="legacy-page affected"/gu).length === AFFECTED_FOUNDATION_PAGES.size, "Affected foundation page count mismatch");
-
-  const legacyArticles = matches(actual, /<article class="legacy-page(?: affected)?"[\s\S]*?<\/article>/gu);
-  let lineReferenceCount = 0;
-  let insertedLineBreakCount = 0;
-  const lineReferenceExpression = /[0-9０-９]+(?:[〜～~－-][0-9０-９]+)?行目/gu;
-  for (const article of legacyArticles) {
-    const proseOnly = article[0].replace(/<pre>[\s\S]*?<\/pre>/gu, "");
-    const references = matches(proseOnly, lineReferenceExpression);
-    const wrappedReferences = matches(
-      proseOnly,
-      /<span class="line-reference">[0-9０-９]+(?:[〜～~－-][0-9０-９]+)?行目<\/span>/gu,
-    );
-    requireCondition(
-      references.length === wrappedReferences.length,
-      "Every prose line reference must use the readable line-reference markup",
-    );
-    for (const reference of wrappedReferences) {
-      const prefix = proseOnly.slice(Math.max(0, reference.index - 48), reference.index);
-      const beginsVisualLine = prefix.endsWith("<br>")
-        || prefix.endsWith("<p>")
-        || prefix.endsWith("<li>")
-        || prefix.endsWith('<div class="line-explanation-title">');
-      requireCondition(beginsVisualLine, `Line reference is not on a new visual line: ${reference[0]}`);
-      if (prefix.endsWith("<br>")) insertedLineBreakCount += 1;
-    }
-    lineReferenceCount += wrappedReferences.length;
-  }
-  requireCondition(lineReferenceCount > 18_000, `Unexpectedly few readable line references: ${lineReferenceCount}`);
-  requireCondition(insertedLineBreakCount > 5_000, `Unexpectedly few inserted line breaks: ${insertedLineBreakCount}`);
-
   const sourceFiles = matches(actual, /<details class="source-file" /gu).length;
   requireCondition(sourceFiles === catalog.sourceFiles.length, `Expected ${catalog.sourceFiles.length} source files, found ${sourceFiles}`);
   for (const relativePath of catalog.sourceFiles) {
@@ -160,7 +116,7 @@ async function main() {
     "半角カッコ内の省略を許可",
     "script-src &#39;self&#39; &#39;unsafe-inline&#39;",
     "Node.js &gt;=22.13.0 &lt;25",
-    "85件のtest",
+    "24章・102工程",
     "往復する順序",
     "なぜこのコードを書くのか",
     "検索アンカー",
@@ -180,14 +136,6 @@ async function main() {
   requireCondition(readme.includes("HTMLマニュアル"), "README does not describe the HTML manual");
 
   const docsFiles = await walk(join(ROOT, "docs"));
-  const remainingPdfs = docsFiles.filter((path) => path.toLocaleLowerCase().endsWith(".pdf"));
-  requireCondition(remainingPdfs.length === 0, `PDF manuals remain: ${remainingPdfs.map((path) => relative(ROOT, path)).join(", ")}`);
-  for (const retired of ["generate_reaudit_manuals.py", "verify_manuals.py", "inspect_rendered_pages.py"]) {
-    const retiredPath = join(MANUAL_SOURCE, retired);
-    const exists = await stat(retiredPath).then(() => true, () => false);
-    requireCondition(!exists, `Retired PDF manual tool remains: ${retired}`);
-  }
-
   requireCondition(readme.includes("](docs/" + MANUAL_FILE_NAME + ")"), "README must link to the exact current manual filename");
   requireCondition(actual.includes(MANUAL_REVISION), "Manual revision is missing");
   const manuals = docsFiles.filter((path) => /^docs[\\/]([^\\/]+)\.html$/u.test(relative(ROOT, path)));
@@ -200,8 +148,19 @@ async function main() {
   requireCondition(matches(actual, /data-guide-step="/gu).length === development.excerpts.length, "Teaching step count mismatch");
   requireCondition(matches(actual, /data-workshop-step="/gu).length === development.workshopSteps, "Basic workshop step count mismatch");
   requireCondition(matches(actual, /data-search-step="/gu).length === development.searchWorkshopSteps, "Maintenance workshop step count mismatch");
-  requireCondition(actual.includes('section.dataset.history !== "true"'), "Default search must exclude historical chapters");
-  requireCondition(sections.findIndex((section) => section.history) > sections.findIndex((section) => section.id === "appendix-b"), "Historical material must follow the current manual");
+  requireCondition(actual.includes("searchIndex = sections.map"), "Full-text search must cover every section");
+  requireCondition(sectionIds.every((id) => /^(?:home|learn-[a-z-]+|appendix-[ab])$/u.test(id)), "Unexpected manual section");
+  requireCondition(!/<article class="legacy-page|data-history="true"/u.test(actual), "Unexpected archived content");
+  const narrative = actual
+    .replace(/<style>[\s\S]*?<\/style>/gu, "")
+    .replace(/<script>[\s\S]*?<\/script>/gu, "")
+    .replace(/<details class="source-file"[\s\S]*?<\/details>/gu, "")
+    .replace(/<pre>[\s\S]*?<\/pre>/gu, "");
+  const obsoleteProse = /旧版|旧バージョン|従来版|旧形式|旧進捗|localStorage|foundation_pages|849ページ|HISTORICAL REFERENCE/u;
+  requireCondition(!obsoleteProse.test(narrative), "Manual narrative must describe the current application");
+  requireCondition(!obsoleteProse.test(readme), "README must describe the current application");
+  const guideNarrative = JSON.stringify(development.guide, (key, value) => key === "excerpt" ? undefined : value);
+  requireCondition(!obsoleteProse.test(guideNarrative), "Tutorial data must describe the current application");
   const sourceDetails = matches(actual, /<details class="source-file" data-file="([^"]+)"/gu).map((match) => match[1]);
   for (const file of matches(actual, /class="manual-jump"[^>]*data-file="([^"]+)"/gu).map((match) => match[1])) {
     requireCondition(sourceDetails.includes(file), "Teaching link references a missing source: " + file);
@@ -213,7 +172,7 @@ async function main() {
   console.log("MANUAL_MAINTENANCE_OK steps=" + maintenance.steps + " files=" + maintenance.files + " search_tests=" + maintenance.gradingTests + " recheck_states=" + maintenance.recheckStates + " rejected_invalid_states=" + maintenance.rejectedInvalidStates);
 
   const bytes = Buffer.byteLength(actual);
-  console.log(`MANUAL_HTML_OK sections=${sections.length} foundation_pages=${foundation.pageCount} affected_pages=${AFFECTED_FOUNDATION_PAGES.size} line_references=${lineReferenceCount} inserted_line_breaks=${insertedLineBreakCount} source_files=${catalog.sourceFiles.length} bytes=${bytes} sha256=${sha256(Buffer.from(actual, "utf8"))}`);
+  console.log(`MANUAL_HTML_OK sections=${sections.length} source_files=${catalog.sourceFiles.length} bytes=${bytes} sha256=${sha256(Buffer.from(actual, "utf8"))}`);
 }
 
 main().catch((error) => {

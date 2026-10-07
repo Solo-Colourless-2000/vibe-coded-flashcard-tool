@@ -9,7 +9,10 @@ const escape = (value) => String(value).replace(/[&<>"']/gu, (char) => ({
 const p = (value) => `<p>${escape(value)}</p>`;
 const code = (value, label = "この部分をコピー") => `<div class="code-wrap"><button class="copy-btn" type="button">${escape(label)}</button><pre><code>${escape(value)}</code></pre></div>`;
 const field = (label, value) => `<div class="lesson-field"><h4>${escape(label)}</h4>${p(value)}</div>`;
-const table = (headers, rows) => `<div class="table-scroll"><table class="status-table"><thead><tr>${headers.map((header) => `<th>${escape(header)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${escape(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+const table = (headers, rows, className = "") => `<div class="table-scroll${className ? ` ${escape(className)}` : ""}"${className ? ' tabindex="0"' : ""}><table class="status-table"><thead><tr>${headers.map((header) => `<th>${escape(header)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${escape(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+const references = (items = []) => items.length
+  ? `<p>参考資料（リンク先の閲覧にはインターネット接続が必要です）：${items.map((item) => `<a href="${escape(item.url)}" target="_blank" rel="noopener noreferrer">${escape(item.title)}</a>`).join(" ／ ")}</p>`
+  : "";
 
 export function sourceLink(file) {
   return `<a class="manual-jump" href="#appendix-a" data-target="appendix-a" data-file="${escape(file)}">${escape(file)}</a>`;
@@ -68,8 +71,7 @@ function renderWorkshop() {
     return `<article class="lesson-step" id="workshop-step-${index + 1}" data-workshop-step="${index + 1}">
       <div class="step-number">基礎実習 ${index + 1} / ${workshop.length}</div><h2>${escape(step.title)}</h2>
       <div class="file-travel">${escape(move)}</div><div class="source-position"><strong>開くファイル:</strong> <code>${escape(file)}</code><br><strong>操作:</strong> ${escape(location)}</div>
-      ${field("入力する前に行うこと", step.how)}
-      ${before ? `<details class="before-code"><summary>検索して選択する変更前の部分</summary>${code(before)}</details>` : ""}
+      ${field("入力する前に行うこと", step.how)}${before ? `\n      <details class="before-code"><summary>検索して選択する変更前の部分</summary>${code(before)}</details>` : ""}
       <h3>${kind === "create" ? "今回だけ入力するコード" : "変更後の小さな部分"}</h3>${code(after)}
       ${field("なぜこのコードを書くのか・語句の意味", step.why)}
       ${field("この段階の画面・確認方法", step.check)}${field("つまずいたときに見る場所", step.troubleshoot)}
@@ -98,11 +100,11 @@ export async function renderDevelopmentGuide(root, catalog) {
   const sections = [];
   const bodies = new Map();
   const add = (id, label, title, body) => {
-    sections.push({ id, label, title, group: "現在の開発手順" });
+    sections.push({ id, label, title, group: "開発手順" });
     bodies.set(id, body);
   };
   add("learn-prepare", "準備", "作業環境と実習の進め方", hero("START HERE", "準備：変更前の成功を確かめてから実習する", "完成プロジェクトを土台に、別の実習用コピーで少しずつ入力・確認します。コマンドを打つ場所、ファイルを開く場所、保存データの場所を区別します。")
-    + guide.preparation.map((item, index) => `<article class="lesson-step"><div class="step-number">準備 ${index + 1}</div><h2>${escape(item.title)}</h2>${item.paragraphs.map(p).join("")}${item.commands ? `<h3>ターミナルで一行ずつ実行</h3>${code(item.commands)}${field("期待する結果", item.expected)}` : ""}</article>`).join("\n"));
+    + guide.preparation.map((item, index) => `<article class="lesson-step"><div class="step-number">準備 ${index + 1}</div><h2>${escape(item.title)}</h2>${item.paragraphs.map(p).join("")}${item.table ? p("狭い画面では、表の中を左右にスクロールして全ての列を確認してください。") + table(item.table.headers, item.table.rows, "browser-table") : ""}${references(item.references)}${item.commands ? `<h3>ターミナルで一行ずつ実行</h3>${code(item.commands)}${field("期待する結果", item.expected)}` : ""}</article>`).join("\n"));
   add("learn-language", "基礎語句", "コードを読むための言葉と記号", hero("VOCABULARY", "基礎語句：ファイルを往復するための最小限の言葉", "一度ですべて覚える必要はありません。手順で出会った名前へ戻り、型・値・状態・保存を区別しながら読みます。")
     + table(["言葉・記号", "このプロジェクトでの意味"], guide.glossary)
     + `<h2>役割を一つの流れで確認する</h2><div class="flow-diagram">利用者の入力 → 表示部品のイベント → フックの操作 → モデルの検証・状態遷移 → 共有セットの更新 → 保存キュー → 保存結果の通知</div>${p("表示を変更するときはView、操作を変更するときはuseで始まるフック、判定を変更するときはmodelや純粋関数、保存順序を変更するときはstorageです。共通型と入口の接続へ何度も戻るのが通常の作業です。")}`);
@@ -121,7 +123,7 @@ export async function renderDevelopmentGuide(root, catalog) {
       const { value, firstLine, lastLine } = step.excerpt;
       return `<article class="lesson-step" id="${id}-step-${index + 1}" data-guide-step="${chapter.id}/${index + 1}">
         <div class="step-number">実装 ${chapterNumber}・工程 ${index + 1} / ${chapter.steps.length}</div><h2>${escape(step.title)}</h2><div class="file-travel">${escape(move)}</div>
-        <div class="source-position"><strong>開くファイル:</strong> ${sourceLink(step.file)}<br><strong>検索アンカー:</strong> <code>${escape(step.source.anchor)}</code><br><strong>改訂時の範囲:</strong> ${firstLine}〜${lastLine}行（コードは下の小さな部分だけ）</div>
+        <div class="source-position"><strong>開くファイル:</strong> ${sourceLink(step.file)}<br><strong>検索アンカー:</strong> <code>${escape(step.source.anchor)}</code><br><strong>掲載コードの範囲:</strong> ${firstLine}〜${lastLine}行（コードは下の小さな部分だけ）</div>
         ${field(chapter.id === "maintenance" ? "読む場所と、後半で変更する工程" : "どこを、どの順で作業するか", step.action)}${code(value, "照合用の抜粋をコピー")}
         ${field("処理の意味と、このファイルに置く理由", step.why)}${field("確認すること・期待する結果", step.check)}${field("間違えやすい点と直す場所", step.trouble)}
         <div class="next-file">${escape(next ? `次の工程では${next}を開きます。` : "この章の確認へ進み、成功した状態を記録します。")}</div>
@@ -142,6 +144,6 @@ export async function renderDevelopmentGuide(root, catalog) {
     + table(["見える症状", "最初に調べる場所", "確認すること"], guide.troubleshooting)
     + `${field("中断して翌日に再開する手順", "Ctrl+Sで保存し、サーバーをCtrl+Cで止めます。実習の章番号・工程番号・最後に通った検査・残るエラーを短く記録します。再開したら同じフォルダーとブラウザープロファイルを開き、変更前の検査を一つ実行してから次の工程へ進みます。別のフォルダーの成功と混同しません。")}
       <h2>現在の全ファイルと責務</h2>${table(["ファイル", "役割"], catalog.sourceFiles.map((file) => [file, catalog.roles[file]]))}
-      ${p("付録Aの完成ソースは照合のための資料です。学習を進める順序はこの改訂本文を使います。最後の旧版資料は2026年8月以前の構成を説明するため、page.tsxへ全処理を集める指示を現在の実習へ適用しません。通常の全文検索は旧版資料を除外します。旧版を読むときは目次の「旧版資料」を選びます。")}`);
+      ${p("付録Aの完成ソースは照合のための資料です。学習を進める順序は本文の工程を使い、指定されたファイルと検索アンカーへ移動します。全文検索は本文と付録の全セクションを対象に、ファイル名・関数名・説明文を探せます。")}`);
   return { sections, bodies, guide, excerpts, workshopSteps: workshop.length, searchWorkshopSteps: searchWorkshop.length };
 }

@@ -331,25 +331,6 @@
         color: var(--pink);
         margin-bottom: 5px;
       }
-      .latest-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
-      }
-      .latest-card {
-        background: #151b1f;
-        border: 1px solid var(--line);
-        padding: 20px;
-        border-top: 4px solid var(--teal);
-      }
-      .latest-card h3 {
-        margin: 0 0 8px;
-        color: var(--pink);
-        font-size: 17px;
-      }
-      .latest-card p {
-        margin: 0;
-      }
       .status-table {
         width: 100%;
         border-collapse: collapse;
@@ -374,67 +355,6 @@
       .limit {
         color: #f1bd78;
         font-weight: 800;
-      }
-      .legacy-page {
-        position: relative;
-        background: var(--paper);
-        border: 1px solid #263238;
-        box-shadow: var(--shadow);
-        padding: 44px 52px;
-        margin: 0 0 22px;
-        overflow: hidden;
-        content-visibility: auto;
-        contain-intrinsic-size: 900px;
-      }
-      .legacy-page.affected {
-        border-top: 4px solid var(--orange);
-      }
-      .page-origin {
-        position: absolute;
-        right: 16px;
-        top: 12px;
-        font-size: 10px;
-        color: #aeb7bc;
-      }
-      .legacy-page h2,
-      .legacy-page h3,
-      .legacy-page h4 {
-        color: var(--pink);
-        line-height: 1.35;
-      }
-      .legacy-page h2 {
-        font-size: 24px;
-        margin: 0 0 22px;
-        border-left: 5px solid var(--orange);
-        padding-left: 12px;
-      }
-      .legacy-page h3 {
-        font-size: 19px;
-        margin: 26px 0 12px;
-      }
-      .legacy-page h4 {
-        font-size: 15px;
-        margin: 22px 0 9px;
-        color: var(--teal);
-      }
-      .legacy-page p {
-        white-space: normal;
-        margin: 10px 0;
-        overflow-wrap: anywhere;
-      }
-      .legacy-page ul {
-        padding-left: 1.4em;
-      }
-      .legacy-page li {
-        margin: 5px 0;
-      }
-      .replacement-banner {
-        margin: 0 0 18px;
-        padding: 10px 12px;
-        border: 1px solid #7e6230;
-        background: #2a2418;
-        color: #f3c97f;
-        font-size: 0.84em;
       }
       .callout {
         padding: 14px 16px;
@@ -495,22 +415,6 @@
       .copy-btn:focus-visible {
         border-color: var(--pink);
         color: var(--pink);
-      }
-      .line-explanation-title {
-        font-size: 1.03em;
-        font-weight: 800;
-        line-height: 1.6;
-        margin: 22px 0 9px;
-        color: #72d5de;
-        overflow-wrap: anywhere;
-      }
-      .line-reference {
-        font-weight: 800;
-        color: #72d5de;
-      }
-      .legacy-page br + .line-reference {
-        display: inline-block;
-        margin-top: 0.55em;
       }
       .source-intro {
         background: var(--green);
@@ -738,6 +642,7 @@
       .before-code { padding: 12px; border: 1px solid var(--line); }
       .before-code summary { cursor: pointer; color: var(--orange); }
       .table-scroll { overflow-x: auto; }
+      .browser-table table { min-width: 640px; }
       .flow-diagram { padding: 22px; background: var(--blue); border: 1px solid var(--teal); line-height: 2; }
       .start-reading { display: inline-block; margin-top: 18px; padding: 12px 18px; background: var(--green); border: 1px solid var(--lime); text-decoration: none; }
       .cover-card p, .cover-card code { overflow-wrap: anywhere; white-space: normal; }
@@ -809,11 +714,6 @@
         .section-hero {
           padding: 24px 20px;
         }
-        .legacy-page {
-          padding: 36px 18px 28px;
-          margin-bottom: 14px;
-        }
-        .latest-grid,
         .feature-grid {
           grid-template-columns: 1fr;
         }
@@ -890,7 +790,6 @@
           max-width: none;
           break-before: page;
         }
-        .legacy-page,
         .section-hero,
         .cover-card {
           box-shadow: none;
@@ -902,16 +801,11 @@
         .search-panel {
           display: none !important;
         }
-        .section-hero h1,
-        .legacy-page h2,
-        .legacy-page h3,
-        .legacy-page h4,
-        .line-explanation-title {
+        .section-hero h1 {
           color: #7d2947 !important;
         }
         .section-hero .lead,
-        .source-meta,
-        .page-origin {
+        .source-meta {
           color: #222 !important;
         }
         .code-wrap pre,
@@ -1235,7 +1129,7 @@
             closeSearch(false);
         });
         function buildSearchIndex() {
-          searchIndex = sections.filter((section) => section.dataset.history !== "true").map((section) => {
+          searchIndex = sections.map((section) => {
             const text = section.textContent.replace(/\s+/g, " ").trim();
             return {
               id: section.id,
@@ -1270,7 +1164,7 @@
           if (!query) {
             renderSearch([]);
             searchCount.textContent =
-              "現在の本文と資料を検索します（旧版資料は除外）";
+              "本文と付録の全セクションを検索します";
             return;
           }
           if (!searchIndex.length) buildSearchIndex();

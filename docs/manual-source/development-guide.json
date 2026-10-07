@@ -103,8 +103,8 @@
       "このアプリでは起動時の待機を解除し、画面を操作できる段階を表す値。復元完了だけでなくタイムアウトでもtrueになります。trueでも保存の成功や自動保存の許可を保証せず、保存停止の状態を別に確認します。"
     ],
     [
-      "IndexedDB / localStorage",
-      "どちらもブラウザー内の保存領域。現在の主保存はIndexedDBです。localStorageは旧版データの移行や変更通知などにも使います。プロジェクトのファイルとは別です。"
+      "IndexedDB",
+      "ブラウザー内のデータベース。このアプリは学習セット、進捗、下書き、予備コピーをここへ保存します。パソコン内のプロジェクトファイルとは別で、ブラウザーとプロファイルごとに独立します。"
     ],
     [
       "origin",
@@ -162,7 +162,7 @@
         "コード欄のファイルパスはプロジェクトルートからの相対位置です。PowerShellへファイル名をそのまま入力する指示ではありません。エディターで開き、指定した場所へ入力してCtrl+Sで保存します。UTF-8で保存し、コードに全角の引用符や全角の括弧を入れません。"
       ],
       "commands": "Set-Location -LiteralPath \"F:\\learning-tool\\recall-practice\"\nGet-Location\nTest-Path -LiteralPath package.json\nnode --version\nnpm --version",
-      "expected": "Get-Locationが実習用コピーを示し、Test-PathはTrueです。Node.jsは22.13.0以上25未満を使います。この改訂時の検証環境は24.20.0です。バージョンが条件外なら対応版を用意してターミナルを開き直します。node --version自体が動かない場合は先にNode.jsの導入とPATHを確認します。"
+      "expected": "Get-Locationが実習用コピーを示し、Test-PathはTrueです。Node.jsは22.13.0以上25未満を使います。この教材の検証環境は24.20.0です。バージョンが条件外なら対応版を用意してターミナルを開き直します。node --version自体が動かない場合は先にNode.jsの導入とPATHを確認します。"
     },
     {
       "title": "依存を導入して、変更前の成功を確認する",
@@ -172,7 +172,7 @@
         "完成コードを変更するとHTMLに収録したSHA-256が古くなるため、最後のmanual:verifyだけ失敗することがあります。変更途中は対象テストとtypecheck、lintを使い、章の区切りでmanual:buildしてからcheckを行います。検証を無効にして先へ進む操作はしません。"
       ],
       "commands": "npm ci\nnpm run manual:build\nnpm run check\nnpm run build",
-      "expected": "改訂時の完成コードの自動テストは85件です。基礎実習のテストを加えると86件、さらに保守実習のテストも残すと87件になります。基礎実習を取り除いてから保守実習だけを加えたコピーは86件です。将来の版で数が変わっても、fail 0であることと各検査の終了を確認します。"
+      "expected": "アプリ0.2.1の完成コードの自動テストは85件です。基礎実習のテストを加えると86件、さらに保守実習のテストも残すと87件になります。基礎実習を取り除いてから保守実習だけを加えたコピーは86件です。機能を追加して数が変わっても、fail 0であることと各検査の終了を確認します。"
     },
     {
       "title": "二つのターミナルと一つのブラウザーで小さく往復する",
@@ -183,6 +183,60 @@
       ],
       "commands": "npm run dev",
       "expected": "開発サーバーの起動表示が出て、ホーム画面を操作できます。URLの#setsなどは画面状態です。/practiceは次章で追加する実習専用ルートで、#practiceとは異なります。"
+    },
+    {
+      "title": "ブラウザーによるフォルダー保存の違いを確認する",
+      "paragraphs": [
+        "ブラウザーのAPIとは、JavaScriptから利用できるブラウザー側の機能です。このアプリはFile System Access APIのwindow.showDirectoryPicker()でパソコン内の保存先フォルダーを選び、許可を得てそのフォルダーのrecall-data/sets.jsonを読み書きします。フォルダー選択の対応と、通常のボタンや入力欄の表示は別の機能です。",
+        "次の表は2026-10-07時点のMDNの対応情報を整理したものです。対象はデスクトップ版です。フォルダー保存の実習には対応しているChromeまたはEdgeを使い、空の実習用フォルダーを選びます。対応していても、実際の接続にはフォルダーへのアクセス許可などの条件を満たす必要があります。",
+        "FirefoxやSafariは、ここで使うshowDirectoryPicker()に未対応です。起動時にapp/fileStorage.tsのsupportsProjectFolderStorage()がfalseとなり、app/recall/storage/useStorageHydration.tsがstorageModeをunsupportedへ変えます。app/recall/storage/StorageDialog.tsxは未対応の場合に保存先の選択・変更ボタンをHTMLへ出力せず、「このブラウザーはフォルダー保存に未対応」と表示します。Chromeで見える「保存先を変更」がFirefoxで見えないのは、この表示条件による動作です。詳しい照合手順は実装19の最初の3工程で追います。",
+        "未対応ブラウザーでも、ブラウザー内のIndexedDBへの保存と、バックアップJSONの書き出し・復元は利用できます。IndexedDBはブラウザーとプロファイルごとに別なので、Chromeのデータや選択済みフォルダーがFirefoxへ自動共有されることはありません。データを移す場合はバックアップ章の候補確認と復元の手順を使います。復元後も、そのブラウザーがフォルダー保存に対応するようになるわけではありません。",
+        "フォルダー選択にはsecure contextという実行環境の条件もあります。これは一部のブラウザー機能を利用できる安全な接続環境を指します。このプロジェクトで使うhttp://127.0.0.1:3000は、自分のパソコンを指すローカルアドレスなので、通常のHTTPサイトとは扱いが異なり、この条件を満たします。FirefoxでのAPI未対応は、URLをHTTPSへ変更しても解決しません。未対応と、対応ブラウザーでの権限不足を区別して確認します。",
+        "CSSを変更したり表示条件だけを外したりしてボタンを出しても、ブラウザー側に存在しないフォルダー選択機能は呼び出せません。未対応時のブラウザー保存を残し、APIの対応判定、状態の切り替え、画面の表示条件を別のファイルでつなぐ設計を読みます。以下の参考リンクは対応情報を確認するためのもので、マニュアル自体の閲覧に外部サイトの読み込みは必要ありません。"
+      ],
+      "table": {
+        "headers": [
+          "デスクトップブラウザー",
+          "showDirectoryPicker()の対応",
+          "現在のアプリでの保存先ボタン"
+        ],
+        "rows": [
+          [
+            "Chrome",
+            "対応",
+            "未接続時は「保存先フォルダーを選択」、接続後は「保存先を変更」"
+          ],
+          [
+            "Edge",
+            "対応",
+            "未接続時は「保存先フォルダーを選択」、接続後は「保存先を変更」"
+          ],
+          [
+            "Firefox",
+            "未対応",
+            "保存先の選択・変更ボタンを表示せず、ブラウザー内保存を使う"
+          ],
+          [
+            "Safari",
+            "未対応",
+            "保存先の選択・変更ボタンを表示せず、ブラウザー内保存を使う"
+          ]
+        ]
+      },
+      "references": [
+        {
+          "title": "MDN：showDirectoryPicker()の説明",
+          "url": "https://developer.mozilla.org/ja/docs/Web/API/Window/showDirectoryPicker"
+        },
+        {
+          "title": "MDN：ブラウザー対応データ",
+          "url": "https://github.com/mdn/browser-compat-data/blob/main/api/Window.json"
+        },
+        {
+          "title": "MDN：secure contextとローカルアドレス",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Secure_Contexts"
+        }
+      ]
     },
     {
       "title": "コード欄の読み方と、一回の作業の終わり方",
@@ -685,15 +739,15 @@
         },
         {
           "file": "app/recall/editor/draftStorage.ts",
-          "title": "旧形式の移行を一か所へ集める",
+          "title": "下書きの読み込みと検証を一か所へ集める",
           "source": {
             "anchor": "export async function loadStoredDraft",
-            "lines": 28
+            "lines": 3
           },
-          "action": "draftStorageへ移り、IndexedDBから旧localStorageへ進む条件を読みます。",
-          "why": "現在の保存があるならそれを優先し、旧形式は移行する経路として扱います。旧形式を読み込む例を新規の主保存方式に戻さないようにします。",
-          "check": "型検査と下書きテストを実行します。",
-          "trouble": "旧localStorageのキーを変更しても既存データが自動で移るわけではありません。"
+          "action": "draftStorage.tsへ移り、readBrowserDraft()の結果をvalidDraftFromStorage()へ渡してから編集機能へ返す先頭部分を読みます。IndexedDBへの入出力と、EditorDraftとして使えるかの検証をつなぐ窓口です。次はuseSetEditor.tsへ戻って呼び出し先を確認します。",
+          "why": "読み取ったJSONをそのまま編集画面へ渡さず、下書きの形・件数・文字数を検証します。入出力の窓口を分けると、編集フックへデータベース操作を広げずに読み込み処理を確認できます。",
+          "check": "実習用の下書きを保存し、再読み込み後に編集欄へ復元されることを確認します。戻り値がEditorDraftまたはnullという型契約も照合します。",
+          "trouble": "下書きの検証を省いて文字列を画面へ直接渡すと、型や上限の確認が抜けます。入出力・検証・画面への反映をそれぞれの担当ファイルで確認します。"
         },
         {
           "file": "app/recall/editor/useSetEditor.ts",
@@ -868,7 +922,7 @@
       "id": "study-start",
       "title": "学習設定をUIから保存可能な進捗へ渡す",
       "goal": "一時的な開始設定と、途中再開するセッションの設定を区別する。",
-      "before": "StudyProgressのバージョンは3。旧進捗はモデルで移行する。",
+      "before": "StudyProgress version 3の型と、開始画面の設定項目を照合できる状態。",
       "route": [
         "app/model.ts",
         "app/recall/study/useStudySession.ts",
@@ -886,8 +940,8 @@
           },
           "action": "モデルの進捗型を開き、direction、batchSize、allowParentheticalOmission、phaseを確認します。",
           "why": "途中再開時に設定を画面の既定値だけから読むと、開始時と違う採点になります。セッションが使う条件を進捗内へ保存します。バージョン値は保存形式の契約です。",
-          "check": "旧versionの移行テストを確認します。",
-          "trouble": "新しい設定項目を追加するだけでversion1/2の保存が正しくなるとは限りません。読込時の既定値も必要です。"
+          "check": "開始時に選んだ方向・出題数・カッコ省略設定が進捗へ保存され、途中再開で同じ設定に戻ることを確認します。",
+          "trouble": "設定を画面の状態だけへ置くと、再読み込み後に開始時と違う採点や出題になります。保存する進捗型と読み込み時の検証を一緒に確認します。"
         },
         {
           "file": "app/recall/study/useStudySession.ts",
@@ -1240,10 +1294,10 @@
             "anchor": "export const STORAGE_QUARANTINE_KEY",
             "lines": 12
           },
-          "action": "定数を開き、旧キーが互換のため残ることを確認します。",
-          "why": "ファイルを分けても保存キーまで別名にする必要はありません。今回の分割は保存データを別の場所へ移す変更ではなく、処理の配置を変えています。",
+          "action": "定数を開き、保存データの隔離用キー、別タブへの変更通知用キー、起動時の復元待ち時間を確認します。",
+          "why": "保存機能で共有する値を一か所へまとめ、復元・確定保存・競合確認で同じキーや時間を使います。用途と呼び出し先を照合してから変更します。",
           "check": "既存のテストがキーとタイムアウトを参照することを確認します。",
-          "trouble": "キー名を変えると古いデータが見えなくなるので、見た目の整理だけで変更しません。"
+          "trouble": "キー名を変えると保存済みデータが見えなくなるので、見た目の整理だけで変更しません。"
         },
         {
           "file": "app/recall/RecallApp.tsx",
@@ -1314,12 +1368,12 @@
           "title": "ブラウザーの有効な世代を受け取る",
           "source": {
             "anchor": "      const browserSnapshot =",
-            "lines": 21
+            "lines": 9
           },
           "action": "ブラウザー復元の分岐を読みます。validならsets、revision、削除済みIDを一緒に受け取ります。",
           "why": "セット配列だけを読むと削除済みIDが失われ、古いフォルダーから復活する可能性があります。保存スナップショットを一つの契約として扱います。",
-          "check": "missingだけが旧形式への移行へ進むことを確認します。",
-          "trouble": "invalidのデータを旧形式の空状態に置き換えて保存しないようにします。"
+          "check": "validの読込結果からsets、revision、deletedSetIdsを一緒に復元していることを確認します。実習セットを保存して再読み込みし、削除済みセットが再表示されないことも確認します。",
+          "trouble": "invalidやunavailableを空データとして成功扱いにせず、自動上書きを止める分岐を確認します。読み取りに失敗した状態を保存の成功として扱いません。"
         },
         {
           "file": "app/recall/storage/useStorageHydration.ts",
@@ -1404,14 +1458,16 @@
       "id": "folder",
       "title": "フォルダー接続・統合・切断を往復して作る",
       "goal": "フォルダーAPIの権限と、安全なデータ統合を画面から切り離す。",
-      "before": "Chrome/Edgeの対応環境。実習用の空フォルダーを使う。",
+      "before": "フォルダー選択の実習は、showDirectoryPicker()に対応するデスクトップ版ChromeまたはEdgeと、実習用の空フォルダーを使う。Firefoxでは未対応時の表示とブラウザー保存を確認できる。ブラウザー別の対応表は準備の章を参照する。",
       "route": [
         "app/fileStorage.ts",
+        "app/recall/storage/useStorageHydration.ts",
+        "app/recall/storage/StorageDialog.tsx",
         "app/recall/storage/mergeStudySets.ts",
         "tests/editor-draft.test.mjs",
         "app/recall/storage/folderWriteLock.ts",
         "app/recall/storage/useFolderStorage.ts",
-        "app/recall/storage/StorageDialog.tsx"
+        "ブラウザー"
       ],
       "steps": [
         {
@@ -1421,10 +1477,34 @@
             "anchor": "export function supportsProjectFolderStorage",
             "lines": 17
           },
-          "action": "対応しているかの判定とchooseProjectFolderの入口を開きます。未対応環境でメソッドを無条件に呼びません。",
-          "why": "File System Access APIはブラウザーと権限に依存します。フォルダー選択はクリックなど利用者の操作から行い、起動時に突然選択画面を出しません。",
-          "check": "未対応環境ではブラウザー保存を使えることを確認します。",
-          "trouble": "手動で選べるフォルダーとサーバーが読むプロジェクトルートは別です。"
+          "action": "Ctrl+Pでapp/fileStorage.tsを開き、supportsProjectFolderStorageをCtrl+Fで探します。typeof windowの確認、typeof window.showDirectoryPicker === \"function\"、IndexedDBの存在確認を一つずつ読み、その下のchooseProjectFolderがフォルダー選択を呼ぶことを照合します。既存の関数は重複追加しません。次は、この戻り値を受け取るuseStorageHydration.tsへ移ります。",
+          "why": "typeofは値の種類を調べ、=== \"function\"は呼び出せる関数かを比べます。&&でつないだ条件がすべて成立したときだけtrueです。FirefoxはshowDirectoryPicker()を備えていないためfalseとなります。ブラウザー名を文字列で判定するのではなく、必要な機能が存在するかを調べる設計です。選択はクリックなど利用者の操作から呼びます。",
+          "check": "実習用のアプリをブラウザーで開き、F12で開発者ツールを表示してConsole（コンソール）を選びます。typeof window.showDirectoryPickerを手入力してEnterを押すと、機能を利用できるChrome/Edgeでは\"function\"、未対応のFirefoxでは\"undefined\"になります。これは対応状況を調べるだけで、フォルダー選択やデータ変更は行いません。",
+          "trouble": "File System Access API全体と、ここで必要なshowDirectoryPicker()の対応を混同しません。IndexedDBが使えても任意のフォルダーへ直接保存できるとは限りません。手動で選べるフォルダーとサーバーが読むプロジェクトルートも別です。"
+        },
+        {
+          "file": "app/recall/storage/useStorageHydration.ts",
+          "title": "APIの未対応を保存方式の状態へ渡す",
+          "source": {
+            "anchor": "      if (!supportsProjectFolderStorage()) {",
+            "lines": 3
+          },
+          "action": "app/fileStorage.tsからCtrl+Pでapp/recall/storage/useStorageHydration.tsへ移ります。!supportsProjectFolderStorage()を検索し、setStorageMode(\"unsupported\")の分岐を照合します。前の工程の判定結果が、表示部品へ渡す状態へ変わる場所です。次はStorageDialog.tsxへ移ります。",
+          "why": "!は真偽を反転する記号です。対応判定がfalseならこの分岐に入り、unsupportedという「フォルダー保存に未対応」を表す状態へ変えます。直前までにブラウザー保存の復元は別に行うため、未対応であることと学習データを保存できないことを同じ扱いにしません。cancelledは、終了済みの処理が状態を更新することを防ぐ確認です。",
+          "check": "Firefoxで起動して保存設定を開くと、「このブラウザーはフォルダー保存に未対応」と「Browser storage / IndexedDB」が表示されます。Consoleで確認したAPIの不在と、保存設定の状態がつながることを読みます。",
+          "trouble": "unsupportedをpermissionへ置き換えても、未実装のAPIは追加されません。permissionは対応している環境でフォルダーへの再許可が必要な状態です。起動時にchooseProjectFolder()を呼んで未対応を解決しようとしません。"
+        },
+        {
+          "file": "app/recall/storage/StorageDialog.tsx",
+          "title": "未対応なら保存先ボタンを出力しない条件を読む",
+          "source": {
+            "anchor": "        {storageMode !== \"unsupported\" && (",
+            "lines": 22
+          },
+          "action": "Ctrl+Pでapp/recall/storage/StorageDialog.tsxを開き、storageMode !== \"unsupported\"を検索します。ボタン全体を囲む表示条件を読み、内部のラベルとonClickを照合します。次に同じファイル内の「このブラウザーはフォルダー保存に未対応」を検索し、説明文もstorageModeから決まることを確認します。",
+          "why": "!==は「一致しない」という比較です。unsupportedと異なる場合だけ&&の右側のボタンを表示します。Firefoxでは一致するため条件がfalseとなり、ボタン自体がHTMLに出力されません。Chromeでフォルダーに接続済みならラベルは「保存先を変更」、未接続なら「保存先フォルダーを選択」です。APIの判定はfileStorage、状態への反映は復元フック、表示はこの部品が担当します。",
+          "check": "実習用の保存設定を比べます。Chrome/Edgeの未接続時には「保存先フォルダーを選択」があり、空の実習フォルダーへ接続すると「保存先を変更」になります。Firefoxではどちらもなく、未対応の説明とバックアップの書き出し・復元ボタンが表示されます。ブラウザーごとの実習データを使い、本番フォルダーを接続しません。",
+          "trouble": "secondary-buttonのCSSを直す問題とは区別します。条件を外して表示だけ増やしても、存在しないAPIは使えません。disabledは保存処理中などにボタンの操作を止める別の条件で、未対応時にボタンを出力しない条件とは役割が違います。"
         },
         {
           "file": "app/recall/storage/mergeStudySets.ts",
@@ -1475,7 +1555,7 @@
           "trouble": "表示だけfolderからbrowserへ変えても、保存済みハンドルは残ります。I/Oの解除と表示を両方行います。"
         }
       ],
-      "checkpoint": "対象保存テスト。実習用空フォルダーの接続・変更・切断・再起動を確認する。"
+      "checkpoint": "対象保存テスト。Chrome/Edgeでは実習用空フォルダーの接続・変更・切断・再起動を確認する。Firefoxでは未対応の説明と保存先ボタンの非表示を確認し、実習データのブラウザー内保存と再読み込みを確認する。API判定→起動時の状態反映→ダイアログの表示条件を3ファイルで追えたら次へ進む。"
     },
     {
       "id": "backup",
@@ -1852,9 +1932,14 @@
       "startはbuildを自動実行しない。"
     ],
     [
+      "Firefoxで「保存先を変更」が表示されない",
+      "showDirectoryPicker()が未対応のため、fileStorage.tsの判定がfalseとなり、useStorageHydration.tsがstorageModeをunsupportedへ変更する。StorageDialog.tsxのstorageMode !== \"unsupported\"という条件で保存先ボタンを出力しない。実装19の最初の3工程を順に照合する。",
+      "「このブラウザーはフォルダー保存に未対応」という説明があれば想定した分岐。IndexedDB保存とバックアップJSONの書き出し・復元を使える。フォルダー保存の実習には対応するChrome/Edgeを使い、CSS変更やHTTPS化で未実装のAPIが追加されると考えない。"
+    ],
+    [
       "フォルダー保存が選べない",
-      "対応ブラウザー、利用者操作から呼んでいるか、権限、secure contextを確認。",
-      "ブラウザー保存へ戻れる設計を残す。"
+      "まずshowDirectoryPicker()への対応とstorageModeを確認する。対応ブラウザーでボタンを押した後に失敗する場合は、利用者操作から呼んでいるか、フォルダー権限、secure contextを確認する。http://127.0.0.1:3000はローカルアドレスとしてこの実行環境の条件を満たす。",
+      "未対応と権限不足を別の状態として扱い、ブラウザー保存を利用できる経路を残す。"
     ],
     [
       "一つ直すと別の画面が壊れた",
@@ -1894,9 +1979,14 @@
       "保存失敗を成功表示しない。異なる保存は保護停止する。"
     ],
     [
+      "ブラウザー別の保存先表示",
+      "実習用プロファイルでChromeとFirefoxの保存設定を開く。Chromeでは空の実習フォルダーへの接続前と接続後のボタン名を確認する。Firefoxでは未対応の説明と保存先ボタンの非表示を確認し、実習セットをブラウザー内に保存して再読み込みする。",
+      "Chromeのボタンは接続前に「保存先フォルダーを選択」、接続後に「保存先を変更」。Firefoxはフォルダー選択を表示せず、ブラウザー内の実習データを復元する。ChromeとFirefoxのIndexedDBや保存先が自動で共有されると考えない。"
+    ],
+    [
       "バックアップ",
       "実習データをJSONへ書出し→候補選択→キャンセル→再選択して確定。",
-      "確認前に変更しない。確定後は旧セッションを残さず背景操作が戻る。"
+      "確認前に変更しない。確定後は復元前の学習セッションを残さず背景操作が戻る。"
     ],
     [
       "インポートとフラッシュカード",

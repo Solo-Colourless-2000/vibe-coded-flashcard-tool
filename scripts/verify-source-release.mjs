@@ -30,6 +30,7 @@ async function walk(directory) {
     const path = join(directory, entry.name);
     const rel = relative(stage, path).split(sep).join("/");
     if (rel === "RELEASE_MANIFEST.json") continue;
+    if (entry.name.toLowerCase() === "foundation_pages.json") throw new Error(`Unreferenced manual source in release: ${rel}`);
     if (rel.split("/").some((segment) => forbiddenSegments.has(segment))) throw new Error(`Forbidden path: ${rel}`);
     if (entry.isSymbolicLink()) throw new Error(`Unexpected symlink: ${rel}`);
     const info = await stat(path);
