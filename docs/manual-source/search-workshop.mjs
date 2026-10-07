@@ -57,9 +57,25 @@ export const searchWorkshop = [
   },
 ];
 
-export async function replaySearchWorkshop(root) {
-  const files = new Map();
-  for (const file of [hook, view]) files.set(file, (await readFile(join(root, file), "utf8")).replace(/\r\n?/gu, "\n"));
+export function replaySearchWorkshopFiles(initialFiles) {
+  const files = new Map([hook, view].map((file) => {
+    const content = initialFiles.get(file);
+    if (typeof content !== "string") throw new Error(`Missing search workshop source: ${file}`);
+    return [file, content.replace(/\r\n?/gu, "\n")];
+  }));
+  // Reconstruct the exercise's starting point in memory. Readers may run
+  // manual:verify before, during, or after applying these documented changes.
+  // Inspect "after" first because some "before" blocks are contained in it.
+  for (const change of searchWorkshop.flatMap((step) => step.changes).toReversed()) {
+    if (change.kind !== "replace") continue;
+    const current = files.get(change.file);
+    const afterMatches = current.split(change.after).length - 1;
+    if (afterMatches === 1) {
+      files.set(change.file, current.replace(change.after, () => change.before));
+    } else if (afterMatches > 1 || current.split(change.before).length !== 2) {
+      throw new Error(`Search workshop source differs from the documented before/after: ${change.file}`);
+    }
+  }
   const snapshots = [];
   for (const [index, step] of searchWorkshop.entries()) {
     for (const change of step.changes) {
@@ -75,4 +91,10 @@ export async function replaySearchWorkshop(root) {
     snapshots.push({ step: index + 1, files: new Map(files) });
   }
   return snapshots;
+}
+
+export async function replaySearchWorkshop(root) {
+  const initialFiles = new Map();
+  for (const file of [hook, view]) initialFiles.set(file, await readFile(join(root, file), "utf8"));
+  return replaySearchWorkshopFiles(initialFiles);
 }

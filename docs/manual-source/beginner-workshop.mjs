@@ -14,7 +14,7 @@ export const workshop = [
     change: create(route, 'export default function PracticePage() {\n  return <main><h1>カード開発の実習</h1></main>;\n}\n'),
     how: "実習用コピーのappで、新しいpracticeフォルダーを作ります。その中にpage.tsxを作り、3行だけ入力してCtrl+Sで保存します。既存のapp/page.tsxは編集しません。",
     why: "URLの/practiceに対応するpage.tsxを作ります。export defaultは、このファイルの代表となる部品を外へ渡す書き方です。PracticePageの先頭が大文字なのはReactの画面部品だからです。returnの後のタグはJSXという画面の記述です。",
-    check: "ターミナルAでnpm run devを実行し、http://127.0.0.1:3000/practiceを開きます。「カード開発の実習」が出れば成功です。npm run devは動き続けるので、このターミナルでは次のコマンドを入力しません。",
+    check: "準備でターミナルAに起動した開発サーバーを使い、http://127.0.0.1:3000/practiceを開きます。「カード開発の実習」が出れば成功です。サーバーを止めている場合だけnpm run devを起動し直します。起動済みならもう一度実行せず、検査コマンドはターミナルBで入力します。",
     troubleshoot: "404ならapp/practice/page.tsxの名前を確認します。pagesやpage.tsではありません。接続できなければターミナルのエラーを読み、3000番を使っている別の自分のサーバーをCtrl+Cで止めます。",
   },
   {

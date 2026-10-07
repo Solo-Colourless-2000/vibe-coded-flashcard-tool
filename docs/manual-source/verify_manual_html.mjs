@@ -94,6 +94,12 @@ async function main() {
 
   const allIds = matches(actual, /\bid="([^"]+)"/gu).map((match) => match[1]);
   requireCondition(new Set(allIds).size === allIds.length, "Duplicate HTML id");
+  for (const id of matches(actual, /\bhref="#([^"]+)"/gu).map((match) => match[1])) {
+    requireCondition(allIds.includes(id), `Internal manual link references missing id: ${id}`);
+  }
+  for (const id of matches(actual, /\bdata-target="([^"]+)"/gu).map((match) => match[1])) {
+    requireCondition(sectionIds.includes(id), `Manual navigation references missing section: ${id}`);
+  }
   const referencedIds = matches(actual, /getElementById\(\s*["']([^"']+)["']\s*\)/gu).map((match) => match[1]);
   for (const id of referencedIds) requireCondition(allIds.includes(id), `Inline script references missing id: ${id}`);
 
@@ -204,7 +210,7 @@ async function main() {
   const basic = await verifyWorkshop(ROOT);
   console.log("MANUAL_WORKSHOP_OK steps=" + basic.steps + " files=" + basic.files + " grading_tests=" + basic.gradingTests);
   const maintenance = await verifySearchWorkshop(ROOT);
-  console.log("MANUAL_MAINTENANCE_OK steps=" + maintenance.steps + " files=" + maintenance.files + " search_tests=" + maintenance.gradingTests);
+  console.log("MANUAL_MAINTENANCE_OK steps=" + maintenance.steps + " files=" + maintenance.files + " search_tests=" + maintenance.gradingTests + " recheck_states=" + maintenance.recheckStates + " rejected_invalid_states=" + maintenance.rejectedInvalidStates);
 
   const bytes = Buffer.byteLength(actual);
   console.log(`MANUAL_HTML_OK sections=${sections.length} foundation_pages=${foundation.pageCount} affected_pages=${AFFECTED_FOUNDATION_PAGES.size} line_references=${lineReferenceCount} inserted_line_breaks=${insertedLineBreakCount} source_files=${catalog.sourceFiles.length} bytes=${bytes} sha256=${sha256(Buffer.from(actual, "utf8"))}`);

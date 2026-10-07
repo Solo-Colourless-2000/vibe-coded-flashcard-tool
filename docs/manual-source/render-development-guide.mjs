@@ -84,12 +84,13 @@ function renderWorkshop() {
 }
 
 function renderSearchWorkshop() {
-  return `<h2>ここから実習コピーで入力する、実際の小さな差分</h2><div class="update-note"><strong>開始条件:</strong> 基礎実習の/practiceとは別に、完成アプリの一覧へ変更します。追加する2ファイルは実習用です。本番へ採用する変更とは分けて保管してください。新規ファイルが既にある場合は別の実習コピーを使います。</div>`
+  return `<h2>ここから実習コピーで入力する、実際の小さな差分</h2><div class="update-note"><strong>読解から入力へ:</strong> 前半の事前読解3工程では変更していません。ここから保守実習1〜5を一度だけ順に入力します。基礎実習の/practiceとは別に、完成アプリの一覧へ変更します。追加する2ファイルは実習用です。初めて始めるときに同名ファイルが既にあれば別の実習コピーを使い、中断からの再開なら記録した工程へ戻ります。新規作成を重ねません。</div>`
     + searchWorkshop.map((step, index) => `<article class="lesson-step" id="search-workshop-step-${index + 1}" data-search-step="${index + 1}"><div class="step-number">保守実習 ${index + 1} / ${searchWorkshop.length}</div><h2>${escape(step.title)}</h2>
       ${field("今回行うこと", step.how)}
       ${step.changes.map((change) => `<h3>${escape(change.file)}：${change.kind === "create" ? "新規作成" : "指定範囲を置換"}</h3>${change.before ? `<details class="before-code"><summary>検索して選ぶ変更前の範囲</summary>${code(change.before)}</details>` : ""}<h4>この部分だけ入力する変更後</h4>${code(change.after)}`).join("\n")}
       ${field("処理の意味と実装順の理由", step.why)}${field("期待する結果と確認", step.check)}${field("つまずいたとき", step.trouble)}
-      <div class="next-file">${escape(index < searchWorkshop.length - 1 ? `次は${searchWorkshop[index + 1].changes[0].file}へ移動します。` : "最後にmanual:build→checkを実行し、動く変更と更新した本文を記録します。")}</div></article>`).join("\n");
+      <div class="next-file">${escape(index < searchWorkshop.length - 1 ? `次は${searchWorkshop[index + 1].changes[0].file}へ移動します。` : "最後にnpm run manual:build、npm run checkを一行ずつ実行し、動く変更と更新した本文を記録します。")}</div></article>`).join("\n")
+    + `<div class="callout success"><strong>完了したコピーの再検証:</strong> manual:verifyは教材に記載した変更前・変更後を照合し、メモリー内だけで実習の出発点を組み直して5工程を検査します。編集中・完了後の実ファイルを書き戻す処理ではありません。実際に追加した関数とテストはnpm run checkのテスト・型検査・lintでも確認します。依存配列の欠落など、教材の変更前・変更後と一致しない差分はエラーになります。</div>`;
 }
 
 export async function renderDevelopmentGuide(root, catalog) {
@@ -112,7 +113,7 @@ export async function renderDevelopmentGuide(root, catalog) {
     const route = chapter.route.map((file, index) => `<span>${index + 1}. ${escape(file)}</span>`).join('<span class="travel-arrow" aria-hidden="true">→</span>');
     let body = hero(`IMPLEMENTATION ${String(chapterNumber).padStart(2, "0")}`, `実装 ${chapterNumber}：${chapter.title}`, chapter.goal)
       + field("この章を始める状態", chapter.before)
-      + `<h2>往復する順序</h2><div class="travel-route">${route}</div><div class="callout info"><strong>完成コードの抜粋:</strong> 次の短いコードは現在の実ファイルと照合するための範囲です。ファイル全体の置換指示ではありません。既にあるコードは重複追加せず、各工程の対象だけを確認・変更します。新しい機能を足す場合も、型・処理・テスト・表示の小さな差分へ分けます。</div>`;
+      + `<h2>往復する順序</h2><div class="travel-route">${route}</div><div class="callout info"><strong>完成コードの抜粋:</strong> 次の短いコードは現在の実ファイルと照合するための範囲です。既にあるコードは重複追加せず、各工程の対象だけを確認・変更します。${chapter.id === "maintenance" ? "この章の前半3工程は読むだけです。実際の入力は後半の保守実習1〜5で行います。" : "新しい機能を足す場合も、型・処理・テスト・表示の小さな差分へ分けます。"}</div>`;
     body += chapter.steps.map((step, index) => {
       const prev = chapter.steps[index - 1]?.file;
       const next = chapter.steps[index + 1]?.file;
@@ -121,7 +122,7 @@ export async function renderDevelopmentGuide(root, catalog) {
       return `<article class="lesson-step" id="${id}-step-${index + 1}" data-guide-step="${chapter.id}/${index + 1}">
         <div class="step-number">実装 ${chapterNumber}・工程 ${index + 1} / ${chapter.steps.length}</div><h2>${escape(step.title)}</h2><div class="file-travel">${escape(move)}</div>
         <div class="source-position"><strong>開くファイル:</strong> ${sourceLink(step.file)}<br><strong>検索アンカー:</strong> <code>${escape(step.source.anchor)}</code><br><strong>改訂時の範囲:</strong> ${firstLine}〜${lastLine}行（コードは下の小さな部分だけ）</div>
-        ${field("どこを、どの順で作業するか", step.action)}${code(value, "照合用の抜粋をコピー")}
+        ${field(chapter.id === "maintenance" ? "読む場所と、後半で変更する工程" : "どこを、どの順で作業するか", step.action)}${code(value, "照合用の抜粋をコピー")}
         ${field("処理の意味と、このファイルに置く理由", step.why)}${field("確認すること・期待する結果", step.check)}${field("間違えやすい点と直す場所", step.trouble)}
         <div class="next-file">${escape(next ? `次の工程では${next}を開きます。` : "この章の確認へ進み、成功した状態を記録します。")}</div>
       </article>`;

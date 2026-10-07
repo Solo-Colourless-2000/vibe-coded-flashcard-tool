@@ -742,6 +742,16 @@
       .start-reading { display: inline-block; margin-top: 18px; padding: 12px 18px; background: var(--green); border: 1px solid var(--lime); text-decoration: none; }
       .cover-card p, .cover-card code { overflow-wrap: anywhere; white-space: normal; }
       .manual-jump:focus-visible { outline: 3px solid var(--orange); outline-offset: 4px; }
+      #returnToLesson {
+        position: sticky;
+        top: calc(var(--header-h) + 8px);
+        z-index: 20;
+        max-width: 100%;
+        margin-bottom: 12px;
+        border-color: var(--lime);
+        box-shadow: var(--shadow);
+      }
+      .source-file { scroll-margin-top: calc(var(--header-h) + 88px); }
       @media (max-width: 900px) {
         :root {
           --header-h: 56px;
@@ -867,7 +877,8 @@
         .section-nav,
         .copy-btn,
         .top-progress,
-        .skip-link {
+        .skip-link,
+        #returnToLesson {
           display: none !important;
         }
         .main {
@@ -1130,14 +1141,18 @@
         let lessonReturn = null;
         document.getElementById("returnToLesson").addEventListener("click", () => {
           if (!lessonReturn) return;
-          showSection(lessonReturn.id);
-          window.scrollTo({ top: lessonReturn.top, behavior: "auto" });
+          const destination = lessonReturn;
+          lessonReturn = null;
+          document.getElementById("returnToLesson").hidden = true;
+          showSection(destination.id);
+          destination.link.focus({ preventScroll: true });
+          window.scrollTo({ top: destination.top, behavior: "auto" });
         });
         document.querySelectorAll(".manual-jump").forEach((link) => {
           link.addEventListener("click", (event) => {
             event.preventDefault();
             if (link.dataset.file) {
-              lessonReturn = { id: sections[current].id, top: window.scrollY };
+              lessonReturn = { id: sections[current].id, top: window.scrollY, link };
               document.getElementById("returnToLesson").hidden = false;
             }
             showSection(link.dataset.target);
@@ -1146,6 +1161,7 @@
                 .find((item) => item.dataset.file === link.dataset.file);
               if (target) {
                 target.open = true;
+                target.querySelector("summary")?.focus({ preventScroll: true });
                 target.scrollIntoView({ block: "start", behavior: "auto" });
               }
             }

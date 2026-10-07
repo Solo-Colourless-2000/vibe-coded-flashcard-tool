@@ -2,10 +2,11 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, join, resolve, basename } from "node:path";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
+import assert from "node:assert/strict";
 import ts from "typescript";
 import { ESLint } from "eslint";
 import { replayWorkshop } from "./beginner-workshop.mjs";
-import { replaySearchWorkshop } from "./search-workshop.mjs";
+import { replaySearchWorkshop, replaySearchWorkshopFiles } from "./search-workshop.mjs";
 
 const keyOf = (file) => resolve(file).replaceAll("\\", "/");
 
@@ -79,5 +80,19 @@ export async function verifyWorkshop(root) {
 }
 
 export async function verifySearchWorkshop(root) {
-  return verifySnapshots(root, await replaySearchWorkshop(root), "Search workshop", "tests/library-search-practice.test.mjs");
+  const snapshots = await replaySearchWorkshop(root);
+  const expected = snapshots.at(-1).files;
+  // Verify each partially completed copy, including the final copy, can run
+  // the manual checks without applying a state declaration or UI twice.
+  for (const snapshot of snapshots) {
+    const replayed = replaySearchWorkshopFiles(snapshot.files);
+    assert.deepEqual(replayed.at(-1).files, expected, `Search workshop recheck after step ${snapshot.step}`);
+  }
+  const edited = new Map(expected);
+  const hook = "app/recall/library/useSetLibrary.ts";
+  edited.set(hook, edited.get(hook).replace("[sets, search, titleOnly]", "[sets, search]"));
+  assert.throws(() => replaySearchWorkshopFiles(edited), /differs from the documented before\/after/u,
+    "Rechecking must still reject an incomplete search dependency edit");
+  const result = await verifySnapshots(root, snapshots, "Search workshop", "tests/library-search-practice.test.mjs");
+  return { ...result, recheckStates: snapshots.length, rejectedInvalidStates: 1 };
 }

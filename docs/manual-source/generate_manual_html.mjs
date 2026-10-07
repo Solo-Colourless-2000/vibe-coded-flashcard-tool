@@ -566,7 +566,7 @@ async function renderSourceAppendix(catalog) {
     const value = await readFile(absolutePath, "utf8");
     const lines = sourceLines(value);
     const numbered = lines
-      .map((line, index) => `${String(index + 1).padStart(4, "0")} | ${line}`)
+      .map((line, index) => `${String(index + 1).padStart(4, "0")} |${line ? " " + line : ""}`)
       .join("\n");
     const digest = sha256(Buffer.from(value, "utf8"));
     files.push(
@@ -578,7 +578,7 @@ async function renderSourceAppendix(catalog) {
 
 function htmlOperationsSection(foundation, catalog) {
   return `<div class="section-hero"><div class="section-kicker">HTML-ONLY WORKFLOW</div><h1>付録B - HTMLマニュアルの更新と検証</h1><div class="lead">2026-08-31以降はPDFを廃止し、この自己完結型HTMLだけを生成・更新します。</div></div>
-    <div class="update-note"><strong>運用方針:</strong> 現在の本文はdevelopment-guide.jsonとbeginner-workshop.mjs、旧版履歴はfoundation_pages.json、完成ソース付録は現行ファイル、画面構造はmanual-template.htmlから再生成します。外部CDN・外部フォント・外部JavaScriptは使用しません。</div>
+    <div class="update-note"><strong>運用方針:</strong> 現在の本文はdevelopment-guide.json、基礎実習はbeginner-workshop.mjs、保守実習はsearch-workshop.mjsから作ります。render-development-guide.mjsが短い抜粋と実習を描画し、verify-workshop.mjsが途中状態を検査します。旧版履歴はfoundation_pages.json、完成ソース付録は現行ファイル、画面構造はmanual-template.htmlから再生成します。外部CDN・外部フォント・外部JavaScriptは使用しません。</div>
     <table class="status-table"><thead><tr><th>項目</th><th>現在値</th></tr></thead><tbody><tr><td>旧版本文から移行した基礎解説</td><td>${foundation.pageCount}ページ相当</td></tr><tr><td>差し替え注意付き基礎ページ</td><td>${AFFECTED_FOUNDATION_PAGES.size}ページ</td></tr><tr><td>完成ソース付録</td><td>${catalog.sourceFiles.length}ファイル</td></tr><tr><td>旧PDFの移行元SHA-256</td><td><code>${escapeHtml(foundation.formerPdfSha256)}</code></td></tr><tr><td>配布形式</td><td>UTF-8・単一HTML・オフライン閲覧対応</td></tr></tbody></table>
     <h2>更新手順</h2>${renderCodeBlock(`npm run manual:build\nnpm run manual:verify`, "terminal-wrap")}
     <ol><li>アプリまたは説明文を修正します。</li><li><code>npm run manual:build</code>で現行ソース、SHA-256、行番号、逐次解説をHTMLへ反映します。</li><li><code>npm run manual:verify</code>で基礎解説849ページ相当、完成ソース${catalog.sourceFiles.length}ファイル、目次、検索・コピー用script、外部依存なしを検査します。</li><li><code>npm run check</code>と<code>npm run build</code>を通してから配布します。</li></ol>
