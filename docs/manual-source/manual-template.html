@@ -10,9 +10,9 @@
     <meta name="theme-color" content="#0e1316" />
     <meta
       name="description"
-      content="TOTAL RECALL 0.2.1 機能別開発 初心者向け完全開発マニュアル 2026-10-07改訂"
+      content="TOTAL RECALL 0.2.1 機能別開発 初心者向け完全開発マニュアル 2026-10-08改訂"
     />
-    <title>TOTAL RECALL 機能別開発 初心者向け完全開発マニュアル 2026-10-07</title>
+    <title>TOTAL RECALL 機能別開発 初心者向け完全開発マニュアル 2026-10-08</title>
     <style>
       :root {
         --paper: #151b1f;
@@ -394,6 +394,9 @@
         background: var(--code);
         border: 1px solid #5c4d34;
         color: #f0e4ce;
+      }
+      .copy-btn + pre {
+        padding-top: 48px;
       }
       .terminal-wrap pre {
         background: var(--terminal);
@@ -862,7 +865,7 @@
       <div class="brand">
         <span class="brand-mark">TOTAL RECALL</span
         ><span class="brand-title">機能別開発マニュアル</span
-        ><span class="brand-ver">2026-10-07</span>
+        ><span class="brand-ver">2026-10-08</span>
       </div>
       <div class="header-search">
         <input
@@ -1012,13 +1015,13 @@
             else button.removeAttribute("aria-current");
           });
           updateNavButtons();
-          storageSet("recallWebManualSection20261007", id);
+          storageSet("recallWebManualSection20261008", id);
           if (push) history.replaceState(null, "", "#" + id);
           window.scrollTo({ top: 0, behavior: "auto" });
           closeDrawer();
           closeSearch(false);
           updateProgress();
-          document.title = `${sectionTitle(current)} | TOTAL RECALL 2026-10-07 Manual`;
+          document.title = `${sectionTitle(current)} | TOTAL RECALL 2026-10-08 Manual`;
         }
         function move(delta) {
           const next = Math.max(
@@ -1360,7 +1363,7 @@
         addEventListener("scroll", updateProgress, { passive: true });
         addEventListener("resize", updateProgress);
         const requested = location.hash.slice(1),
-          saved = storageGet("recallWebManualSection20261007"),
+          saved = storageGet("recallWebManualSection20261008"),
           isValid = (id) => sections.some((section) => section.id === id),
           initial = isValid(requested)
             ? requested

@@ -9,8 +9,8 @@ export const ROOT = resolve(dirname(SCRIPT_PATH), "../..");
 export const MANUAL_SOURCE = join(ROOT, "docs", "manual-source");
 export const SOURCE_CATALOG_PATH = join(MANUAL_SOURCE, "source_catalog.json");
 export const TEMPLATE_PATH = join(MANUAL_SOURCE, "manual-template.html");
-export const MANUAL_REVISION = "2026-10-07";
-export const MANUAL_FILE_NAME = "TOTAL_RECALL_機能別開発_初心者向け完全開発マニュアル_20261007.html";
+export const MANUAL_REVISION = "2026-10-08";
+export const MANUAL_FILE_NAME = "TOTAL_RECALL_機能別開発_初心者向け完全開発マニュアル_20261008.html";
 export const OUTPUT = join(
   ROOT,
   "docs",
@@ -92,40 +92,40 @@ function explainGroup(relativePath, lineNumbers, lines) {
       "利用者または開発者が守る手順・契約・注意点を文章として記録します。";
   else if (extension === ".css")
     purpose =
-      "selectorとpropertyを組み合わせ、表示、layout、responsiveまたはaccessibility上の見え方を定義します。";
+      "対象要素を選ぶ記法と見た目の指定を組み合わせ、配置、画面幅への対応、操作や読み上げに関係する表示を決めます。";
   else if ([".yml", ".yaml"].includes(extension))
     purpose =
-      "CI jobのtrigger、OS matrix、command、権限またはartifact条件を宣言します。";
+      "自動検査を実行する条件、検査するOS、コマンド、権限、保存する成果物を設定します。";
   else if (extension === ".svg")
-    purpose = "SVG要素と属性でfaviconのvector形状、色、viewBoxを定義します。";
+    purpose = "SVGの要素と属性で、ブラウザーのタブに出る小さなアイコンの形、色、描画範囲を定義します。";
   else if (/^import\s/u.test(first))
     purpose =
-      "この後の処理で使う型・関数・component・定数を別moduleから読み込みます。";
+      "この後の処理で使う型・関数・画面部品・定数を別ファイルから読み込みます。";
   else if (/^(?:export\s+type|type\s|interface\s)/u.test(first))
-    purpose = "値の形を型契約として定義し、callerと実装の期待を一致させます。";
+    purpose = "値の形を型として定義し、呼び出す側と処理する側で項目や引数を一致させます。";
   else if (/function\s/u.test(first))
     purpose =
-      "名前付き処理を定義し、引数を検証・変換して結果またはPromiseをcallerへ返します。";
+      "名前付きの処理を定義します。引数が入力で、returnの値が呼び出し側へ返す結果です。具体的な処理は関数の本体を追って確認します。";
   else if (/^(?:if\s|if\(|else|switch\s|case\s)/u.test(first))
-    purpose = "条件に応じて処理経路を分け、異常値や競合を安全側で停止します。";
+    purpose = "条件によって進む処理を分けます。何と比較しているか、成立した後にどの値を変えるかを前後の行で確認します。";
   else if (/^(?:try|catch|finally|throw\s)/u.test(first))
     purpose =
-      "失敗時のcleanupとerror伝播を定義し、途中状態を成功として扱わないようにします。";
+      "例外の発生と受け取り、終了時の後片付けを扱います。catchが受け取る失敗と、finallyが行う解除を確認します。";
   else if (first.includes("await "))
-    purpose = "非同期処理の完了を待ち、完了順序とerror処理を明確にします。";
+    purpose = "時間のかかる処理の完了を待ってから、この関数内の続きを実行します。失敗をどのcatchが受け取るかも確認します。";
   else if (first.startsWith("return "))
-    purpose = "この分岐の結果をcallerへ返し、後続の不要な処理を止めます。";
+    purpose = "この関数の実行を終え、結果を呼び出し側へ返します。何を返しているかを呼び出し先の利用と照合します。";
   else if (/^(?:const|let)\s/u.test(first))
     purpose =
-      "処理で使う値またはstateを名前付き変数へ保持し、後続の判定・描画・保存へ渡します。";
+      "値に名前を付けて保持し、後続の処理から使います。useStateで受け取る値と通常の変数は、画面更新の仕組みが異なります。";
   else if (/^(?:test\(|assert\.)/u.test(first))
     purpose =
       "期待する挙動を自動検査として固定し、将来の変更で同じ不備が戻ることを防ぎます。";
   else if (/^(?:<|\{|\})/u.test(first) || first.includes("className="))
     purpose =
-      "UI要素、属性、条件描画または構造境界を定義し、利用者操作とstateを接続します。";
+      "タグ、属性、条件付きの表示や括弧の構造を記述します。画面の値やイベントの接続は、対応するViewとフックの本文で確認します。";
   else if (/^(?:\/\/|\/\*|\*|#)/u.test(first))
-    purpose = "実装理由、入力上の注意、運用上の前提をcommentとして残します。";
+    purpose = "コメントとして説明を残します。コメント自体は実行されないため、書かれた条件と実際の処理を照合します。";
   else
     purpose =
       "前後の宣言・式・設定と組み合わさり、このファイルの責務を段階的に構成します。";
@@ -179,9 +179,9 @@ async function renderSourceAppendix(catalog) {
 
 function htmlOperationsSection(catalog, development) {
   return `<div class="section-hero"><div class="section-kicker">MANUAL WORKFLOW</div><h1>付録B - HTMLマニュアルの更新と検証</h1><div class="lead">本文、実習、実ファイルの照合資料を編集元から再生成し、アプリの実装と一致させます。</div></div>
-    <div class="update-note"><strong>編集するファイル:</strong> 本文はdevelopment-guide.json、基礎実習はbeginner-workshop.mjs、保守実習はsearch-workshop.mjsです。render-development-guide.mjsが短い抜粋と実習を描画し、verify-workshop.mjsが各途中状態を検査します。付録の収録対象と役割はsource_catalog.json、画面構造はmanual-template.htmlで管理します。</div>
+    <div class="update-note"><strong>編集するファイル:</strong> 本文はdevelopment-guide.json、基礎実習はbeginner-workshop.mjs、保守実習はsearch-workshop.mjs、Linuxの準備はlinux-workshop.mjsです。render-development-guide.mjsが短い抜粋と実習を描画し、verify-workshop.mjsが各途中状態を検査します。付録の収録対象と役割はsource_catalog.json、画面構造はmanual-template.htmlで管理します。</div>
     <table class="status-table"><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody><tr><td>機能別の手順</td><td>${development.guide.chapters.length}章・${development.excerpts.length}工程</td></tr><tr><td>基礎実習</td><td>${development.workshopSteps}工程</td></tr><tr><td>保守実習</td><td>${development.searchWorkshopSteps}工程</td></tr><tr><td>完成ソース付録</td><td>${catalog.sourceFiles.length}ファイル</td></tr><tr><td>配布形式</td><td>UTF-8・単一HTML・オフライン閲覧対応</td></tr></tbody></table>
-    <h2>編集元から更新する手順</h2><ol><li>本文の説明を直す場合はdevelopment-guide.jsonの該当工程を探し、実ファイル、検索アンカー、理由、期待する結果を一緒に照合します。</li><li>実習を直す場合は、入力する順序と変更前・変更後の範囲を確認します。一つのファイル全体をまとめて置換する手順にしません。</li><li>本番ソースを追加した場合はsource_catalog.jsonへファイル名と役割を加え、本文からの参照先も確認します。</li><li>プロジェクトのルートで、次のコマンドを一行ずつ実行します。先のコマンドが成功してから次へ進みます。</li></ol>
+    <h2>編集元から更新する手順</h2><ol><li>本文の説明を直す場合はdevelopment-guide.jsonの該当工程を探し、実ファイル、検索アンカー、理由、期待する結果を一緒に照合します。</li><li>Linuxの準備を直す場合はlinux-workshop.mjsでBashと実行結果、OS固有の条件を一緒に確認します。</li><li>実習を直す場合は、入力する順序と変更前・変更後の範囲を確認します。一つのファイル全体をまとめて置換する手順にしません。</li><li>本番ソースを追加した場合はsource_catalog.jsonへファイル名と役割を加え、本文からの参照先も確認します。</li><li>プロジェクトのルートで、次のコマンドを一行ずつ実行します。先のコマンドが成功してから次へ進みます。</li></ol>
     ${renderCodeBlock("npm run manual:build\nnpm run manual:verify", "terminal-wrap")}
     <p>manual:buildは実ファイルのコード、行番号、SHA-256をHTMLへ反映します。manual:verifyは本文とソースの検索位置、教材の途中状態、HTML/CSS/scriptの構文、目次・内部リンク、コピー・検索用の要素、外部依存がないことを検査します。生成したHTMLを直接直すと次の生成で失われるため、編集元へ戻って修正します。</p>
     <h2>アプリと配布物を確認する</h2>${renderCodeBlock("npm run check\nnpm run build\nnpm run release:prepare\nnpm run release:verify", "terminal-wrap")}
@@ -212,7 +212,7 @@ export async function buildManualHtml() {
     { id: "appendix-a", label: "付録A・照合用", title: "全ファイルと完成ソース", group: "照合・更新資料" },
     { id: "appendix-b", label: "付録B", title: "HTMLマニュアルの更新と検証", group: "照合・更新資料" },
   ];
-  const home = `<div class="cover"><div class="cover-card"><div class="cover-logo">TOTAL RECALL</div><h1>機能別開発<br>初心者向け完全開発マニュアル</h1><div class="cover-sub">アプリ ${escapeHtml(packageJson.version)} / ${MANUAL_REVISION}版</div><div class="cover-meta">Windowsの作業例 / Node.js ${escapeHtml(packageJson.engines.node)} / 検証環境24.20.0</div><div class="principle"><strong>関連するファイルを往復し、小さな差分と確認を積み重ねます。</strong><br>準備→基礎語句→基礎実習${development.workshopSteps}工程→機能別の実装${development.guide.chapters.length}章・${development.excerpts.length}工程→保守実習${development.searchWorkshopSteps}工程→検証と配布の順で進めます。各工程に開くファイル、編集位置、短いコード、理由、期待する結果、失敗時の確認先を示します。</div><div class="feature-grid"><div class="feature"><b>途中も確かめる実習</b>型、表示、フック、採点、テストを別ファイルに作り、接続を少しずつ広げます。</div><div class="feature"><b>実ファイルと照合</b>検索アンカーと行番号を実ソースから検証します。完成ソースは付録の照合資料です。</div><div class="feature"><b>作業と確認をつなぐ</b>書く場所、処理の理由、期待する画面を確認してから次の小さな工程へ進みます。</div></div><p>ファイル名：<code>${MANUAL_FILE_NAME}</code></p><a class="start-reading manual-jump" href="#learn-prepare" data-target="learn-prepare">準備の章から読み始める →</a></div></div>`;
+  const home = `<div class="cover"><div class="cover-card"><div class="cover-logo">TOTAL RECALL</div><h1>機能別開発<br>初心者向け完全開発マニュアル</h1><div class="cover-sub">アプリ ${escapeHtml(packageJson.version)} / ${MANUAL_REVISION}版</div><div class="cover-meta">Windows（PowerShell）/ Linux（Bash） / Node.js ${escapeHtml(packageJson.engines.node)} / 検証環境24.20.0</div><div class="principle"><strong>関連するファイルを往復し、小さな差分と確認を積み重ねます。</strong><br>準備（Windows/Linux）→基礎語句→基礎実習${development.workshopSteps}工程→機能別の実装${development.guide.chapters.length}章・${development.excerpts.length}工程→保守実習${development.searchWorkshopSteps}工程→検証と配布の順で進めます。各工程に開くファイル、編集位置、短いコード、理由、期待する結果、失敗時の確認先を示します。</div><div class="feature-grid"><div class="feature"><b>途中も確かめる実習</b>型、表示、フック、採点、テストを別ファイルに作り、接続を少しずつ広げます。</div><div class="feature"><b>実ファイルと照合</b>検索アンカーと行番号を実ソースから検証します。完成ソースは付録の照合資料です。</div><div class="feature"><b>作業と確認をつなぐ</b>書く場所、処理の理由、期待する画面を確認してから次の小さな工程へ進みます。</div></div><p>ファイル名：<code>${MANUAL_FILE_NAME}</code></p><a class="start-reading manual-jump" href="#learn-prepare" data-target="learn-prepare">準備の章から読み始める →</a></div></div>`;
   const bodies = new Map([["home", home], ...development.bodies]);
   bodies.set("appendix-a", await renderSourceAppendix(catalog));
   bodies.set("appendix-b", htmlOperationsSection(catalog, development));

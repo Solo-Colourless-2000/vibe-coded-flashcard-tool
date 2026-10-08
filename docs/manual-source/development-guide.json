@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "2026-10-07",
+  "revision": "2026-10-08",
   "glossary": [
     [
       "プロジェクトのルート",
@@ -147,11 +147,15 @@
     {
       "title": "完成プロジェクトと実習用コピーを区別する",
       "paragraphs": [
-        "この改訂版は、現在の完成プロジェクトを教材として、最初に小さな機能を自分で実装し、その後に本番の各機能を同じ開発ループで読み、変更できるようにする本です。空のフォルダーへ全ソースを一括入力する手順ではありません。同梱のpackage.json、lockfile、model、保存I/Oを土台に使います。空から別のアプリを設計するための汎用入門書とは開始条件が違います。",
-        "本番用の学習データと完成コードを保護するため、エクスプローラーでプロジェクトを実習用の別フォルダーへコピーします。例はF:\\learning-tool\\recall-practiceです。コピー元とコピー先を別のエディターウィンドウで開き、実習中はコピー先だけを編集します。この操作は学習用に自分で行う手順であり、配布版のアプリがフォルダーを自動変更する機能ではありません。",
-        "node_modules、dist、.next、.vinext、.wrangler、releaseは生成物なのでコピー先へ持ち込む必要はありません。package-lock.jsonは必ず持ち込みます。recall-data、sets.json、sets.backup.jsonなど実際の学習データは実習へ持ち込みません。Gitを使っている場合は自分の作業前の差分を確認してから記録します。",
-        "ブラウザーの保存領域はフォルダーをコピーしても別になりません。同じoriginのアプリは同じIndexedDBを読むため、実習は新しいブラウザープロファイルで開きます。完成アプリのタブを閉じ、そのプロファイルだけを使います。保存先フォルダーを選ぶ実習では新しく空の実習データ用フォルダーを用意し、本番の学習フォルダーを選びません。"
-      ]
+        "この本は現在の完成プロジェクトを土台に、基礎実習22工程で小さなカード機能を作り、機能別24章で本番コードの役割を読み、最後の保守実習5工程で一覧へ設定を追加する順序です。基礎実習と保守実習は指定した差分を入力します。本番実装編の短い抜粋は、既にあるコードの読解と変更位置の照合に使います。まず「今は入力する工程か、読む工程か」を確かめます。",
+        "実習は別のコピーで行います。Windowsの例はF:\\learning-tool\\recall-practiceです。下のPowerShellは完成プロジェクトから設定・コードをコピーし、生成物、秘密情報、学習データを除外します。Linuxではこの欄を実行せず、次の「Linuxの準備と起動」章のBash手順を使います。元とコピーを別のエディターウィンドウで開き、実習中はコピー先だけを編集します。",
+        "package.json、package-lock.json、.npmrc、.gitignore、app、docs、testsを残します。.npmrcなどの先頭が.のファイルも設定の一部です。node_modulesとビルド結果はコピー先で作り直します。除外一覧にない名前で実際の学習データを置いている場合は、そのフォルダー・ファイル名も除外へ加えます。既存の実習先は上書きせず、別の未使用名で始めます。",
+        "ブラウザーの保存領域はフォルダーをコピーしても別になりません。同じoriginのアプリは同じIndexedDBを読むため、実習は新しいブラウザープロファイルで開きます。完成アプリのタブを閉じ、そのプロファイルだけを使います。保存先フォルダーを選ぶ実習では新しく空の実習データ用フォルダーを用意し、本番の学習フォルダーを選びません。新規プロファイルとは、ブラウザーのデータを分ける新しい利用者領域です。Firefoxの具体的な作成操作はLinux章にあり、Windowsでもabout:profilesから同様に作れます。Chrome/Edgeはプロフィール追加のメニューを使います。",
+        "コピーでは.gitも除外するため、この実習先はまだGitリポジトリーではありません。Gitを使う場合だけ「確認・配布」の任意手順で最初の状態を記録します。使わない場合は、検査が通った区切りのコピーと工程メモで再開位置を残せます。"
+      ],
+      "commandLabel": "PowerShell・Windows：パスを確認してからコピーする",
+      "commands": "$recallSource = \"F:\\learning-tool\\vibe-coded-flashcard-tool\"\n$recallPractice = \"F:\\learning-tool\\recall-practice\"\n$recallSourceAbs = [IO.Path]::GetFullPath($recallSource)\n$recallPracticeAbs = [IO.Path]::GetFullPath($recallPractice)\nif (-not (Test-Path -LiteralPath (Join-Path $recallSourceAbs \"package.json\"))) {\n  throw \"コピー元のpackage.jsonがありません。\"\n}\nif (Test-Path -LiteralPath $recallPracticeAbs) {\n  throw \"実習先が既にあります。別の名前を選びます。\"\n}\nif (($recallPracticeAbs + \"\\\").StartsWith($recallSourceAbs + \"\\\", [StringComparison]::OrdinalIgnoreCase)) {\n  throw \"コピー元の内部は実習先にできません。\"\n}\nrobocopy $recallSourceAbs $recallPracticeAbs /E /XJ `\n  /XD node_modules dist .next .vinext .wrangler release .git recall-data `\n  /XF \".env*\" sets.json sets.backup.json \"*.tsbuildinfo\"\n$recallCopyExit = $LASTEXITCODE\nif ($recallCopyExit -ge 8) { throw \"コピー失敗。終了コード: $recallCopyExit\" }\n\"コピー終了コード: $recallCopyExit\"",
+      "expected": "入力前にコピー元のパスを自分の完成プロジェクトへ合わせます。ifの複数行を含むため、この欄は全体をまとめてPowerShellへ入力します。Robocopyの終了コード0〜7は失敗を示しません。8以上、またはthrowのエラーなら次へ進まず原因を確認し、途中の実習先へ上書きせず別の未使用名を選びます。`はPowerShellの行継続記号で、行末の後ろへ空白を入れません。出力の末尾と実習先のファイル一覧を確認します。このWindows欄はPowerShellへ直接入力する例です。表示される`や引用符は半角のコード記号です。"
     },
     {
       "title": "フォルダーを開き、ファイル名を正確に確認する",
@@ -159,20 +163,24 @@
         "エディターの「フォルダーを開く」で実習用コピーのルートを開きます。左のファイル一覧にapp、docs、tests、package.json、package-lock.jsonが並んでいれば正しい場所です。appだけを開いた場合は上の階層へ開き直します。操作例はVS Codeのキー配置です。Ctrl+Pで既存のファイル名、Ctrl+Fで開いているファイル内のアンカー、Ctrl+Shift+Fでプロジェクト全体の名前を探します。別のエディターでは同じ機能のメニューを使います。",
         "新規作成は既存ファイルを探す操作とは別です。左の一覧で親フォルダーを右クリックし、「新しいフォルダー」でpracticeなどを作ります。そのフォルダーを右クリックして「新しいファイル」を選び、page.tsxなどの名前を入力します。入力後はCtrl+Sで保存します。ファイル内検索で0件なら、正しいファイルと直前の工程を確認し、変更前の数行は行ごとに照合します。検索文字へ説明文や表示用の行番号を含めません。",
         "Windowsのエクスプローラーでは「表示」から「ファイル名拡張子」を有効にします。page.tsx.txtという名前のテキストファイルを作らないようにします。importで使う大文字小文字は実ファイルと同じにします。Windowsで見逃した不一致が別OSで失敗する場合があります。",
-        "コード欄のファイルパスはプロジェクトルートからの相対位置です。PowerShellへファイル名をそのまま入力する指示ではありません。エディターで開き、指定した場所へ入力してCtrl+Sで保存します。UTF-8で保存し、コードに全角の引用符や全角の括弧を入れません。"
+        "コード欄のファイルパスはプロジェクトルートからの相対位置です。ターミナルへファイル名をそのまま入力する指示ではありません。エディターで開き、指定した場所へ入力してCtrl+Sで保存します。UTF-8で保存し、コードに全角の引用符や全角の括弧を入れません。"
       ],
       "commands": "Set-Location -LiteralPath \"F:\\learning-tool\\recall-practice\"\nGet-Location\nTest-Path -LiteralPath package.json\nnode --version\nnpm --version",
-      "expected": "Get-Locationが実習用コピーを示し、Test-PathはTrueです。Node.jsは22.13.0以上25未満を使います。この教材の検証環境は24.20.0です。バージョンが条件外なら対応版を用意してターミナルを開き直します。node --version自体が動かない場合は先にNode.jsの導入とPATHを確認します。"
+      "expected": "Get-Locationが実習用コピーを示し、Test-PathはTrueです。Node.jsは22.13.0以上25未満を使います。この教材の検証環境は24.20.0です。バージョンが条件外なら対応版を用意してターミナルを開き直します。node --version自体が動かない場合は先にNode.jsの導入とPATHを確認します。Linuxでは次の専用章のcd、pwd、testで同じ確認を行います。",
+      "commandLabel": "PowerShell・Windows：実習用ルートで一行ずつ実行"
     },
     {
       "title": "依存を導入して、変更前の成功を確認する",
       "paragraphs": [
-        "実習用コピーでnpm ciを一度実行します。インターネット接続が必要になるのは、未導入の依存を取得するこの段階などです。HTMLマニュアルの閲覧と、導入後の学習データ処理は別です。package-lock.jsonを削除したり、npm updateを先に実行したりしません。",
+        "このプロジェクトはpackage.jsonでnpm@12.0.2を指定しています。下のnpx --yes npm@12.0.2 ciで、その版のnpmを使ってpackage-lock.jsonに記録された依存を実習コピーへ導入します。Node同梱のnpmを全体ごと入れ替える必要はありません。指定npmや未導入の依存の取得にはインターネット接続が必要です。package-lock.jsonを消したり、先にnpm updateを実行したりしません。",
         "最初にnpm run manual:buildで、この実習用コピーの現物から掲載ソースを揃えます。その後、変更前のnpm run checkとnpm run buildを確認します。成功した環境で小さな差分を作ると、その後に失敗した原因を絞れます。npm run checkはテスト、型検査、lint、マニュアル検証の順です。途中で止まったら、その工程を直してから続けます。",
-        "完成コードを変更するとHTMLに収録したSHA-256が古くなるため、最後のmanual:verifyだけ失敗することがあります。変更途中は対象テストとtypecheck、lintを使い、章の区切りでmanual:buildしてからcheckを行います。検証を無効にして先へ進む操作はしません。"
+        "完成コードを変更するとHTMLに収録したSHA-256が古くなるため、最後のmanual:verifyだけ失敗することがあります。変更途中は対象テストとtypecheck、lintを使い、章の区切りでmanual:buildしてからcheckを行います。検証を無効にして先へ進む操作はしません。",
+        "サーバー以外のコマンドは、終了してPS ...>などの入力待ちへ戻るまで待ちます。エラーなく終了し、直後の$LASTEXITCODEが0なら成功です。LinuxのBashでは直後の$?が0です。別のコマンドを挟むと、その結果に変わるため確認は終了直後にします。checkが途中で失敗した場合、後続の検査はまだ実行されていません。",
+        "Gitで差分を記録する場合は、変更前のcheckとbuildが成功したここで、目次の「確認・配布」にある「任意：実習用コピーで最初の状態をGitへ記録する」を行い、この準備章へ戻ります。基礎実習後に最初の記録を作ると、実習で何を変えたかの比較ができないため、作業前に記録します。Gitを使わない場合はこの段階を省略できます。"
       ],
-      "commands": "npm ci\nnpm run manual:build\nnpm run check\nnpm run build",
-      "expected": "アプリ0.2.1の完成コードの自動テストは85件です。基礎実習のテストを加えると86件、さらに保守実習のテストも残すと87件になります。基礎実習を取り除いてから保守実習だけを加えたコピーは86件です。機能を追加して数が変わっても、fail 0であることと各検査の終了を確認します。"
+      "commands": "npx --yes npm@12.0.2 ci\nnpm run manual:build\nnpm run check\nnpm run build",
+      "expected": "アプリ0.2.1の完成コードの自動テストは85件です。基礎実習のテストを加えると86件、さらに保守実習のテストも残すと87件になります。基礎実習を取り除いてから保守実習だけを加えたコピーは86件です。機能を追加して数が変わっても、fail 0であることと各検査の終了を確認します。",
+      "commandLabel": "Windowsの準備：実習用ルートで一行ずつ成功を確認（npmコマンドはLinuxとも共通）"
     },
     {
       "title": "二つのターミナルと一つのブラウザーで小さく往復する",
@@ -182,13 +190,14 @@
         "本番確認では開発サーバーを止めてからnpm run build、npm run startを実行します。startだけではソース変更から本番成果物を作り直しません。同じ3000番でdevとstartを同時に起動しません。終了後はCtrl+Cで止めます。"
       ],
       "commands": "npm run dev",
-      "expected": "開発サーバーの起動表示が出て、ホーム画面を操作できます。URLの#setsなどは画面状態です。/practiceは次章で追加する実習専用ルートで、#practiceとは異なります。"
+      "expected": "開発サーバーの起動表示が出て、ホーム画面を操作できます。URLの#setsなどは画面状態です。/practiceは次章で追加する実習専用ルートで、#practiceとは異なります。",
+      "commandLabel": "ターミナルA・Windows/Linux共通：起動後はこのターミナルを使わず、検査はBへ"
     },
     {
       "title": "ブラウザーによるフォルダー保存の違いを確認する",
       "paragraphs": [
         "ブラウザーのAPIとは、JavaScriptから利用できるブラウザー側の機能です。このアプリはFile System Access APIのwindow.showDirectoryPicker()でパソコン内の保存先フォルダーを選び、許可を得てそのフォルダーのrecall-data/sets.jsonを読み書きします。フォルダー選択の対応と、通常のボタンや入力欄の表示は別の機能です。",
-        "次の表は2026-10-07時点のMDNの対応情報を整理したものです。対象はデスクトップ版です。フォルダー保存の実習には対応しているChromeまたはEdgeを使い、空の実習用フォルダーを選びます。対応していても、実際の接続にはフォルダーへのアクセス許可などの条件を満たす必要があります。",
+        "次の表は2026-10-08時点のMDNの対応情報を整理したものです。対象はデスクトップ版です。フォルダー保存の実習には対応しているChromeまたはEdgeを使い、空の実習用フォルダーを選びます。対応していても、実際の接続にはフォルダーへのアクセス許可などの条件を満たす必要があります。",
         "FirefoxやSafariは、ここで使うshowDirectoryPicker()に未対応です。起動時にapp/fileStorage.tsのsupportsProjectFolderStorage()がfalseとなり、app/recall/storage/useStorageHydration.tsがstorageModeをunsupportedへ変えます。app/recall/storage/StorageDialog.tsxは未対応の場合に保存先の選択・変更ボタンをHTMLへ出力せず、「このブラウザーはフォルダー保存に未対応」と表示します。Chromeで見える「保存先を変更」がFirefoxで見えないのは、この表示条件による動作です。詳しい照合手順は実装19の最初の3工程で追います。",
         "未対応ブラウザーでも、ブラウザー内のIndexedDBへの保存と、バックアップJSONの書き出し・復元は利用できます。IndexedDBはブラウザーとプロファイルごとに別なので、Chromeのデータや選択済みフォルダーがFirefoxへ自動共有されることはありません。データを移す場合はバックアップ章の候補確認と復元の手順を使います。復元後も、そのブラウザーがフォルダー保存に対応するようになるわけではありません。",
         "フォルダー選択にはsecure contextという実行環境の条件もあります。これは一部のブラウザー機能を利用できる安全な接続環境を指します。このプロジェクトで使うhttp://127.0.0.1:3000は、自分のパソコンを指すローカルアドレスなので、通常のHTTPサイトとは扱いが異なり、この条件を満たします。FirefoxでのAPI未対応は、URLをHTTPSへ変更しても解決しません。未対応と、対応ブラウザーでの権限不足を区別して確認します。",
@@ -243,10 +252,35 @@
       "paragraphs": [
         "基礎実習の欄は「新規作成」か「指定部分の置換」を明記します。置換では変更前をCtrl+Fで探し、その範囲だけを変更後へ書き換えます。新しい関数を末尾へ重複して追加する操作ではありません。入力するコードに説明文や表示用の行番号は含めません。",
         "本番実装編の欄は現在の完成コードから抽出した小さな抜粋です。上部のファイル名と検索アンカーで実ファイルを開き、周囲の関数の中で照合します。抜粋の最後が関数の終わりとは限りません。コード欄に出ていない残りを削除したり、抜粋だけでファイル全体を置換したりしません。完成プロジェクトには既にあるので、同じコードを二重に追加しません。",
-        "本文の「開くファイル」のリンクは、HTML内の付録Aにある完成ソースを開きます。エディターのファイルを自動で開くリンクではありません。編集するときはエディターのCtrl+Pへ同じ相対パスを入力します。付録の上部に残る「本文の工程へ戻る」で元の工程と位置へ戻れます。全文検索はWindowsならCtrl+K、macOSならCommand+Kで開き、Escで閉じます。ヘッダーの⌘はmacOSのCommandキーの記号です。",
+        "本文の「開くファイル」のリンクは、HTML内の付録Aにある完成ソースを開きます。エディターのファイルを自動で開くリンクではありません。編集するときはエディターのCtrl+Pへ同じ相対パスを入力します。付録の上部に残る「本文の工程へ戻る」で元の工程と位置へ戻れます。全文検索はWindows/LinuxならCtrl+K、macOSならCommand+Kで開き、Escで閉じます。ヘッダーの⌘はmacOSのCommandキーの記号です。",
         "一回の開発ループは、必要な型または純粋関数を少し書く → そのテストを書く → フックへつなぐ → 表示へつなぐ → 入口へ戻る → 確認する、です。一回で全部のファイルを完成させる順番ではありません。この本の各章の「往復する順序」は、そのループを具体的に示します。",
-        "確認に成功した区切りで変更を記録します。Gitを使う場合はgit status --shortで変更一覧、git diff -- app/recall/library/useSetLibrary.tsで指定ファイルの差分を読みます。--の後には半角空白を入れ、例のパスを自分が変更したファイルへ置き換えます。既にあった他の変更を無関係にコミットしません。Gitがまだ分からなければ実習用フォルダーの別コピーを区切りごとに保存し、いつの状態か名前を付けます。"
-      ]
+        "確認に成功した区切りで変更を記録します。Gitを使う場合はgit status --shortで変更一覧、git diff -- app/recall/library/useSetLibrary.tsで指定ファイルの差分を読みます。--の後には半角空白を入れ、例のパスを自分が変更したファイルへ置き換えます。既にあった他の変更を無関係にコミットしません。Gitがまだ分からなければ実習用フォルダーの別コピーを区切りごとに保存し、いつの状態か名前を付けます。",
+        "Ctrl+Sはプログラムのファイルをディスクへ保存する操作です。画面で文字を入力してReactのstateが変わることや、学習セットをIndexedDBへ保存することとは別です。コードの保存→開発画面の更新、入力状態の更新→描画、セット保存→再読み込み後の復元を分けて確認します。"
+      ],
+      "table": {
+        "headers": [
+          "「保存」の対象",
+          "何を行うか",
+          "確認する場所"
+        ],
+        "rows": [
+          [
+            "プログラムのファイル",
+            "エディターのCtrl+Sで.ts/.tsxなどを保存",
+            "ファイルの未保存印が消え、devが変更を読み込む"
+          ],
+          [
+            "画面の一時状態",
+            "setAnswerなどでReactのstateを更新",
+            "入力欄や結果が変わる。永続保存を持たない実習は再読み込みで初期化される"
+          ],
+          [
+            "学習データの永続保存",
+            "保存フックからIndexedDBや選択済みフォルダーへ書き込む",
+            "成功表示を待ち、同じプロファイル・URLで再読み込みして保持を確認"
+          ]
+        ]
+      }
     }
   ],
   "chapters": [
@@ -257,10 +291,11 @@
       "before": "基礎実習を終えている。/practiceの機能は実習用だけに置き、本番ファイルへ混ぜない。",
       "route": [
         "app/page.tsx",
-        "app/recall/RecallApp.tsx",
         "app/recall/types.ts",
+        "app/recall/RecallApp.tsx",
         "app/recall/library/LibraryView.tsx",
-        "app/recall/library/useSetLibrary.ts",
+        "app/recall/library/useSetLibrary.ts（操作の定義を読む）",
+        "app/recall/shell/AppSidebar.tsx",
         "ブラウザー"
       ],
       "steps": [
@@ -325,7 +360,12 @@
           "trouble": "メニューへ新しい項目を追加したら、型・入口で渡す値・操作の初期化へ戻って確認します。表示だけ増やして処理をpage.tsxへ書き足しません。"
         }
       ],
-      "checkpoint": "npm run typecheck。ページの入口と画面部品・フック・モデルの四つの役割を、自分の言葉で説明する。"
+      "checkpoint": "npm run typecheck。ページの入口と画面部品・フック・モデルの四つの役割を、自分の言葉で説明する。",
+      "reason": {
+        "title": "入口が小さいまま機能を増やせる理由",
+        "explanation": "検索欄の文言だけを変えるときはLibraryView、条件を変えるときはuseSetLibraryへ移ります。page.tsxへ両方を書き足すと、画面の見た目と保存処理が一緒に変わってしまいます。入口→組み立て→担当部品の向きを先に追うと、変更先を選べます。"
+      },
+      "commands": "npm run typecheck"
     },
     {
       "id": "model",
@@ -361,7 +401,7 @@
           },
           "action": "securityLimitsへ移動し、セット・カード本文・インポート上限を読みます。上限を変える場合はUIと保存とテストへ戻って確認します。",
           "why": "画面のmaxLengthだけでは、ファイル入力やJSON復元で上限を越えられます。検証関数と保存処理も同じ定数を使います。10_000の下線は桁の区切りで、数値10000と同じです。",
-          "check": "MAX_CARD_TEXT_LENGTHの参照先をプロジェクト全体検索し、入力画面以外でも検証されることを確認します。",
+          "check": "VS CodeのCtrl+Shift+FへMAX_CARD_TEXT_LENGTHと入力し、画面入力、取り込み、保存済みデータの検証などの参照先を開きます。この章の検査コマンドでモデルの上限テストが通ることも確認します。",
           "trouble": "上限を増やしても処理が速くなるわけではありません。カード数、文字数、ファイルサイズは別々に考えます。"
         },
         {
@@ -389,7 +429,12 @@
           "trouble": "例示の30行で関数が終わっていなければ、実ファイルの閉じ括弧まで読みます。続きを削除しません。"
         }
       ],
-      "checkpoint": "node --experimental-strip-types --test tests/model.test.mjs。fail 0であることを確認する。"
+      "checkpoint": "node --experimental-strip-types --test tests/model.test.mjs。fail 0であることを確認する。",
+      "reason": {
+        "title": "画面なしで採点を確かめる理由",
+        "explanation": "TLSとtlsの違いを検査するためにブラウザーのボタンを毎回押す必要はありません。文字列の入力と真偽の結果だけをmodelの関数へ渡します。表示部品から独立しているため、別の画面でも同じ採点ルールを使えます。"
+      },
+      "commands": "node --experimental-strip-types --test tests/model.test.mjs\nnpm run typecheck"
     },
     {
       "id": "notifications",
@@ -454,7 +499,12 @@
           "trouble": "toastがnullのときにtoast.messageへ無条件アクセスしないでください。"
         }
       ],
-      "checkpoint": "npm run typecheck。変更したファイルへnpx eslintを実行し、成功・警告・エラーの表示を確認する。"
+      "checkpoint": "npm run typecheck。変更したファイルへnpx eslintを実行し、成功・警告・エラーの表示を確認する。",
+      "reason": {
+        "title": "通知の見た目と寿命を分ける理由",
+        "explanation": "文字の位置を変えるならToastとCSS、自動で消える時間を変えるならuseNotificationsです。表示部品ごとにタイマーを持たせると、前の通知の処理が次の通知へ残りやすくなります。内容の型を先に読み、状態と表示へ渡す順序を追います。"
+      },
+      "commands": "npm run typecheck\nnpx eslint app/recall/shared/useNotifications.ts app/recall/shared/Toast.tsx app/recall/RecallApp.tsx"
     },
     {
       "id": "navigation",
@@ -518,7 +568,12 @@
           "trouble": "履歴移動で下書き本体を無条件破棄しないでください。一時的なエラーやモーダルと入力データは違います。"
         }
       ],
-      "checkpoint": "npm run typecheck。戻る・進むと直接URLの両方を確認する。"
+      "checkpoint": "npm run typecheck。戻る・進むと直接URLの両方を確認する。",
+      "reason": {
+        "title": "URLと画面の更新を一緒に追う理由",
+        "explanation": "一覧から編集へ移動したのにURLだけ一覧のままだと、戻る操作で期待する画面になりません。goToへ履歴更新を集め、入口のコールバックで一時的なダイアログを解除すると、表示・URL・操作可能な状態を揃えられます。"
+      },
+      "commands": "npm run typecheck"
     },
     {
       "id": "library",
@@ -582,7 +637,12 @@
           "trouble": "見た目が違うボタンでも、同じ役割なら同じ操作を呼びます。"
         }
       ],
-      "checkpoint": "npm run typecheck。検索対象、空結果、解除、ホームの統計を確認する。"
+      "checkpoint": "npm run typecheck。検索対象、空結果、解除、ホームの統計を確認する。",
+      "reason": {
+        "title": "表示用の絞り込みを元データから分ける理由",
+        "explanation": "9セットのうち検索で2セットだけ見えても、残り7セットは保存先に必要です。filteredSetsは見せる配列、setsは保存する全配列です。検索結果をsetSetsへ保存しないという境界を、入力欄とフックを往復して確認します。"
+      },
+      "commands": "npm run typecheck"
     },
     {
       "id": "draft",
@@ -646,7 +706,12 @@
           "trouble": "JSON.parseで成功しても正しいEditorDraftとは限りません。as EditorDraftで検証を省略しません。"
         }
       ],
-      "checkpoint": "node --experimental-strip-types --test tests/editor-draft.test.mjs。npm run typecheck。"
+      "checkpoint": "node --experimental-strip-types --test tests/editor-draft.test.mjs。npm run typecheck。",
+      "reason": {
+        "title": "下書きが保存済みセットとは別の型である理由",
+        "explanation": "セット名を入力し始めた瞬間は、カードがまだ空でも入力を続けられる必要があります。下書きでは途中の状態を許し、確定保存の直前に必要な内容を検証します。編集中の失敗で保存済みデータまで変わらないよう、状態を分けます。"
+      },
+      "commands": "node --experimental-strip-types --test tests/editor-draft.test.mjs\nnpm run typecheck"
     },
     {
       "id": "card-edit",
@@ -710,7 +775,12 @@
           "trouble": "offsetの型-1 | 1は二つの方向だけを許す契約です。任意の数値を渡して穴を作りません。"
         }
       ],
-      "checkpoint": "npm run typecheck。編集・並べ替え・削除・undoと100枚単位のページ表示を確認する。"
+      "checkpoint": "npm run typecheck。編集・並べ替え・削除・undoと100枚単位のページ表示を確認する。",
+      "reason": {
+        "title": "配列の位置とカードIDを両方確認する理由",
+        "explanation": "2枚目のカードを上へ動かすと配列位置は変わりますが、カードのIDは変わりません。現在の位置とIDを合わせて渡すと、並べ替え後に違うカードを編集する誤りを防げます。表示のイベントからフックへ戻って引数を確かめます。"
+      },
+      "commands": "npm run typecheck"
     },
     {
       "id": "draft-autosave",
@@ -774,7 +844,12 @@
           "trouble": "新規作成時に古い内容が出ないだけで、保存を失ったとは限りません。下書きの所属を確認します。"
         }
       ],
-      "checkpoint": "npm run typecheck。新規下書きと既存セット下書きの二つを別々に再読み込みして確認する。"
+      "checkpoint": "npm run typecheck。新規下書きと既存セット下書きの二つを別々に再読み込みして確認する。",
+      "reason": {
+        "title": "下書き保存とセットの確定保存を分ける理由",
+        "explanation": "入力を途中で中断したときは下書きが役立ちます。一方、確定保存にはタイトルとカード内容の検証が必要です。下書きを復元できたことだけで、一覧にセットが確定したとは判断しません。保存I/O→形式検証→編集状態の順に追います。"
+      },
+      "commands": "node --experimental-strip-types --test tests/editor-draft.test.mjs\nnpm run typecheck"
     },
     {
       "id": "save-validation",
@@ -851,7 +926,12 @@
           "trouble": "下書きへ既存セットを直接参照させて書き換えると、保存をキャンセルしても元セットが変わります。"
         }
       ],
-      "checkpoint": "node --experimental-strip-types --test tests/editor-draft.test.mjs。データ変換だけのテストが画面なしで動くことを確認する。"
+      "checkpoint": "node --experimental-strip-types --test tests/editor-draft.test.mjs。データ変換だけのテストが画面なしで動くことを確認する。",
+      "reason": {
+        "title": "検証結果を作ってから書き込む理由",
+        "explanation": "102枚目の正解だけが空なら、そのページと欄を案内して入力を残します。検証関数が保存候補とエラー位置を返すため、データベースへ触れずにこの仕様をテストできます。validという結果は、この時点では保存候補が整った意味です。"
+      },
+      "commands": "node --experimental-strip-types --test tests/editor-draft.test.mjs\nnpm run typecheck"
     },
     {
       "id": "save-commit",
@@ -910,13 +990,18 @@
             "anchor": "            {explicitSaveInProgress ? \"保存中…\" : \"保存\"}",
             "lines": 14
           },
-          "action": "EditorViewで保存ボタンのdisabledとsaveDraftの呼び出しを検索します。この抜粋は宣言位置なので、検索結果のボタン位置も確認します。",
+          "action": "EditorViewの「保存中…」を検索します。抜粋の直前にあるbuttonのdisabled={explicitSaveInProgress}とonClickを読み、「保存」と「保存して学習」の両方がsaveDraftへ渡す真偽値を照合します。抜粋の先頭はボタンのラベル部分で、buttonの開始タグはその上にあります。",
           "why": "見た目のdisabledだけでなく操作関数のガードも必要です。キーボードや別操作から呼ばれても保存を重ねないためです。",
           "check": "保存を連打し、セットが二重に作られないことを確認します。",
           "trouble": "disabledボタンをCSSだけで薄くして、操作自体を許す実装にしません。"
         }
       ],
-      "checkpoint": "npm run typecheck。保存成功、検証失敗、多重操作を確認する。"
+      "checkpoint": "npm run typecheck。保存成功、検証失敗、多重操作を確認する。",
+      "reason": {
+        "title": "awaitの後で成功を画面へ反映する理由",
+        "explanation": "保存ボタンを押してすぐ一覧へ戻ると、書き込みに失敗しても成功に見えてしまいます。検証→永続保存を待つ→共有セットと表示を更新する順序にします。ボタンの無効化と関数側のガードを両方追って、多重操作も防ぎます。"
+      },
+      "commands": "node --experimental-strip-types --test tests/editor-draft.test.mjs tests/study-layout.test.mjs\nnpm run typecheck"
     },
     {
       "id": "study-start",
@@ -980,7 +1065,12 @@
           "trouble": "画面で独自の進捗オブジェクトを手書きして、モデルの検証条件とずらさないようにします。"
         }
       ],
-      "checkpoint": "node --experimental-strip-types --test tests/model.test.mjs。開始設定を実画面で確認する。"
+      "checkpoint": "node --experimental-strip-types --test tests/model.test.mjs。開始設定を実画面で確認する。",
+      "reason": {
+        "title": "開始設定を進捗へ記録する理由",
+        "explanation": "カッコ省略をオンで始めた学習を途中再開したときに、オフへ戻ると同じ解答の採点結果が変わります。開始前の選択状態から、開始したセッションの保存用進捗へ設定を渡し、再開ではその値を使います。"
+      },
+      "commands": "node --experimental-strip-types --test tests/model.test.mjs tests/study-layout.test.mjs\nnpm run typecheck"
     },
     {
       "id": "study-answer",
@@ -1056,7 +1146,12 @@
           "trouble": "正解/不正解のphaseと、入力エラーのmessageは別の値です。"
         }
       ],
-      "checkpoint": "対象モデルテスト。実画面で不正解→誤った再入力→正しい再入力→再出題→自力正解を一周する。"
+      "checkpoint": "この章のモデルテストと型検査が成功したら、実習用の画面で不正解→誤った再入力→正しい再入力→再出題→自力正解を一周します。入力の不備の案内と、採点のphaseの表示を区別できたら次へ進みます。",
+      "reason": {
+        "title": "通常回答と再入力を別の操作にする理由",
+        "explanation": "正答を見て写せたことと、自分で思い出せたことを同じ正解として数えると、復習が足りないまま終了します。question→retype→correct→再出題をモデルで管理し、画面は現在のphaseに合う入力欄を出します。"
+      },
+      "commands": "node --experimental-strip-types --test tests/model.test.mjs\nnpm run typecheck"
     },
     {
       "id": "study-progress",
@@ -1120,7 +1215,12 @@
           "trouble": "習得率100%と初回正答率50%は同時に成立します。違う指標だからです。"
         }
       ],
-      "checkpoint": "回答後、再入力後、グループ終了後に再読み込みし、続きから再開する。選んだ一つのセットの全カードが完了するまで一周する。"
+      "checkpoint": "回答後、再入力後、グループ終了後に再読み込みし、続きから再開する。選んだ一つのセットの全カードが完了するまで一周する。",
+      "reason": {
+        "title": "画面と保存対象を同時に更新する理由",
+        "explanation": "問題が先へ進んでも、その状態がセット内のstudyProgressへ入っていなければ再読み込みで戻ってしまいます。commitStudyProgressは画面用のstudyRunと保存対象のsetsを同じ結果へ揃え、自動保存へ渡します。"
+      },
+      "commands": "node --experimental-strip-types --test tests/model.test.mjs\nnpm run typecheck"
     },
     {
       "id": "code-editor",
@@ -1184,7 +1284,12 @@
           "trouble": "isComposingだけでなく現在の入力部品やフォーカスも関係します。条件を一つだけ残して簡略化しません。"
         }
       ],
-      "checkpoint": "node --experimental-strip-types --test tests/code-editor.test.mjs tests/model.test.mjs。実画面でキーボードを確認する。"
+      "checkpoint": "node --experimental-strip-types --test tests/code-editor.test.mjs tests/model.test.mjs。実画面でキーボードを確認する。",
+      "reason": {
+        "title": "入力部品の契約と学習操作を分ける理由",
+        "explanation": "Enterで改行するコード解答では、画面全体のEnterを無条件に採点へ使えません。入力部品は編集と送信の契約を公開し、学習フックは現在のphaseとフォーカスから操作を選びます。再入力欄も同じ部品を使い、入力値は別に持ちます。"
+      },
+      "commands": "node --experimental-strip-types --test tests/code-editor.test.mjs tests/model.test.mjs\nnpm run typecheck"
     },
     {
       "id": "flashcards",
@@ -1236,7 +1341,12 @@
           "trouble": "現在位置が0のとき-1番目のカードを読む計算にならないようにします。"
         }
       ],
-      "checkpoint": "npm run typecheck。カードの両面と前後移動を実画面で確認する。"
+      "checkpoint": "npm run typecheck。カードの両面と前後移動を実画面で確認する。",
+      "reason": {
+        "title": "めくる状態を学習成績から分ける理由",
+        "explanation": "カードを裏返しただけで正答率が増えると、確認閲覧と採点が混ざります。カード本文はそのままに、ID順・現在位置・表裏だけをフックで変えます。表示部品はその結果を受け取り、移動操作を呼びます。"
+      },
+      "commands": "npm run typecheck"
     },
     {
       "id": "storage-state",
@@ -1285,7 +1395,7 @@
           "action": "公開保存フックへ戻り、state→persistence→hydration→folder→backupsの順を読みます。",
           "why": "低レベルI/Oと画面をつなぐ機能フックをここで組み合わせます。このファイルへ全I/Oを移すと再び巨大な一枚になるため、責務ごとに委譲します。",
           "check": "各フックへ同じstateを渡していることを確認します。",
-          "trouble": "ReturnTypeは公開APIの型です。新しい操作を戻り値へ加えると、表示側で使う契約にも反映されます。"
+          "trouble": "ReturnType<typeof useStudyStorage>は、この関数の戻り値の型を取り出す記法です。新しい操作をreturnへ加えると公開する型にも反映されます。型だけを追加して、実際のreturnへ値を渡し忘れないようにします。"
         },
         {
           "file": "app/recall/storage/constants.ts",
@@ -1324,7 +1434,12 @@
           "trouble": "ローディングの見た目を変えるためにhydratedを強制trueへしません。復元と自動保存のガードを保ちます。"
         }
       ],
-      "checkpoint": "node --experimental-strip-types --test tests/startup-recovery.test.mjs。npm run typecheck。"
+      "checkpoint": "node --experimental-strip-types --test tests/startup-recovery.test.mjs。npm run typecheck。",
+      "reason": {
+        "title": "保存先と書き込み結果を別に持つ理由",
+        "explanation": "フォルダーを選んでいても、権限や競合で保存に失敗する場合があります。storageModeが保存先、storageWriteStateが書き込み状態です。画面に必要な値はstate、キューや世代の内部管理はrefへ置き、公開フックが必要な操作だけを返します。"
+      },
+      "commands": "node --experimental-strip-types --test tests/startup-recovery.test.mjs\nnpm run typecheck"
     },
     {
       "id": "hydration",
@@ -1388,7 +1503,12 @@
           "trouble": "mergeStudySetsを起動時に無条件追加して警告を消すと、安全に停止する契約を変えてしまいます。"
         }
       ],
-      "checkpoint": "対象起動復旧・保存テスト。起動して既存の実習セットが保持されることを確認する。"
+      "checkpoint": "この章の起動復旧・保存テストと型検査を実行します。自動テストの失敗は最初の該当名から読みます。実画面は実習セットを保存して再読み込みし、復元後も保持されることを確認します。",
+      "reason": {
+        "title": "読み取れないデータを空と決めつけない理由",
+        "explanation": "保存領域が遅くてもデータがないとは限りません。タイムアウトで画面を使えるようにしても、読み取り結果が不明な間は自動上書きを止めます。missing、invalid、unavailableを分ける理由を、結果の型と復元フックの分岐で照合します。"
+      },
+      "commands": "node --experimental-strip-types --test tests/startup-recovery.test.mjs tests/fileStorage.test.mjs\nnpm run typecheck"
     },
     {
       "id": "persistence",
@@ -1452,7 +1572,12 @@
           "trouble": "終了直前の非同期処理だけに保存を依存させません。通常の自動保存も必要です。"
         }
       ],
-      "checkpoint": "node --experimental-strip-types --test tests/fileStorage.test.mjs tests/startup-recovery.test.mjs。保存後の再読み込みを確認する。"
+      "checkpoint": "node --experimental-strip-types --test tests/fileStorage.test.mjs tests/startup-recovery.test.mjs。保存後の再読み込みを確認する。",
+      "reason": {
+        "title": "保存を順番待ちにする理由",
+        "explanation": "回答Aの保存より回答Bの保存が先に完了すると、後から来たAで進捗が戻る恐れがあります。キューで同じ保存先への処理順を保ち、revisionで別タブの変更も検知します。登録しただけで成功とせず、Promiseの完了を待ちます。"
+      },
+      "commands": "node --experimental-strip-types --test tests/fileStorage.test.mjs tests/startup-recovery.test.mjs\nnpm run typecheck"
     },
     {
       "id": "folder",
@@ -1513,7 +1638,7 @@
             "anchor": "export function mergeStudySets",
             "lines": 28
           },
-          "action": "純粋な統合関数を開きます。deletedSetIds、bounded timestamp、同時刻時の優先を確認します。",
+          "action": "mergeStudySetsを開き、deletedSetIdsとsafeTimestampを読みます。safeTimestampは更新時刻が現在より極端に先なら0として扱います。同じIDの更新時刻を比較する条件が>であるため、同時刻ではブラウザー側を保持することを追います。",
           "why": "同じIDは適正範囲の更新時刻で比較し、同時刻ならブラウザー側を保ちます。極端な未来時刻を無条件に最新版とせず、削除IDは取り込みません。",
           "check": "統合テストで同時刻、未来時刻、削除IDを確認します。",
           "trouble": "配列を連結するだけだと同じIDが重複し、削除済みセットも復活します。"
@@ -1525,7 +1650,7 @@
             "anchor": "export async function",
             "lines": 20
           },
-          "action": "Web Locksの利用と未対応時の経路を読みます。",
+          "action": "folderWriteLockを開き、navigator.locksがある場合のrequestと、ない場合に渡された処理を直接呼ぶ経路を読みます。callbackは呼び出し側から渡された書き込み処理です。次にuseFolderStorageへ戻って利用する箇所を確認します。",
           "why": "複数タブが同時に同じ書込を始めることを調整します。ただしロックだけでファイル内容の競合検証は完了しないため、fileStorage側の比較も残します。",
           "check": "fileStorageテストで書込・abort・競合を確認します。",
           "trouble": "ロックを加えたから外部エディターの変更も消してよいわけではありません。"
@@ -1555,7 +1680,12 @@
           "trouble": "表示だけfolderからbrowserへ変えても、保存済みハンドルは残ります。I/Oの解除と表示を両方行います。"
         }
       ],
-      "checkpoint": "対象保存テスト。Chrome/Edgeでは実習用空フォルダーの接続・変更・切断・再起動を確認する。Firefoxでは未対応の説明と保存先ボタンの非表示を確認し、実習データのブラウザー内保存と再読み込みを確認する。API判定→起動時の状態反映→ダイアログの表示条件を3ファイルで追えたら次へ進む。"
+      "checkpoint": "対象保存テスト。Chrome/Edgeでは実習用空フォルダーの接続・変更・切断・再起動を確認する。Firefoxでは未対応の説明と保存先ボタンの非表示を確認し、実習データのブラウザー内保存と再読み込みを確認する。API判定→起動時の状態反映→ダイアログの表示条件を3ファイルで追えたら次へ進む。",
+      "reason": {
+        "title": "APIの判定、状態、ボタンを別ファイルでつなぐ理由",
+        "explanation": "Firefoxでフォルダー選択APIがないときは、判定がfalse→保存モードunsupported→ボタンを出力しない、という順です。表示だけを変えてもAPIは増えません。対応ブラウザーでは、利用者のクリックから選択→検証→統合→保存へ進みます。"
+      },
+      "commands": "node --experimental-strip-types --test tests/fileStorage.test.mjs tests/editor-draft.test.mjs tests/startup-recovery.test.mjs\nnpm run typecheck"
     },
     {
       "id": "backup",
@@ -1632,7 +1762,12 @@
           "trouble": "失敗時にもこのコールバックを呼ぶと、保存できていないのに画面だけ復元済みに見えます。"
         }
       ],
-      "checkpoint": "バックアップ対象テスト。実習用JSONの書出し、選択、キャンセル、確定を確認する。"
+      "checkpoint": "この章のバックアップ・ダイアログテストと型検査を実行します。実習用JSONを書き出し、選択→キャンセルで現在の内容を保持し、再選択→確定後だけ内容が変わることを確認します。",
+      "reason": {
+        "title": "候補の検証と復元の確定を分ける理由",
+        "explanation": "間違ったJSONを選んでも、内容を確認してキャンセルできれば現在のセットは変わりません。読込と形式検証で候補を作り、別の確認画面で確定してから保存します。成功後の画面リセットだけを入口のコールバックへ任せます。"
+      },
+      "commands": "node --experimental-strip-types --test tests/backupFile.test.mjs tests/refactoring.test.mjs\nnpm run typecheck"
     },
     {
       "id": "deletion",
@@ -1685,7 +1820,12 @@
           "trouble": "tombstoneはJavaScriptのSet型、StudySetは学習セット型です。名前が似ていますが別です。"
         }
       ],
-      "checkpoint": "対象下書き・統合テスト。一時セット削除後の再読み込みと空一覧を確認する。"
+      "checkpoint": "この章の下書き・統合テストと型検査を実行します。消してよい実習セットだけを削除し、再読み込みで戻らないこと、最後のセットを削除した場合の移動先と空一覧を確認します。",
+      "reason": {
+        "title": "削除でも保存完了を待つ理由",
+        "explanation": "削除後に画面から消えても、保存に失敗していたら再読み込みで戻ります。remainingと削除済みIDを同じ操作へ渡し、永続保存後に配列を更新します。削除済みIDは後で他のコピーを統合したときの意図しない復活も防ぎます。"
+      },
+      "commands": "node --experimental-strip-types --test tests/editor-draft.test.mjs\nnpm run typecheck"
     },
     {
       "id": "modal",
@@ -1750,7 +1890,12 @@
           "trouble": "ソース文字列のテストと動作テストの目的を同じにしません。"
         }
       ],
-      "checkpoint": "対象ダイアログテスト。Tab、Escape、キャンセル、確定、閉じた後の背景操作を確認する。"
+      "checkpoint": "この章のダイアログ構造テストと型検査を実行します。実画面でTab、Escape、キャンセル、確定、閉じた後の背景操作を確認します。ソース構造テストだけでキーボード操作の確認を済ませません。",
+      "reason": {
+        "title": "共通枠と各機能の内容を分ける理由",
+        "explanation": "保存設定から復元確認を開くとき、二つのダイアログが同時に背景を操作不能にすると解除が食い違います。ModalDialogは枠とフォーカスを管理し、StorageDialogは候補がある間いったん外れます。各機能の保存処理は枠へ入れません。"
+      },
+      "commands": "node --experimental-strip-types --test tests/refactoring.test.mjs\nnpm run typecheck"
     },
     {
       "id": "import",
@@ -1816,7 +1961,12 @@
           "trouble": "finishImportで直接IndexedDBへ書く別経路を増やしません。"
         }
       ],
-      "checkpoint": "モデル・Worker境界の対象テスト。小さなCSV/TSV/Excelを取り込み、編集して保存する。"
+      "checkpoint": "この章のモデル・起動復旧テストと型検査を実行します。少数行のCSV/TSV/Excelを取り込み、プレビュー→下書き→編集→確定保存の順に確認します。",
+      "reason": {
+        "title": "解析したデータを直接保存しない理由",
+        "explanation": "Excelが読めても、片側だけの行や上限超過は学習カードとして検査が必要です。重い解析はWorker、受け渡しはReader、行の判定はmodelが担当し、採用候補を編集下書きへ加えます。セットの保存は通常のsaveDraftを通します。"
+      },
+      "commands": "node --experimental-strip-types --test tests/model.test.mjs tests/startup-recovery.test.mjs\nnpm run typecheck"
     },
     {
       "id": "maintenance",
@@ -1872,7 +2022,12 @@
           "trouble": "filter結果を保存しません。検索だけの変更でセット数を減らす操作はしません。"
         }
       ],
-      "checkpoint": "変更したフックと表示へlint。typecheck。検索条件の4ケースを記録。manual:build後にcheck。本番確認前にbuild。"
+      "checkpoint": "後半の保守実習5を終えてからこの章のコマンドを実行します。チェックのオン/オフ、タイトル一致、本文だけ一致、空文字の結果を確認します。manual:build→checkの順で掲載内容と全体検査を揃え、本番確認前にbuildします。",
+      "reason": {
+        "title": "純粋関数→テスト→フック→表示→接続の順にする理由",
+        "explanation": "先にタイトルだけを判定する関数をテストすると、後でチェックボックスの表示が変でも検索ルールと入力の接続を分けて調べられます。状態を公開してから表示へ渡し、最後にuseMemoの呼び出しと依存配列を更新して一つの機能にします。"
+      },
+      "commands": "node --experimental-strip-types --test tests/library-search-practice.test.mjs\nnpm run typecheck\nnpx eslint app/recall/library tests/library-search-practice.test.mjs"
     }
   ],
   "troubleshooting": [
@@ -1945,6 +2100,16 @@
       "一つ直すと別の画面が壊れた",
       "共有型、共通フック、model、CSSの利用先を全体検索。差分を小さくして直前の成功と比較。",
       "画面固有の変更を共通部品へ入れた理由を再確認。"
+    ],
+    [
+      "LinuxでNodeやnpmが見つからない／Windows版を参照する",
+      "Linux章のnvm読み込みとnvm useを行い、command -v nodeとcommand -v npmを確認する。新しいターミナルBも個別に確認する。",
+      "依存を導入した実習先と、起動・検査する実習先を揃える。/mnt/c/...のWindows版npmへ戻らない。"
+    ],
+    [
+      "LinuxでPermission deniedまたはファイルが見つからない",
+      "実習先の所有者、pwd、ls -a、importの大文字小文字を確認する。shellスクリプトの改行はLFを確認する。",
+      "npmへsudoを足して回避せず、ホーム内の自分の実習先とLinux版の依存を使う。"
     ]
   ],
   "manualScenarios": [

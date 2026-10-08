@@ -12,6 +12,7 @@ import {
 } from "./generate_manual_html.mjs";
 
 import { verifyWorkshop, verifySearchWorkshop } from "./verify-workshop.mjs";
+import { linuxGuide } from "./linux-workshop.mjs";
 
 function requireCondition(condition, message) {
   if (!condition) throw new Error(message);
@@ -138,8 +139,12 @@ async function main() {
   const docsFiles = await walk(join(ROOT, "docs"));
   requireCondition(readme.includes("](docs/" + MANUAL_FILE_NAME + ")"), "README must link to the exact current manual filename");
   requireCondition(actual.includes(MANUAL_REVISION), "Manual revision is missing");
-  const manuals = docsFiles.filter((path) => /^docs[\\/]([^\\/]+)\.html$/u.test(relative(ROOT, path)));
-  requireCondition(manuals.length === 1 && manuals[0] === OUTPUT, "Only the current manual may remain at docs root");
+  const manuals = docsFiles.filter((path) => /^docs[\\/]TOTAL_RECALL_機能別開発_初心者向け完全開発マニュアル_\d{8}\.html$/u.test(relative(ROOT, path)));
+  requireCondition(manuals.length === 1 && manuals[0] === OUTPUT, "Only the current main manual may remain; independent booklets are allowed");
+  requireCondition(development.guide.revision === MANUAL_REVISION, "Tutorial revision must match the generated document");
+  requireCondition(sectionIds.includes("learn-linux"), "Linux preparation section is missing");
+  requireCondition(matches(actual, /data-linux-step="/gu).length === linuxGuide.length, "Linux preparation step count mismatch");
+  requireCondition(matches(actual, /data-linux-command="/gu).length === linuxGuide.flatMap((step) => step.blocks).length, "Linux command block count mismatch");
   requireCondition(development.guide.chapters.length >= 24 && development.excerpts.length >= 100, "The detailed current tutorial is incomplete");
   const covered = new Set(development.excerpts.map((item) => item.file));
   for (const file of catalog.sourceFiles.filter((file) => file.startsWith("app/recall/"))) {

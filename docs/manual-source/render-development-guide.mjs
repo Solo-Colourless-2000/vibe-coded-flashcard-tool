@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { workshop, replayWorkshop } from "./beginner-workshop.mjs";
 import { searchWorkshop } from "./search-workshop.mjs";
+import { linuxGuide } from "./linux-workshop.mjs";
 
 const escape = (value) => String(value).replace(/[&<>"']/gu, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -28,12 +29,21 @@ export async function loadDevelopmentGuide(root) {
       if (value.trimEnd().split("\n").length > 36) throw new Error(`Workshop code block exceeds 36 lines: ${change.file}`);
     }
   }
+  const linuxIds = new Set();
+  for (const step of linuxGuide) {
+    if (!step.title || !step.paragraphs.length || !step.expected || !step.blocks.length) throw new Error(`Incomplete Linux step: ${step.id}`);
+    for (const block of step.blocks) {
+      if (linuxIds.has(block.id)) throw new Error(`Duplicate Linux command id: ${block.id}`);
+      linuxIds.add(block.id);
+      if (!block.value.trim() || block.value.trimEnd().split("\n").length > 36) throw new Error(`Invalid Linux command block: ${block.id}`);
+    }
+  }
   const allIds = new Set();
   const excerpts = [];
   for (const chapter of guide.chapters) {
     if (allIds.has(chapter.id) || !/^[a-z][a-z-]+$/u.test(chapter.id)) throw new Error(`Invalid chapter id: ${chapter.id}`);
     allIds.add(chapter.id);
-    if (!chapter.steps.length || !chapter.goal || !chapter.before || !chapter.route.length || !chapter.checkpoint) {
+    if (!chapter.steps.length || !chapter.goal || !chapter.before || !chapter.route.length || !chapter.checkpoint || !chapter.reason?.title || !chapter.reason?.explanation || !chapter.commands) {
       throw new Error(`Incomplete chapter: ${chapter.id}`);
     }
     for (const [index, step] of chapter.steps.entries()) {
@@ -58,6 +68,18 @@ export async function loadDevelopmentGuide(root) {
 
 function hero(label, title, lead) {
   return `<div class="section-hero"><div class="section-kicker">${escape(label)}</div><h1>${escape(title)}</h1><div class="lead">${escape(lead)}</div></div>`;
+}
+
+function renderLinuxGuide() {
+  return hero("LINUX SETUP", "Linuxの準備と起動：同じ開発ループへ入る", "Ubuntu/Debian系とBashを例に、実習コピー、Node、依存、サーバー、確認を順に用意します。準備が成功したらWindowsと共通の短い編集工程へ進みます。")
+    + `<div class="callout info">${p("この章はWindowsの準備2〜4のコマンドを置き換えます。WindowsのPowerShell欄とLinuxのBash欄の両方を実行する必要はありません。aptとnvmの導入は必要な場合だけです。途中でエラーになったら後の欄へ進まず、その工程の期待結果と確認先を読みます。")}</div>`
+    + linuxGuide.map((step, index) => `<article class="lesson-step" id="linux-step-${step.id}" data-linux-step="${step.id}">
+      <div class="step-number">Linux準備 ${index + 1} / ${linuxGuide.length}</div><h2>${escape(step.title)}</h2>
+      ${step.paragraphs.map(p).join("")}
+      ${step.blocks.map((block) => `<h3>${escape(block.title)}</h3><div data-linux-command="${escape(block.id)}">${code(block.value, "Bashコマンドをコピー")}</div>`).join("\n")}
+      ${field("期待する結果と、止まって確認する条件", step.expected)}${references(step.references)}
+    </article>`).join("\n")
+    + `<p><a class="manual-jump" href="#learn-language" data-target="learn-language">基礎語句へ進む →</a> ／ <a class="manual-jump" href="#learn-workshop" data-target="learn-workshop">基礎実習へ進む →</a></p>`;
 }
 
 function renderWorkshop() {
@@ -104,7 +126,14 @@ export async function renderDevelopmentGuide(root, catalog) {
     bodies.set(id, body);
   };
   add("learn-prepare", "準備", "作業環境と実習の進め方", hero("START HERE", "準備：変更前の成功を確かめてから実習する", "完成プロジェクトを土台に、別の実習用コピーで少しずつ入力・確認します。コマンドを打つ場所、ファイルを開く場所、保存データの場所を区別します。")
-    + guide.preparation.map((item, index) => `<article class="lesson-step"><div class="step-number">準備 ${index + 1}</div><h2>${escape(item.title)}</h2>${item.paragraphs.map(p).join("")}${item.table ? p("狭い画面では、表の中を左右にスクロールして全ての列を確認してください。") + table(item.table.headers, item.table.rows, "browser-table") : ""}${references(item.references)}${item.commands ? `<h3>ターミナルで一行ずつ実行</h3>${code(item.commands)}${field("期待する結果", item.expected)}` : ""}</article>`).join("\n"));
+    + `<div class="callout info">${p("Windowsはこの準備章のPowerShell欄を使います。Linuxは説明を読んでから次の専用章へ進み、Bash欄を使います。npm、node、npxの検査コマンドと.ts/.tsxの編集工程は共通です。")}</div><p><a class="manual-jump" href="#learn-linux" data-target="learn-linux">Linuxの準備と起動へ →</a></p>`
+    + table(["学習の段階", "自分が行うこと", "成功したと判断する点"], [
+      ["基礎実習22工程", "実習コピーへ6ファイルを少しずつ作成・置換", "/practiceの表示、入力と採点、対象テスト"],
+      ["機能別24章・102工程", "完成コードを開き、短い抜粋と関数の周囲を照合", "値を作る側、受け取る側、保存する側を追い、章の検査と実画面を確認"],
+      ["保守実習5工程", "本番の一覧へ小さな検索設定を追加", "関数→テスト→フック→表示→接続の差分と全体検査"],
+    ])
+    + guide.preparation.map((item, index) => `<article class="lesson-step"><div class="step-number">準備 ${index + 1}</div><h2>${escape(item.title)}</h2>${item.paragraphs.map(p).join("")}${item.table ? p("狭い画面では、表の中を左右にスクロールして全ての列を確認してください。") + table(item.table.headers, item.table.rows, "browser-table") : ""}${references(item.references)}${item.commands ? `<h3>${escape(item.commandLabel ?? "ターミナルで一行ずつ実行")}</h3>${code(item.commands)}${field("期待する結果", item.expected)}` : ""}</article>`).join("\n"));
+  add("learn-linux", "Linux", "Linuxの準備と起動", renderLinuxGuide());
   add("learn-language", "基礎語句", "コードを読むための言葉と記号", hero("VOCABULARY", "基礎語句：ファイルを往復するための最小限の言葉", "一度ですべて覚える必要はありません。手順で出会った名前へ戻り、型・値・状態・保存を区別しながら読みます。")
     + table(["言葉・記号", "このプロジェクトでの意味"], guide.glossary)
     + `<h2>役割を一つの流れで確認する</h2><div class="flow-diagram">利用者の入力 → 表示部品のイベント → フックの操作 → モデルの検証・状態遷移 → 共有セットの更新 → 保存キュー → 保存結果の通知</div>${p("表示を変更するときはView、操作を変更するときはuseで始まるフック、判定を変更するときはmodelや純粋関数、保存順序を変更するときはstorageです。共通型と入口の接続へ何度も戻るのが通常の作業です。")}`);
@@ -115,6 +144,7 @@ export async function renderDevelopmentGuide(root, catalog) {
     const route = chapter.route.map((file, index) => `<span>${index + 1}. ${escape(file)}</span>`).join('<span class="travel-arrow" aria-hidden="true">→</span>');
     let body = hero(`IMPLEMENTATION ${String(chapterNumber).padStart(2, "0")}`, `実装 ${chapterNumber}：${chapter.title}`, chapter.goal)
       + field("この章を始める状態", chapter.before)
+      + `<div class="callout info">${field(chapter.reason.title, chapter.reason.explanation)}</div>`
       + `<h2>往復する順序</h2><div class="travel-route">${route}</div><div class="callout info"><strong>完成コードの抜粋:</strong> 次の短いコードは現在の実ファイルと照合するための範囲です。既にあるコードは重複追加せず、各工程の対象だけを確認・変更します。${chapter.id === "maintenance" ? "この章の前半3工程は読むだけです。実際の入力は後半の保守実習1〜5で行います。" : "新しい機能を足す場合も、型・処理・テスト・表示の小さな差分へ分けます。"}</div>`;
     body += chapter.steps.map((step, index) => {
       const prev = chapter.steps[index - 1]?.file;
@@ -130,13 +160,14 @@ export async function renderDevelopmentGuide(root, catalog) {
       </article>`;
     }).join("\n");
     if (chapter.id === "maintenance") body += renderSearchWorkshop();
-    body += `<div class="chapter-checkpoint"><h2>この章の確認と次へ進む条件</h2>${p(chapter.checkpoint)}${p("エラーがある間は次の機能を重ねません。最初のエラー、最後に触ったファイル、依存先の型の順に確認します。本番のソースを変更した章の区切りではnpm run manual:buildで掲載ソースを更新し、その後にnpm run checkを行います。")}</div>`;
+    body += `<div class="chapter-checkpoint"><h2>この章の確認と次へ進む条件</h2>${p(chapter.checkpoint)}<h3>ターミナルB・Windows/Linux共通：ルートで一行ずつ実行</h3>${chapter.id === "maintenance" ? p("次のテストファイルは保守実習2で作成します。前半の事前読解中や実習前には、この欄を実行せず後半5工程の完成を待ちます。") : ""}${code(chapter.commands)}${p("コマンドが終了して入力待ちへ戻り、終了コードが0であることを確認します。テストの成功は記載した条件の検査です。クリックや入力、再読み込みの確認も上の期待結果に沿って行います。")} ${p("エラーがある間は次の機能を重ねません。最初のエラー、最後に触ったファイル、依存先の型の順に確認します。本番のソースを変更した章の区切りではnpm run manual:buildで掲載ソースを更新し、その後にnpm run checkを行います。")}</div>`;
     add(id, `実装 ${chapterNumber}`, chapter.title, body);
   }
   add("learn-verification", "確認・配布", "変更の確認、マニュアル更新、配布", hero("VERIFY AND DELIVER", "確認：小さな検査から本番と配布まで進める", "変更の性質に合う検査を行い、完成コード・マニュアル・配布物を一致させます。単にbuildが通っただけで、保存と学習の確認を終えたことにはしません。")
     + table(["確認場面", "実行するもの", "分かること"], [["純粋な採点・検証の変更", "node --experimental-strip-types --test tests/model.test.mjs tests/editor-draft.test.mjs", "入力と結果の仕様"], ["型・Props・フックの接続", "npm run typecheck", "引数、戻り値、importの接続"], ["変更ファイルの記述", "npx eslint app/recall/変更したファイル.tsx", "記述・フック依存の問題。実際のパスに置き換える"], ["章を終えた状態", "npm run manual:build → npm run check", "掲載ソースの更新と全体検査"], ["本番画面", "npm run build → npm run start", "生成された本番コードでの挙動"], ["配布用ソース", "npm run release:prepare → npm run release:verify", "同梱ファイルとSHA-256の整合性"]])
     + `<h2>実習用ルートを本番へ混ぜず、完成状態を確かめる</h2>${p("/practiceのファイルとテストを残す場合は実習用コピーだけで保管します。本番へ反映する変更をgit diffなどで選び、教材のサンプルデータや練習用UIを配布対象へ混ぜません。生成HTMLは直接編集せず、development-guide.json、beginner-workshop.mjs、テンプレートを更新して再生成します。")}`
-    + `<h2>ターミナルBで順に実行</h2>${code("npm run manual:build\nnpm run check\nnpm run build\nnpm run release:prepare\nnpm run release:verify")}`
+    + `<h2>任意：実習用コピーで最初の状態をGitへ記録する</h2>${p("Gitを導入済みで、このマニュアルのコピー手順で.gitを除外した場合だけ行います。変更前の検査が通った段階で初回記録を作ると、その後の小さな差分をgit diffで読めます。既にGit管理しているコピーではgit initを重ねず、自分の既存変更を先に確認します。")}${code('git init\ngit status --short\ngit add .\ngit commit -m "実習の開始状態を記録"')}${p("git addの前にstatusを読み、学習データ、秘密情報、生成物が対象にないことを確認します。.gitignoreは除外の設定ですが、実データの別名保存まで自動で判断しません。commitで名前やメールの設定を求められた場合は、Gitを必須と考えて実習を止めず、工程メモと実習コピーでも状態を記録できます。Gitの確認は手順の記録用で、アプリを起動する条件ではありません。")}`
+    + `<h2>ターミナルB・Windows/Linux共通：一行ずつ実行</h2>${code("npm run manual:build\nnpm run check\nnpm run build\nnpm run release:prepare\nnpm run release:verify")}`
     + `${p("release:prepareはこのプロジェクトのrelease/recall-0.2.1-sourceを作り直します。ここへ手作業の唯一の原本を保存しません。配布前は元のソースとバックアップを保ち、出力が新しいマニュアル名を含むことを確認します。startのサーバーは確認後にCtrl+Cで終了します。")}`
     + `<h2>ブラウザーで行う具体的な確認</h2>${table(["機能", "操作順", "期待する結果"], guide.manualScenarios)}
       <h2>今回の掲載内容を検証する範囲</h2>${p(`基礎実習${workshop.length}工程を順序どおり再適用して各段階を型検査し、採点テストを実行します。本番実装編は${guide.chapters.length}章・${excerpts.length}工程の検索アンカーが実ソースに一意に存在すること、コード欄が一度に36行以下であることを検査します。手動確認項目は読者が変更後に行う項目であり、すべての環境の動作を自動検査が代替する意味ではありません。`)}`);
