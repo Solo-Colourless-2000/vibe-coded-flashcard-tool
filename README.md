@@ -1,210 +1,210 @@
 # TOTAL RECALL
 
-TOTAL RECALL 0.2.1 は、個人利用向けのローカル学習ツールです。問題を見て答えを入力し、不正解の場合は正しい解答を再入力してから、選択した問題数のグループ内で自力正解できるまで繰り返します。学習データ、途中進捗、編集下書きは端末内へ保存し、カード内容を外部サービスへ送信する処理はありません。
+TOTAL RECALL 0.2.1 is a local study tool intended for personal use. You read a question and type your answer. If your answer is incorrect, you must re-enter the correct answer before continuing. Questions are repeated within a group of the selected size until you can answer every question correctly on your own. Study data, in-progress sessions, and editing drafts are saved on your device. The application does not send card contents to external services.
 
-## 動作要件
+## Requirements
 
-- Node.js `22.13.0` 以上 `25` 未満（Node.js 24対応）
-- npm と `package-lock.json` を利用した clean install
-- Chrome / Edge 系ブラウザー推奨
-- プロジェクトフォルダー保存には File System Access API 対応ブラウザーが必要
+- Node.js `22.13.0` or later, but earlier than `25` (Node.js 24 is supported)
+- npm and a clean install using `package-lock.json`
+- A Chromium-based browser such as Chrome or Edge is recommended
+- Saving to a project folder requires a browser that supports the File System Access API
 
-フォルダー保存で使用する `window.showDirectoryPicker()` は、2026-10-08時点でデスクトップ版Chrome・Edgeが対応し、Firefox・Safariは未対応です。未対応環境では「このブラウザーはフォルダー保存に未対応」と表示し、保存先フォルダーの選択・変更ボタンを表示しません。ブラウザー内のIndexedDB保存と、バックアップJSONの書き出し・復元は利用できます。対応情報は [MDNのshowDirectoryPicker()](https://developer.mozilla.org/ja/docs/Web/API/Window/showDirectoryPicker) を参照してください。マニュアルの「準備」と「実装19：フォルダー接続・統合・切断」で、対応判定から表示までを説明しています。
+As of October 8, 2026, `window.showDirectoryPicker()`, which is used for folder-based saving, is supported by desktop Chrome and Edge but not by Firefox or Safari. In unsupported browsers, the application displays a message stating that folder-based saving is not supported and hides the buttons for selecting or changing the destination folder. You can still save data in the browser using IndexedDB and export or restore JSON backups. See [MDN: showDirectoryPicker()](https://developer.mozilla.org/en-US/docs/Web/API/Window/showDirectoryPicker) for browser compatibility information. The manual explains feature detection and the related UI behavior in “Preparation” and “Implementation 19: Connecting, Integrating, and Disconnecting Folder Storage.”
 
-配布版には意図的に `node_modules`、`.next`、`.vinext`、`.wrangler`、`dist` を含めていません。OSごとのネイティブ依存を正しく導入するため、展開後に必ず `npm ci` を実行してください。
+The distribution intentionally excludes `node_modules`, `.next`, `.vinext`, `.wrangler`, and `dist`. Always run `npm ci` after extracting the project to install the correct native dependencies for your operating system.
 
-`.npmrc` の `engine-strict=true` と本番起動時の検査により、対応範囲外のNode.jsでは処理を停止します。Node.js 22系と24系は同じlockfile・同じコマンドで利用できます。
+The `engine-strict=true` setting in `.npmrc` and a startup check in production mode prevent the application from running with unsupported Node.js versions. Node.js 22 and 24 can use the same lockfile and commands.
 
-## 起動
+## Getting Started
 
-プロジェクトディレクトリで次を実行します。
+Run the following command in the project directory:
 
 ```bash
 npm ci
 ```
 
-開発モード:
+For development mode:
 
 ```bash
 npm run dev
 ```
 
-通常利用では、本番ビルドを推奨します。
+For regular use, a production build is recommended:
 
 ```bash
 npm run build
 npm run start
 ```
 
-ブラウザーでは **`http://127.0.0.1:3000`** を使用してください。`http://localhost:3000` でアクセスした場合も、TOTAL RECALL のローカルサーバーは canonical origin である `127.0.0.1:3000` へリダイレクトします。
+Open **`http://127.0.0.1:3000`** in your browser. If you use `http://localhost:3000`, the TOTAL RECALL local server redirects you to the canonical origin, `127.0.0.1:3000`.
 
-サーバーは `127.0.0.1:3000` のみで待ち受けます。管理者/root権限で起動したり、`0.0.0.0`、LAN内IP、WANへ公開したりしないでください。終了するときは起動したターミナルで `Ctrl+C` を押します。
+The server listens only on `127.0.0.1:3000`. Do not run it with administrator/root privileges or expose it on `0.0.0.0`, a LAN IP address, or the public internet. To stop the server, press `Ctrl+C` in the terminal where it is running.
 
-## HTMLマニュアル
+## HTML Manual
 
-作成・保守の手順は [TOTAL RECALL 機能別開発 初心者向け完全開発マニュアル（2026-10-08版）](docs/TOTAL_RECALL_機能別開発_初心者向け完全開発マニュアル_20261008.html) を参照してください。アプリ0.2.1の機能別構成に沿い、準備、35項目の基礎語句、22工程の基礎実習、24章・102工程の実装説明、5工程の保守実習、確認と配布を説明します。Windows（PowerShell）とLinux（Bash）の準備・起動手順を収録し、各章に役割を分ける理由と確認コマンドを示します。各工程で関連ファイルを往復し、短い差分と動作確認を重ねます。完成ソースは照合用の付録です。
+For instructions on building and maintaining the application, see the [TOTAL RECALL Complete Beginner's Feature-Based Development Manual (October 8, 2026 edition)](docs/TOTAL_RECALL_機能別開発_初心者向け完全開発マニュアル_20261008.html). Following the feature-based structure of version 0.2.1, the manual covers preparation, 35 foundational terms, 22 introductory exercises, implementation explanations spanning 24 chapters and 102 steps, five maintenance exercises, verification, and distribution. It includes setup and startup procedures for Windows (PowerShell) and Linux (Bash), explains why responsibilities are separated in each chapter, and provides verification commands. Each step moves between related files, making small changes and checking their behavior along the way. The completed source code is provided as a reference appendix.
 
-HTMLは外部CDN、外部フォント、外部JavaScriptを使用せず、ファイル単体で開けます。本文の英字はWindowsで`Segoe UI`、コードは`Cascadia Mono`または`Consolas`を優先し、日本語フォントへ適切にフォールバックします。固定目次、全セクションの全文検索、文字サイズ変更、集中表示、小さなコード差分のコピー、モバイルナビゲーション、印刷用スタイルを備えています。
+The HTML manual does not use external CDNs, fonts, or JavaScript and can be opened as a standalone file. On Windows, the body text prefers `Segoe UI`, while code prefers `Cascadia Mono` or `Consolas`, with appropriate fallbacks for Japanese text. Features include a fixed table of contents, full-text search across all sections, adjustable font size, focus mode, copyable small code snippets, mobile navigation, and print styles.
 
-アプリや説明を変更した場合は、次の順でマニュアルを再生成・検証します。
+After changing the application or its documentation, regenerate and verify the manual in this order:
 
 ```bash
 npm run manual:build
 npm run manual:verify
 ```
 
-`npm run check`にもHTMLマニュアル検証を含めています。実習の全途中状態の型検査、最終教材のlint・採点テスト、本番ソース抜粋の検索位置、収録ファイル、目次、HTML/CSS/操作script、SHA-256を検証します。
+`npm run check` also includes HTML manual verification. The checks cover type checking of every intermediate exercise state, linting and grading tests for the final learning materials, locations of excerpts from production source code, included files, the table of contents, HTML/CSS/interactive scripts, and SHA-256 hashes.
 
-## 開発・保守の構成
+## Development and Maintenance Structure
 
-`app/page.tsx`はルートの入口だけを担当します。画面、状態管理、編集、学習、保存処理は`app/recall/`配下の機能別フォルダーへ分離しています。ファイルごとの責務、データの流れ、変更内容から探すファイルは [アプリの構成と保守ガイド](docs/ARCHITECTURE.md) を参照してください。
+`app/page.tsx` is responsible only for the root entry point. The UI, state management, editing, studying, and persistence logic are separated into feature-specific folders under `app/recall/`. For file responsibilities, data flow, and guidance on which files to inspect for a given change, see the [Application Architecture and Maintenance Guide](docs/ARCHITECTURE.md).
 
-## 主な機能
+## Key Features
 
-- 入力式学習と、不正解時の必須正答再入力
-- 回答欄と正答再入力欄に、行番号・構文色分け・括弧補完・4スペース幅のTabインデント・検索・拡大表示を備えたコードエディター
-- プレーンテキスト、JavaScript、TypeScript、JSX、TSX、Python、HTML、CSS、JSON、SQL、Javaの言語モード
-- 対応の取れた半角 `(...)` 内を省略してよいか学習開始前に選べ、各行末の余分な空白だけを自動除去する、大文字・小文字を区別した厳密判定
-- 1グループを1・3・5・10・15・20問から選び、自力ですべて正解するまで繰り返す習得方式
-- 回答ごとの途中進捗保存と、前回の続きからの再開
-- 正解後は、ボタンへフォーカスしなくても Enter だけで次の問題へ移動
-- フラッシュカード表示
-- 学習セットとカードの作成、編集、並べ替え、削除
-- カード削除直後の「元に戻す」
-- 大規模セット編集時の100枚単位ページ表示
-- セット名・説明だけでなくカード本文も対象にした検索
-- ブラウザーの戻る／進むに対応した画面履歴
-- Excel（`.xlsx` / `.xlsm`）、CSV、TSV、TXT、貼り付けテキストからのインポート
-- UTF-8 / UTF-16 LE / UTF-16 BE / Shift_JIS の読込と自動判定
-- 重複カード候補の確認と、完全一致重複を除外して取り込むオプション
-- 不可視文字・制御文字を含むカードの警告
-- IndexedDBへの自動保存と編集下書き保存
-- ブラウザー内の複数世代予備コピー
-- TOTAL RECALL全体バックアップJSONの書き出し／検証付き復元
-- 任意のローカルフォルダーへのJSON保存と複数世代バックアップ
-- ブラウザーストレージ使用量・永続化状態の表示と永続ストレージ要求
+- Typed-answer study mode with mandatory re-entry of the correct answer after an incorrect response
+- Code editors for both the answer field and the correct-answer re-entry field, with line numbers, syntax highlighting, bracket completion, Tab indentation equivalent to four spaces, search, and an expanded view
+- Language modes for plain text, JavaScript, TypeScript, JSX, TSX, Python, HTML, CSS, JSON, SQL, and Java
+- Case-sensitive, strict answer checking that removes only extra trailing whitespace from each line, with an option selected before studying to omit content inside balanced ASCII parentheses `(...)`
+- Mastery-based learning in groups of 1, 3, 5, 10, 15, or 20 questions, repeated until every question is answered correctly without assistance
+- Progress saved after each answer, with the ability to resume the previous session
+- After a correct answer, pressing Enter moves to the next question without requiring the user to focus a button
+- Flashcard view
+- Creation, editing, reordering, and deletion of study sets and cards
+- Undo immediately after deleting a card
+- Pagination in batches of 100 cards when editing large sets
+- Search across card contents as well as set names and descriptions
+- Navigation history compatible with the browser's Back and Forward buttons
+- Import from Excel (`.xlsx` / `.xlsm`), CSV, TSV, TXT, and pasted text
+- Reading and automatic detection of UTF-8, UTF-16 LE, UTF-16 BE, and Shift_JIS
+- Review of potential duplicate cards, with an option to exclude exact duplicates during import
+- Warnings for cards containing invisible or control characters
+- Automatic saving to IndexedDB, including editing drafts
+- Multiple generations of in-browser backup copies
+- Export and validated restoration of a full TOTAL RECALL JSON backup
+- JSON saving to a chosen local folder, with multiple backup generations
+- Display of browser storage usage and persistence status, with the ability to request persistent storage
 
-## ブラウザー保存
+## Browser Storage
 
-主保存先は **IndexedDB** です。学習セット、途中進捗、編集下書き、ブラウザー内の予備コピーを保存します。同じブラウザー・プロファイルでアプリを開くと、保存済みのデータを復元します。
+The primary storage backend is **IndexedDB**. It stores study sets, in-progress sessions, editing drafts, and in-browser backup copies. Saved data is restored when you open the application with the same browser profile.
 
-保存時にはrevisionを使用し、別タブで先に更新されたデータへ無条件に上書きしないようにします。フォルダー接続を解除してブラウザー保存へ戻す場合も、現在revisionを再確認してから保存します。現在状態を更新する前には必要に応じて予備コピーを作成し、最大5世代を保持します。保存領域の構造異常・競合・利用不能を検知した場合は、安全のため自動上書きを停止します。
+Saving uses revisions to avoid blindly overwriting data that another tab has updated first. When disconnecting folder storage and switching back to browser storage, the application also rechecks the current revision before saving. It creates backup copies as needed before updating the current state and retains up to five generations. If it detects an invalid storage structure, a conflict, or unavailable storage, automatic overwriting stops as a safety measure.
 
-IndexedDBを開く処理がtimeoutまたはblockedで終了した後に遅れて接続できた場合、その接続は直ちに閉じます。書込みtransactionがtimeoutになった場合はabortを試み、呼出側が失敗と判断した書込みが後からcommitされる危険を抑えます。
+If an IndexedDB connection succeeds only after the open operation has timed out or been blocked and terminated, that late connection is immediately closed. If a write transaction times out, the application attempts to abort it to reduce the risk of a write being committed later after the caller has already treated it as failed.
 
-画面左下の保存状態ボタンから次を行えます。フォルダー未接続時の表示名は「ローカル保存」で、接続後は選んだフォルダー名になります。
+The storage-status button in the lower-left corner provides the following actions. When no folder is connected, its label is “Local Storage” (`ローカル保存`); once a folder is connected, it displays the selected folder's name.
 
-- ブラウザーの永続ストレージを要求
-- 最新のブラウザー予備コピーを復元
-- TOTAL RECALLバックアップJSONを書き出す
-- TOTAL RECALLバックアップJSONから復元する
-- 対応ブラウザーでプロジェクトフォルダー保存を接続／変更／解除する
+- Request persistent browser storage
+- Restore the latest in-browser backup copy
+- Export a TOTAL RECALL JSON backup
+- Restore data from a TOTAL RECALL JSON backup
+- Connect, change, or disconnect project-folder storage in a supported browser
 
-バックアップJSONには、全セット、学習進捗、削除済みセットIDが含まれます。0.2.1で書き出したファイルの`appVersion`は`0.2.1`です。復元前には現在状態を予備コピーとして保持し、ファイル内容を検証してから反映します。
+The backup JSON includes all study sets, learning progress, and IDs of deleted sets. Files exported by version 0.2.1 have an `appVersion` value of `0.2.1`. Before restoring a backup, the application preserves the current state as a backup copy and validates the file contents before applying them.
 
-## プロジェクトフォルダー保存
+## Project-Folder Storage
 
-ChromeまたはEdgeで画面左下の保存状態ボタンを開き、「保存先フォルダーを選択」を押します。**他の重要ファイルを含まないTOTAL RECALL専用フォルダー**を選ぶことを推奨します。接続後は「保存先を変更」で別のフォルダーを選べます。
+In Chrome or Edge, open the storage-status button in the lower-left corner and click “Select Save Folder” (`保存先フォルダーを選択`). We recommend choosing **a folder dedicated to TOTAL RECALL that contains no other important files**. After connecting a folder, you can select another one using “Change Destination” (`保存先を変更`).
 
-選択したフォルダー配下に次のようなファイルを作成します。
+The following files are created under the selected folder:
 
 ```text
-<選択フォルダー>/recall-data/sets.json
-<選択フォルダー>/recall-data/sets.backup.json
-<選択フォルダー>/recall-data/sets.backup.1.json
-<選択フォルダー>/recall-data/sets.backup.2.json
+<selected-folder>/recall-data/sets.json
+<selected-folder>/recall-data/sets.backup.json
+<selected-folder>/recall-data/sets.backup.1.json
+<selected-folder>/recall-data/sets.backup.2.json
 ...
-<選択フォルダー>/recall-data/sets.backup.5.json
+<selected-folder>/recall-data/sets.backup.5.json
 ```
 
-`sets.backup.json`と`sets.backup.1.json`は直前の保存内容の予備コピーです。`sets.backup.2.json`〜`5.json`は、それより前の保存内容を順に保持します。バックアップを作る保存を重ねると、世代が繰り下がります。
+`sets.backup.json` and `sets.backup.1.json` are backup copies of the previous saved contents. `sets.backup.2.json` through `sets.backup.5.json` retain successively older saved contents. As saves that create backups accumulate, older copies shift through the generations.
 
-フォルダー保存では、初回作成時にもdata directory作成後に`sets.json`の出現を再確認します。通常更新では書込み前の再読込、競合再確認、バックアップ書込み後の再確認、主ファイル書込み後のread-back検証を行います。検証に失敗した場合は、他の正当な外部更新を上書きしない範囲で直前世代へのロールバックを試みます。ファイルI/Oにはtimeoutを設け、同一ブラウザー内では利用可能な場合 Web Locks を用いて保存処理を直列化します。
+For folder-based saving, the application rechecks whether `sets.json` has appeared after creating the data directory, even during initial setup. For normal updates, it rereads the file before writing, rechecks for conflicts, verifies the result after writing a backup, and performs read-back verification after writing the main file. If verification fails, it attempts to roll back to the previous generation without overwriting legitimate external changes. File I/O operations have timeouts. Within the same browser, the application uses Web Locks, when available, to serialize saving operations.
 
-フォルダー保存に対応していないブラウザーではIndexedDBのみで利用できます。ブラウザー再起動後などにフォルダー権限の再許可が必要な場合は、利用者のクリックが必要です。
+Browsers that do not support folder-based saving can still use IndexedDB. If folder access must be reauthorized, such as after restarting the browser, the user must click to grant permission again.
 
-## 正答判定のルール
+## Answer-Checking Rules
 
-学習開始前の「半角カッコ内の省略を許可」で、対応の取れた半角カッコ `(...)` の部分を省略してよいか選べます。初期値はオン（省略可）で、オフの場合はカッコとその中身も文字どおり入力した場合だけ正解です。この選択は途中進捗へ保存され、「続きから再開」でも変わりません。
+Before starting a study session, you can choose whether to allow omission of text inside balanced ASCII parentheses `(...)` using the “Allow Omitting Text in ASCII Parentheses” option (`半角カッコ内の省略を許可`). The option is enabled by default (omission allowed). When disabled, an answer is accepted only if the parentheses and their contents are entered exactly. This setting is stored with in-progress session data and remains unchanged when you resume a session.
 
-どちらを選んでも、送信時には各行の末尾にある水平空白（スペース、Tabなど）だけを除去します。それ以外は文字列を厳密に比較し、小文字化、Unicode正規化、正規表現解釈は行いません。
+Regardless of the setting, submission removes only horizontal whitespace (spaces, tabs, etc.) at the end of each line. All other characters are compared exactly. The application does not lowercase text, apply Unicode normalization, or interpret input as regular expressions.
 
-- `TLS` と `tls` は別の答えです。
-- 省略可では、`Centralized governance (集中型ガバナンス)` は、全文でも `Centralized governance` だけでも正解です。
-- 省略不可では、同じ解答を `Centralized governance` だけ入力すると不正解です。
-- 省略可で複数の半角カッコがある場合は、それぞれを省略できます。
-- 対応していないカッコ、空の `()`、入れ子の `(A (B))`、全角の `（...）` は通常の文字として扱います。
-- `C++`、`<script>`、`[a-z]*`、`A+B=C?` などは通常の文字として扱います。
-- 各行の行頭インデントと行中の空白は判定対象です。各行末の余分な水平空白だけは判定前に除去されます。
-- 複数行の答えでは Enter が改行、`Ctrl+Enter` または `Cmd+Enter` が採点です。
-- コードエディター内では Tab が半角スペース4個分のインデント、`Ctrl+F` または `Cmd+F` が検索です。
-- 言語モードは表示と編集支援だけを変え、採点対象の文字列は変更しません。
-- 保存時の通常改行はLFへ統一します。
-- 不可視Unicode文字は厳密一致では別文字です。インポート時の警告を確認してください。
+- `TLS` and `tls` are different answers.
+- When omission is allowed, `Centralized governance (集中型ガバナンス)` is accepted either in full or as `Centralized governance` alone.
+- When omission is not allowed, entering only `Centralized governance` for the same answer is incorrect.
+- When omission is allowed and an answer contains multiple sets of ASCII parentheses, each eligible parenthesized part may be omitted independently.
+- Unbalanced parentheses, empty `()`, nested `(A (B))`, and full-width `（...）` parentheses are treated as ordinary characters.
+- Strings such as `C++`, `<script>`, `[a-z]*`, and `A+B=C?` are treated as ordinary characters.
+- Leading indentation and spaces within each line affect answer checking. Only extra trailing horizontal whitespace is removed before comparison.
+- For multiline answers, Enter inserts a newline; `Ctrl+Enter` or `Cmd+Enter` submits the answer for grading.
+- In the code editor, Tab indents by four ASCII spaces, and `Ctrl+F` or `Cmd+F` opens search.
+- Language modes change only display and editing assistance; they do not modify the string used for grading.
+- Standard line endings are normalized to LF when saving.
+- Invisible Unicode characters are distinct characters under strict comparison. Review import warnings carefully.
 
-## 選べる出題単位と途中再開
+## Question Group Sizes and Resuming Sessions
 
-- 学習開始前に、1グループの出題数を1・3・5・10・15・20問から選べます。初期値は15問です。
-- 学習開始前に、半角 `(...)` 内を省略してよいか選べます。初期値は省略可です。
-- セットの残り枚数が選択数より少ない場合、最後のグループは残りのカードだけを出題します。
-- 不正解時は正答再入力が必須です。再入力後も、そのカードは現在のグループ内で再出題されます。
-- 再出題されたカードを答えを見ずに正解するまで、次のグループには進めません。
-- 出題順、カッコ省略設定、現在のグループ、再出題待ち、正解後・再入力中の画面を回答ごとに保存します。
-- ブラウザーを閉じた後も、同じセットの「続きから再開」で保存地点へ戻れます。
-- フォルダー保存を接続している場合、途中進捗も `recall-data/sets.json` へ同期します。
+- Before starting, select a group size of 1, 3, 5, 10, 15, or 20 questions. The default is 15.
+- Before starting, choose whether text inside ASCII parentheses `(...)` may be omitted. Omission is allowed by default.
+- If fewer cards remain than the selected group size, the final group contains only the remaining cards.
+- After an incorrect answer, re-entering the correct answer is mandatory. The card will still be presented again within the current group.
+- You cannot move to the next group until you answer every repeated card correctly without looking at the answer.
+- After each answer, the application saves question order, the parentheses-omission setting, the current group, cards awaiting repetition, and the screen state following a correct answer or during answer re-entry.
+- Even after closing the browser, you can return to the saved point by choosing “Resume” (`続きから再開`) for the same set.
+- When folder-based saving is connected, session progress is also synchronized to `recall-data/sets.json`.
 
-## インポート時の注意
+## Import Considerations
 
-貼り付けテキストとTXTの区切り文字は文字どおり扱い、CSV/TSVファイルでは標準の引用符構文を解釈します。取り込み前にプレビュー、行番号付き警告、完全一致の重複候補を確認できます。
+Delimiters in pasted text and TXT files are treated literally, whereas CSV/TSV files are parsed using standard quoted-field syntax. Before importing, you can review a preview, warnings with line numbers, and potential exact-match duplicates.
 
-- 取込ファイル: 10 MiB以下
-- 1回の取込: 10,000カード以下
-- Excel: ZIP構造を事前検査し、暗号化、ZIP64、危険なパス、異常圧縮率、過大展開容量、過剰entry数などを拒否
-- Excel解析: 専用Workerで実行し、シート数・名前・行列・セル・全シート合計文字数をWorker内で検証してから画面側へ渡す。ファイル差替え／ダイアログ終了時は処理をキャンセル
-- TXT/CSV/TSV: UTF-8、UTF-16 LE/BE、Shift_JISを選択可能。BOM等からの自動判定にも対応
-- `.xlsm` のマクロやセルの式を実行する処理はありません
+- Import file size: up to 10 MiB
+- Cards per import: up to 10,000
+- Excel: the ZIP structure is checked in advance; encrypted files, ZIP64, unsafe paths, abnormal compression ratios, excessive uncompressed sizes, and excessive entry counts are rejected
+- Excel parsing: runs in a dedicated Worker, which validates sheet counts, names, rows, columns, cells, and the total character count across all sheets before passing results to the UI. Parsing is canceled if the file is replaced or the dialog is closed
+- TXT/CSV/TSV: selectable UTF-8, UTF-16 LE/BE, and Shift_JIS encodings, with automatic detection based on BOMs and other indicators
+- `.xlsm` macros and cell formulas are not executed
 
-信頼できないファイルには、上限内でもパーサの境界ケースが含まれる可能性があります。重要な環境では出所を確認したファイルを使用してください。
+Untrusted files can contain parser edge cases even within these limits. In sensitive environments, import only files from verified sources.
 
-## データ上限
+## Data Limits
 
-- 最大200セット
-- 1セット最大10,000カード
-- 全体最大50,000カード
-- セット名255文字
-- 説明5,000文字
-- カード片面20,000 UTF-16 code units
-- ブラウザー保存JSONは最大25 Mi UTF-16 code units、フォルダーの`sets.json`はUTF-8で25 MiB以下
+- Maximum of 200 study sets
+- Maximum of 10,000 cards per set
+- Maximum of 50,000 cards in total
+- Set name: 255 characters
+- Description: 5,000 characters
+- Each side of a card: 20,000 UTF-16 code units
+- Browser-storage JSON: up to 25 Mi UTF-16 code units; folder-based `sets.json`: up to 25 MiB in UTF-8
 
-これらは安全上限であり、実用上の推奨件数とは別です。大規模セットでは編集画面を100枚単位で表示し、全カードの入力欄を同時にDOMへ生成しないようにしています。
+These are safety limits, not recommended dataset sizes for everyday use. When editing large sets, the application displays cards in pages of 100 rather than creating input fields for every card in the DOM at once.
 
-## セキュリティ設計
+## Security Design
 
-- 開発・本番ともloopbackのみで待ち受け、任意Hostを拒否します。
-- canonical originは `http://127.0.0.1:3000` です。`localhost:3000` はcanonical originへリダイレクトします。
-- 許可していないOrigin、GET/HEAD以外のmethod、8 KiBを超えるURL、過剰な多重URL encoding、path traversalを拒否します。
-- `recall-data`、隠しファイル、秘密鍵形式、主要プロジェクト設定ファイルを直接配信しないよう遮断します。
-- CSPはスクリプトの配信元を同一originへ限定し、HTML属性からのスクリプト実行を禁止します。Vinextが生成する本番起動用のインラインbootstrapだけは画面初期化に必要なため許可します。このほかframe-ancestors/X-Frame-Options、nosniff、Referrer-Policy、Permissions-Policy、COOP/COEP/CORP等の防御ヘッダーを返します。
-- 本番ビルドはsource mapを無効にします。
-- カード内容は `innerHTML` ではなくReactの通常テキストとして描画します。
-- 外部解析タグ、広告、効果音、外部フォント、カード内容を送信する外部APIはありません。
-- 保存データは型・件数・文字数・ID・日時・学習進捗の整合性を検証してから利用します。
-- Excel/ZIPには圧縮率・展開量・entry数等の安全上限を適用します。
-- 依存versionとlockfileを固定し、source releaseにはSBOMと第三者ライセンス一覧を含めます。
+- Both development and production servers listen on loopback only and reject unauthorized Host values.
+- The canonical origin is `http://127.0.0.1:3000`. Requests to `localhost:3000` are redirected to the canonical origin.
+- Requests with unauthorized Origins, methods other than GET/HEAD, URLs exceeding 8 KiB, excessive layers of URL encoding, or path traversal are rejected.
+- Direct serving of `recall-data`, hidden files, private-key formats, and major project configuration files is blocked.
+- The Content Security Policy (CSP) limits script sources to the same origin and blocks script execution from HTML attributes. Only the inline bootstrap generated by Vinext for production startup is allowed because it is required to initialize the UI. Additional defense-in-depth headers include `frame-ancestors`/`X-Frame-Options`, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, and COOP/COEP/CORP.
+- Source maps are disabled in production builds.
+- Card contents are rendered as regular React text rather than through `innerHTML`.
+- There are no external analytics tags, ads, sound effects, external fonts, or external APIs that transmit card contents.
+- Saved data is validated for type, item counts, character lengths, IDs, timestamps, and learning-progress consistency before use.
+- Safety limits for compression ratios, uncompressed sizes, entry counts, and related values are enforced for Excel/ZIP files.
+- Dependency versions and the lockfile are pinned, and source releases include an SBOM and a list of third-party licenses.
 
-詳細な信頼境界と非目標は `docs/THREAT_MODEL.md` を参照してください。
+See `docs/THREAT_MODEL.md` for a detailed description of trust boundaries and non-goals.
 
-### 保護範囲と運用上の注意
+### Scope of Protection and Operational Precautions
 
-学習データは外部送信しませんが、IndexedDB・バックアップJSON・フォルダーJSONはいずれも端末上では平文です。このアプリは、同じOSアカウントを利用できる第三者、悪意あるブラウザー拡張、端末上のマルウェア、管理者/root権限を持つ利用者からデータを秘匿するものではありません。
+Although study data is not transmitted to external services, IndexedDB data, backup JSON files, and folder-based JSON files are all stored in plaintext on the device. The application does not protect data from third parties who can access the same OS account, malicious browser extensions, malware on the device, or users with administrator/root privileges.
 
-パスワード、秘密鍵、個人番号などの機密情報をカードへ保存しないでください。必要に応じてOSのデバイス暗号化、画面ロック、専用ブラウザープロファイル、フォルダーアクセス権を併用してください。
+Do not store sensitive information such as passwords, private keys, or personal identification numbers in cards. Where appropriate, also use operating-system device encryption, screen locking, a dedicated browser profile, and folder access permissions.
 
-File System Accessのdirectory handleはブラウザーoriginに関連付けられます。TOTAL RECALL利用時はcanonical origin `127.0.0.1:3000` を使用し、同じoriginを信頼できない別アプリに利用させないでください。
+File System Access directory handles are associated with the browser origin. Use the canonical origin `127.0.0.1:3000` when running TOTAL RECALL, and do not allow untrusted applications to use the same origin.
 
-## 品質確認
+## Quality Checks
 
-通常の変更後は次を実行します。
+After ordinary changes, run:
 
 ```bash
 npm run manual:build
@@ -212,20 +212,20 @@ npm run check
 npm run build
 ```
 
-依存更新後は脆弱性監査も行います。
+After updating dependencies, also run vulnerability audits:
 
 ```bash
 npm audit
 npm audit --omit=dev
 ```
 
-release準備:
+To prepare a release:
 
 ```bash
 npm run release:prepare
 npm run release:verify
 ```
 
-`release:prepare` はSBOMと第三者ライセンス一覧を生成した後、allowlist方式でsource releaseを作り、`node_modules`、build cache、`recall-data`等を除外します。Unix系では通常ファイル0644、directory0755へ正規化し、`RELEASE_MANIFEST.json`へ各ファイルのSHA-256を記録します。
+`release:prepare` generates an SBOM and a list of third-party licenses, then creates a source release using an allowlist. It excludes `node_modules`, build caches, `recall-data`, and other non-release content. On Unix-like systems, permissions are normalized to `0644` for regular files and `0755` for directories, and each file's SHA-256 hash is recorded in `RELEASE_MANIFEST.json`.
 
-詳しい手順は `docs/RELEASE.md` を参照してください。
+See `docs/RELEASE.md` for detailed instructions.
